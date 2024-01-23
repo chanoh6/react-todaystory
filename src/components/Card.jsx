@@ -2,12 +2,6 @@ import style from '../styles/card.module.css';
 import styleM from '../styles/cardM.module.css';
 import styleS from '../styles/cardS.module.css';
 
-function Card(props) {
-  let card = cardType(props.type);
-
-  return card;
-}
-
 const cardType = (type) => {
   let result = '';
   switch (type) {
@@ -97,5 +91,11 @@ const cardType = (type) => {
 
   return result;
 };
+
+function Card(props) {
+  let card = cardType(props.type);
+
+  return card;
+}
 
 export default Card;
