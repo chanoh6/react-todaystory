@@ -1,0 +1,28 @@
+.list__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: linear-gradient(180deg, #fff 0%, #faf9fe 100%);
+  padding: 36px 15px 25px 15px;
+}
+
+.title {
+  color: #2571d9;
+  font-family: 'Oswald', sans-serif;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.56px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
