@@ -1,8 +1,8 @@
-import style from '../styles/cardList.module.css';
-import Card from './card';
+import style from '../styles/CardList.module.css';
+import CardItem from './CardItem';
 
 function CardList(props) {
-  let cardType = ['L', 'M', 'S'];
+  let cardType = ['l', 'm', 's'];
   let listType = [...props.type];
   let typeList = [];
 
@@ -13,14 +13,14 @@ function CardList(props) {
   }
 
   return (
-    <div className={style.list__wrap}>
+    <section className={style.wrap}>
       <h1 className={style.title}>{props.title}</h1>
-      <ul className={style.list}>
+      <div className={style.list}>
         {typeList.map((type, i) => (
-          <Card key={i} type={type} />
+          <CardItem key={i} type={type} />
         ))}
-      </ul>
-    </div>
+      </div>
+    </section>
   );
 }
 

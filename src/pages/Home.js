@@ -1,20 +1,24 @@
-import '../styles/home.css';
-import CardList from '../components/cardList';
+import '../styles/Home.css';
+import Header from '../components/Header';
+import CategoryList from '../components/CategoryList';
+import CardList from '../components/CardList';
+import CardEditor from '../components/CardEditor';
 
 function Home() {
   return (
     <div className="Home">
-      <header>
-        <div className="">header</div>
-        <div className="category-list">
-          <p>category</p>
-        </div>
-      </header>
+      <Header />
+      <CategoryList />
       <main>
         <CardList title="top stories" type="123" />
         <CardList title="best stories" type="004" />
+        <CardEditor title="editors' pick" />
+        <CardList title="best stories" type="004" />
+        <CardList title="category" type="103" />
+        <CardList title="category" type="121" />
+        <CardList title="category" type="004" />
       </main>
-      <footer>footer</footer>
+      <footer></footer>
     </div>
   );
 }

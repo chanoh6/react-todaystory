@@ -1,0 +1,51 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 24px 0 15px 0;
+  margin: 0 15px;
+}
+
+header .logo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+header .logo h1,
+header .logo h2 {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1;
+  color: #000;
+  margin: 0;
+}
+
+header .logo h1 {
+  cursor: pointer;
+}
+
+header .logo h2 {
+  color: #8a898e;
+}
+
+header .menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .menu .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+header .menu .icon img {
+  object-fit: contain;
+}

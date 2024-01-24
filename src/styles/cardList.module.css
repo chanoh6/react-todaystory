@@ -1,4 +1,4 @@
-.list__wrap {
+.wrap {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -7,7 +7,6 @@
 }
 
 .title {
-  color: #2571d9;
   font-family: 'Oswald', sans-serif;
   font-size: 28px;
   font-style: normal;
@@ -22,7 +21,4 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }

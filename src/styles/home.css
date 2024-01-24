@@ -17,13 +17,3 @@ p {
   max-width: 540px;
   margin: 0 auto;
 }
-
-header,
-footer {
-  background-color: aquamarine;
-}
-
-header {
-  color: blue;
-  padding: 0 15px;
-}

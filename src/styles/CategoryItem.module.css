@@ -1,0 +1,42 @@
+.item {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 12px;
+  gap: 14px;
+  border-radius: 8px;
+  background-color: #faf9fe;
+  cursor: pointer;
+}
+
+.item:active {
+  background-color: #000;
+}
+
+.item:active p {
+  color: #fff;
+}
+
+.item:active .icon img {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(29deg) brightness(102%) contrast(105%);
+}
+
+.item p {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.item .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+}
+
+.item .icon img {
+  height: 100%;
+  object-fit: contain;
+}
