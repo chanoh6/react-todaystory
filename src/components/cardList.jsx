@@ -14,7 +14,17 @@ function CardList(props) {
 
   return (
     <section className={style.wrap}>
-      <h1 className={style.title}>{props.title}</h1>
+      <div className={style.title__wrap}>
+        <h1 className={style.title}>{props.title}</h1>
+        {props.more ? (
+          <button className={style.btn__more}>
+            <p>더보기</p>
+            <img src="../assets/btn_more.svg" alt="btn more" />
+          </button>
+        ) : (
+          ''
+        )}
+      </div>
       <div className={style.list}>
         {typeList.map((type, i) => (
           <CardItem key={i} type={type} />

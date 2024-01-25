@@ -5,8 +5,8 @@ function CardEditor(props) {
   return (
     <section className={style.wrap}>
       <hgroup className={style.title__wrap}>
-        <h1 className={style.title}>{props.title}</h1>
-        <h2 className={style.subtitle}>subtitle</h2>
+        <h1>{props.title}</h1>
+        <h2>subtitle</h2>
       </hgroup>
       <CardItem type="e" />
     </section>

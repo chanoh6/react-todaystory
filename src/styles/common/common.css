@@ -1,9 +1,22 @@
+@import url('./normalize.css');
+@import url('./colors.css');
+
+/* font */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Oswald:wght@400;700&display=swap');
-@import url('./common/normalize.css');
 
 * {
   font-family: 'Pretendard', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: border-box;
 }
 
 p {
