@@ -9,11 +9,3 @@
 p {
   margin: 0;
 }
-
-.Home {
-  position: relative;
-  width: 100%;
-  min-width: 280px;
-  max-width: 540px;
-  margin: 0 auto;
-}

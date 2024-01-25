@@ -3,7 +3,8 @@
   flex-direction: column;
   gap: 16px;
   background: linear-gradient(180deg, #fff 0%, #faf9fe 100%);
-  padding: 36px 15px 25px 15px;
+  /* padding: 36px 15px 25px 15px; */
+  padding: 36px 15px;
 }
 
 .title {

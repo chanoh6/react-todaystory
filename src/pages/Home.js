@@ -1,4 +1,5 @@
 import '../styles/Home.css';
+import style from '../styles/Home.module.css';
 import Header from '../components/Header';
 import CategoryList from '../components/CategoryList';
 import CardList from '../components/CardList';
@@ -6,7 +7,7 @@ import CardEditor from '../components/CardEditor';
 
 function Home() {
   return (
-    <div className="Home">
+    <div className={style.wrap}>
       <Header />
       <CategoryList />
       <main>
