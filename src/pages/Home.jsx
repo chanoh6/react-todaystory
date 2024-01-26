@@ -6,7 +6,7 @@ import CardEditor from '../components/CardEditor';
 
 function Home() {
   return (
-    <div className={style.wrap}>
+    <>
       <Header />
       <CategoryList />
       <main>
@@ -19,7 +19,7 @@ function Home() {
         <CardList title="category" type="004" more={true} />
       </main>
       <footer></footer>
-    </div>
+    </>
   );
 }
 
