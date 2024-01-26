@@ -4,7 +4,7 @@ import './styles/index.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './pages/Home';
-import Content from './pages/ContentDetail';
+import ContentDetail from './pages/ContentDetail';
 import Contents from './pages/Contents';
 import NotFound from './pages/NotFound';
 
@@ -15,7 +15,8 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'content', element: <Content /> },
+      { path: 'content', element: <ContentDetail /> },
+      { path: 'content/:contentId', element: <ContentDetail /> },
       { path: 'contents/:pageTitle/:pageId', element: <Contents /> },
     ],
   },
