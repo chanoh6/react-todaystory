@@ -1,12 +1,10 @@
 import { useParams } from 'react-router-dom';
 
 function Contents() {
-  const { pageTitle, pageId } = useParams();
+  const { pageId } = useParams();
   return (
     <>
-      <div>
-        {pageTitle} {pageId}
-      </div>
+      <div>{pageId}</div>
     </>
   );
 }

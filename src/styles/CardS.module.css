@@ -1,0 +1,26 @@
+.card__info {
+  display: flex;
+  align-self: stretch;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card__title {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 10px;
+  background-color: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 2px 14px 2px 2px;
+  border: none;
+}
+
+.thumbnail {
+  width: 36%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-light-gray);
+  border-radius: 4px;
+  margin: 0;
+}

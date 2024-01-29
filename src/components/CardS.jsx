@@ -1,36 +1,37 @@
-import style from '../styles/CardItem.module.css';
+import '../styles/Card.css';
+import style from '../styles/CardS.module.css';
 
-function CardItem(props) {
+function CardS() {
   return (
-    <article className={`${style.card} ${style[props.type]}`}>
+    <li className="card">
       <div className={style.card__info}>
-        <figure className={style.thumbnail}>
-          <img alt="thumbnail" />
-        </figure>
         <div className={style.card__title}>
-          <div className={style.cp}>
+          <div className="cp">
             <img src="./assets/icon_cplogo.svg" alt="cp logo" />
             <p>CHANNEL</p>
           </div>
-          <p className={style.title}>TITLE</p>
+          <p className="title">TITLE</p>
         </div>
+        <figure className={style.thumbnail}>
+          <img src="./assets/no_image.png" alt="thumbnail" />
+        </figure>
       </div>
-      <div className={style.card__more}>
-        <div className={style.date}>
+      <div className="card__more">
+        <div className="date">
           <span id="publishedDate">date</span>
           <span>|</span>
           <span id="contentCategory">category</span>
         </div>
-        <div className={style.like}>
-          <div className={style.view}>
+        <div className="like">
+          <div className="view">
             <img src="./assets/icon_view.svg" alt="icon view" />
             <p id="viewCount">12,345</p>
           </div>
           <img src="./assets/icon_like.svg" alt="icon like" />
         </div>
       </div>
-    </article>
+    </li>
   );
 }
 
-export default CardItem;
+export default CardS;

@@ -5,7 +5,7 @@ function ContentDetail() {
 
   return (
     <>
-      <div>ContentDetail {contentId}</div>
+      <div>content {contentId}</div>
     </>
   );
 }

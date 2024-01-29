@@ -1,3 +1,18 @@
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  text-decoration: none;
+  padding: 8px 15px;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
 .item {
   flex: 0 0 auto;
   display: flex;

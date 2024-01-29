@@ -15,12 +15,13 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'content', element: <ContentDetail /> },
-      { path: 'content/:contentId', element: <ContentDetail /> },
-      { path: 'contents/:pageTitle/:pageId', element: <Contents /> },
+      { path: 'view/:contentId', element: <ContentDetail /> },
+      // channel, category 명만 와야됨.
+      { path: '/:pageId', element: <Contents /> },
     ],
   },
 ]);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
