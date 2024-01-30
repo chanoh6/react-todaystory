@@ -1,10 +1,13 @@
+import { Link } from 'react-router-dom';
 import style from '../styles/Header.module.css';
 
 function Header() {
   return (
     <header>
       <hgroup className={style.logo}>
-        <h1>오늘의 스토리</h1>
+        <Link to={'/'}>
+          <h1>오늘의 스토리</h1>
+        </Link>
         <h2>1월 12일</h2>
       </hgroup>
       <div className={style.menu}>

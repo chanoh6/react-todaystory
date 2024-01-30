@@ -7,89 +7,49 @@
   },
   "data": [
     {
-      "idx": "1",
+      "idx": 1,
       "name": "여행",
       "icon": "travel.svg"
     },
     {
-      "idx": "2",
+      "idx": 2,
       "name": "라이프스타일",
       "icon": "lifestyle.svg"
     },
     {
-      "idx": "3",
+      "idx": 3,
       "name": "건강",
       "icon": "health.svg"
     },
     {
-      "idx": "4",
+      "idx": 4,
       "name": "레시피",
       "icon": "recipe.svg"
     },
     {
-      "idx": "5",
+      "idx": 5,
       "name": "패션&뷰티",
       "icon": "fashion.svg"
     },
     {
-      "idx": "6",
+      "idx": 6,
       "name": "힐링",
       "icon": "healing.svg"
     },
     {
-      "idx": "7",
-      "name": "자동차&TECH",
-      "icon": "car.svg"
-    },
-    {
-      "idx": "8",
-      "name": "경제",
-      "icon": "economy.svg"
-    },
-    {
-      "idx": "9",
+      "idx": 7,
       "name": "날씨",
       "icon": "weather.svg"
     },
     {
-      "idx": "10",
+      "idx": 8,
       "name": "스포츠",
       "icon": "sport.svg"
     },
     {
-      "idx": "11",
+      "idx": 9,
       "name": "핫플",
       "icon": "sights.svg"
-    },
-    {
-      "idx": "12",
-      "name": "문화&예술",
-      "icon": "culture.svg"
-    },
-    {
-      "idx": "13",
-      "name": "이슈",
-      "icon": "issue.svg"
-    },
-    {
-      "idx": "14",
-      "name": "인테리어",
-      "icon": "interior.svg"
-    },
-    {
-      "idx": "15",
-      "name": "푸드",
-      "icon": "food.svg"
-    },
-    {
-      "idx": "16",
-      "name": "환경",
-      "icon": "environment.svg"
-    },
-    {
-      "idx": "17",
-      "name": "교육",
-      "icon": "education.svg"
     }
   ]
 }

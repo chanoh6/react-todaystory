@@ -6,7 +6,7 @@ function CardEditor() {
     <section className={style.wrap}>
       <hgroup className={style.title__wrap}>
         <h1>editor's pick</h1>
-        <h2>subtitle</h2>
+        <h2>주목할 만한 콘텐츠</h2>
       </hgroup>
       <article className={style.card}>
         <div className={style.card__img}>

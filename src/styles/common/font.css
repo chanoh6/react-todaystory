@@ -1,0 +1,5 @@
+/* font */
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Oswald:wght@400;700&display=swap');
+
+/* TODO: 언어별 폰트 프리셋 적용 */

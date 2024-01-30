@@ -4,7 +4,11 @@ import Category from '../components/Category';
 import CardL from '../components/CardL';
 import CardM from '../components/CardM';
 import CardS from '../components/CardS';
+import CardList from '../components/CardList';
 import CardEditor from '../components/CardEditor';
+
+// dummy
+import topStories from '../json/topStories.json';
 
 function Home() {
   return (
@@ -14,16 +18,9 @@ function Home() {
       <main>
         <section className={style.wrap}>
           <h1 className={style.title}>top stories</h1>
-          <ul className={style.list}>
-            <CardL />
-            <CardM />
-            <CardM />
-            <CardS />
-            <CardS />
-            <CardS />
-          </ul>
+          <CardList contents={topStories.data} />
         </section>
-        <section className={style.wrap}>
+        {/* <section className={style.wrap}>
           <h1 className={style.title}>best stories</h1>
           <ul className={style.list}>
             <CardS />
@@ -31,9 +28,9 @@ function Home() {
             <CardS />
             <CardS />
           </ul>
-        </section>
+        </section> */}
         <CardEditor />
-        <section className={style.wrap}>
+        {/* <section className={style.wrap}>
           <h1 className={style.title}>best stories</h1>
           <ul className={style.list}>
             <CardS />
@@ -86,7 +83,7 @@ function Home() {
             <CardS />
             <CardS />
           </ul>
-        </section>
+        </section> */}
       </main>
       <footer></footer>
     </>

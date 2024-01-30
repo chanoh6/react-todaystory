@@ -45,13 +45,3 @@
   font-weight: 700;
   line-height: 0.9;
 }
-
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-}
