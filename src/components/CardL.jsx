@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Card.css';
 
 function CardL(props) {
+  const baseURL = 'https://picks.my/ko/s/';
   let { content } = props;
   let { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedDate, viewCount } = content;
 
@@ -9,11 +10,11 @@ function CardL(props) {
     <li data-idx={idx} className="card">
       <Link to={`/view/${idx}`}>
         <figure className="thumbnail">
-          <img src={`./assets/thumbnail/${thumbnail}`} alt="thumbnail" />
+          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
         </figure>
         <div className="card__title">
           <div className="cp">
-            <img src={`./assets/logo/${logo}`} alt="cp logo" />
+            <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
             <p>{channel}</p>
           </div>
           <p className="title">{title}</p>

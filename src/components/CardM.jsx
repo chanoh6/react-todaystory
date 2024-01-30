@@ -3,6 +3,7 @@ import '../styles/Card.css';
 import style from '../styles/CardM.module.css';
 
 function CardM(props) {
+  const baseURL = 'https://picks.my/ko/s/';
   let { content } = props;
   let { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedDate, viewCount } = content;
 
@@ -10,11 +11,11 @@ function CardM(props) {
     <li className={style.card}>
       <Link to={`/view/${idx}`}>
         <figure className="thumbnail">
-          <img src={`./assets/thumbnail/${thumbnail}`} alt="thumbnail" />
+          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
         </figure>
         <div className="card__title">
           <div className="cp">
-            <img src={`./assets/logo/${logo}`} alt="cp logo" />
+            <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
             <p>{channel}</p>
           </div>
           <p className="title">{title}</p>

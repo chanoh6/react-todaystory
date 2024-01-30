@@ -3,6 +3,7 @@ import '../styles/Card.css';
 import style from '../styles/CardS.module.css';
 
 function CardS(props) {
+  const baseURL = 'https://picks.my/ko/s/';
   let { content } = props;
   let { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedDate, viewCount } = content;
 
@@ -12,13 +13,13 @@ function CardS(props) {
         <div className={style.card__info}>
           <div className={style.card__title}>
             <div className="cp">
-              <img src={`./assets/logo/${logo}`} alt="cp logo" />
+              <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
               <p>{channel}</p>
             </div>
             <p className="title">{title}</p>
           </div>
           <figure className={style.thumbnail}>
-            <img src={`./assets/thumbnail/${thumbnail}`} alt="thumbnail" />
+            <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
           </figure>
         </div>
         <div className="card__more">
