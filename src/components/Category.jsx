@@ -12,7 +12,7 @@ function Category() {
   return (
     <nav>
       <ul className={style.list}>
-        <li className={style.item}>
+        <li key={0} className={`${style.item} ${style.active}`}>
           <Link to={'/'}>
             <img src={`${baseURL}all.svg`} alt="category icon" />
             <p>전체보기</p>

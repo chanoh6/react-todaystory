@@ -29,15 +29,18 @@ nav {
   cursor: pointer;
 }
 
-.item:active {
+.item:active,
+.item.active {
   background-color: var(--color-black);
 }
 
-.item:active p {
+.item:active p,
+.item.active p {
   color: var(--color-white);
 }
 
-.item:active img {
+.item:active img,
+.item.active img {
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(29deg) brightness(102%) contrast(105%);
 }
 

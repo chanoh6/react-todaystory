@@ -1,6 +1,57 @@
 @import url('./common/common.css');
 
-.wrap {
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  padding: 24px 0 15px 0;
+  margin: 0 15px;
+}
+
+header .logo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+header .logo h1,
+header .logo h2 {
+  color: var(--color-black);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0;
+}
+
+header .logo h1 {
+  cursor: pointer;
+}
+
+header .logo h2 {
+  color: var(--color-dark-gray);
+}
+
+header .menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .menu .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+header .menu .icon img {
+  object-fit: contain;
+}
+
+.content__wrap {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -9,7 +60,7 @@
   padding: 36px 15px;
 }
 
-.title__wrap {
+.content__title {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -17,25 +68,69 @@
 }
 
 .title {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Oswald', 'Pretendard', sans-serif;
   font-size: 28px;
-  font-weight: 700;
+  /* font-weight: 700; */
+  font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.56px;
   text-transform: uppercase;
   margin: 0;
 }
 
+.editor__wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(180deg, #dedbd4 0%, #948777 100%);
+  padding: 36px 0;
+  z-index: 1;
+}
+
+.editor__title {
+  position: sticky;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  line-height: 1;
+  z-index: -1;
+}
+
+.editor__title h1,
+.editor__title h2 {
+  color: var(--color-black);
+  text-align: center;
+  margin: 0;
+}
+
+.editor__title h1 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.68px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.editor__title h2 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .btn__more {
+  margin: 0 -8px -8px 0;
+}
+
+.btn__more a {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 4px;
-  background-color: transparent;
-  border: none;
   padding: 8px;
-  margin: 0 -8px -8px 0;
-  cursor: pointer;
 }
 
 .btn__more p {

@@ -1,0 +1,54 @@
+{
+  "code": "0",
+  "msg": {
+    "en": null,
+    "ko": null,
+    "jp": null
+  },
+  "data": [
+    {
+      "idx": 23115,
+      "thumbnail": "3eeb1e14cff36d62c78b669ceb8906bafa6637a6.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channel": "웨더뉴스",
+      "title": "빙판길이 미끄러운 이유, 아직 모른다?",
+      "categoryIdx": 7,
+      "category": "날씨",
+      "publishedDate": "2024.01.24",
+      "viewCount": 51852
+    },
+    {
+      "idx": 23101,
+      "thumbnail": "2aafbf89235c688d4c35156ee1c4240a4e9ea36c.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channel": "웨더뉴스",
+      "title": "겨울철, 눈만 오면 ‘결항될까’ 무서운 제주공항…그 이유는?",
+      "categoryIdx": 7,
+      "category": "날씨",
+      "publishedDate": "2024.01.23",
+      "viewCount": 50454
+    },
+    {
+      "idx": 23149,
+      "thumbnail": "c4e8a67a0b9e071e2139a2df175198aba09a1b4d.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channel": "웨더뉴스",
+      "title": "‘체감온도’ 영하 20℃… 냉동고 한파 속 체감온도 올리는 법은?",
+      "categoryIdx": 7,
+      "category": "날씨",
+      "publishedDate": "2024.01.25",
+      "viewCount": 50147
+    },
+    {
+      "idx": 23205,
+      "thumbnail": "93355ce19a064723cfe4aff50f5a1488360466d9.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channel": "웨더뉴스",
+      "title": "기상관측 사상 역대 가장 ‘뜨거웠던’ 2023년, 기후변화 실감",
+      "categoryIdx": 7,
+      "category": "날씨",
+      "publishedDate": "2024.01.30",
+      "viewCount": 40442
+    }
+  ]
+}

@@ -1,34 +1,37 @@
+import { Link } from 'react-router-dom';
 import '../styles/Card.css';
 import style from '../styles/CardEditor.module.css';
 
+// dummy
+import editorsPick from '../json/editorsPick.json';
+
 function CardEditor() {
+  const baseURL = 'https://picks.my/ko/s/';
+  let { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedDate, viewCount } = editorsPick.data;
+
   return (
-    <section className={style.wrap}>
-      <hgroup className={style.title__wrap}>
-        <h1>editor's pick</h1>
-        <h2>주목할 만한 콘텐츠</h2>
-      </hgroup>
-      <article className={style.card}>
+    <article className={style.card}>
+      <Link to={`/view/${idx}`}>
         <div className={style.card__img}>
           <figure className={style.thumbnail}>
-            <img alt="thumbnail" />
+            <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
           </figure>
           <figure className={style.background}>
-            <img alt="background" />
+            <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="background" />
           </figure>
         </div>
         <div className="card__title">
           <div className="cp">
-            <img src="./assets/icon_cplogo.svg" alt="cp logo" />
-            <p>CHANNEL</p>
+            <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
+            <p>{channel}</p>
           </div>
-          <p className="title">TITLE</p>
+          <p className="title">{title}</p>
         </div>
         <div className="card__more">
           <div className="date">
-            <span id="publishedDate">date</span>
+            <span id="publishedDate">{publishedDate}</span>
             <span>|</span>
-            <span id="contentCategory">category</span>
+            <span id="contentCategory">{category}</span>
           </div>
           <div className="like">
             <div className="view">
@@ -38,8 +41,8 @@ function CardEditor() {
             <img src="./assets/icon_like.svg" alt="icon like" />
           </div>
         </div>
-      </article>
-    </section>
+      </Link>
+    </article>
   );
 }
 
