@@ -1,21 +1,33 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from '../styles/Home.module.css';
 import Category from '../components/Category';
 import CardList from '../components/CardList';
 import CardEditor from '../components/CardEditor';
+import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 
 function Home() {
+  const navigate = useNavigate();
   const date = new Date();
   const month = date.getMonth() + 1;
   const day = date.getDate();
+
+  // for test
+  // contextApi 사용
+  const { todaystory } = useTodaystoryApi();
+  const result = todaystory.posts();
+  console.log(result);
 
   return (
     <>
       <header>
         <hgroup className={style.logo}>
-          <Link to={'/'}>
-            <h1>오늘의 스토리</h1>
-          </Link>
+          <h1
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            오늘의 스토리
+          </h1>
           <h2>
             {month}월 {day}일
           </h2>
@@ -59,11 +71,14 @@ function Home() {
         <section className={style.content__wrap}>
           <div className={style.content__title}>
             <h1 className={style.title}>여행</h1>
-            <button className={style.btn__more}>
-              <Link to={`/${1}`}>
-                <p>더보기</p>
-                <img src="../assets/btn_more.svg" alt="btn more" />
-              </Link>
+            <button
+              className={style.btn__more}
+              onClick={() => {
+                navigate(`/${1}`);
+              }}
+            >
+              <p>더보기</p>
+              <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
           <CardList type={3} contentType={`contents${1}`} />
@@ -72,11 +87,14 @@ function Home() {
         <section className={style.content__wrap}>
           <div className={style.content__title}>
             <h1 className={style.title}>라이프스타일</h1>
-            <button className={style.btn__more}>
-              <Link to={`/${2}`}>
-                <p>더보기</p>
-                <img src="../assets/btn_more.svg" alt="btn more" />
-              </Link>
+            <button
+              className={style.btn__more}
+              onClick={() => {
+                navigate(`/${2}`);
+              }}
+            >
+              <p>더보기</p>
+              <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
           <CardList type={2} contentType={`contents${2}`} />
@@ -85,11 +103,14 @@ function Home() {
         <section className={style.content__wrap}>
           <div className={style.content__title}>
             <h1 className={style.title}>건강</h1>
-            <button className={style.btn__more}>
-              <Link to={`/${3}`}>
-                <p>더보기</p>
-                <img src="../assets/btn_more.svg" alt="btn more" />
-              </Link>
+            <button
+              className={style.btn__more}
+              onClick={() => {
+                navigate(`/${3}`);
+              }}
+            >
+              <p>더보기</p>
+              <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
           <CardList type={4} contentType={`contents${3}`} />

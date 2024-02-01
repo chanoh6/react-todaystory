@@ -14,7 +14,7 @@
       "title": "홍콩에 가면",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.31",
+      "publishedAt": "2024-01-31 00:00:00",
       "viewCount": 5
     },
     {
@@ -25,7 +25,7 @@
       "title": "Travie Pick ‘토론토 아일랜드’",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.31",
+      "publishedAt": "2024-01-31 00:00:00",
       "viewCount": 3
     },
     {
@@ -36,7 +36,7 @@
       "title": "서울·경기 실내 여행, 아이들과 가기 좋은 흥미진진한 박물관 4",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.24",
+      "publishedAt": "2024-01-29 00:00:00",
       "viewCount": 3736
     },
     {
@@ -47,7 +47,7 @@
       "title": "'퀸즐랜드'의 모든 매력, 여행 꿀팁 모음",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.29",
+      "publishedAt": "2024-01-29 00:00:00",
       "viewCount": 2311
     },
     {
@@ -58,7 +58,7 @@
       "title": "매력적인 ‘광주’ 여행을 위한 공간 5",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.26",
+      "publishedAt": "2024-01-26 00:00:00",
       "viewCount": 12882
     },
     {
@@ -69,7 +69,7 @@
       "title": "2024 해외여행 항공권 싸게 사는 법 & 비행기표 특가 구매팁 추천!",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.25",
+      "publishedAt": "2024-01-25 00:00:00",
       "viewCount": 3376
     },
     {
@@ -80,7 +80,7 @@
       "title": "Travie Pick ‘알록달록 김천의 봄’",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.24",
+      "publishedAt": "2024-01-24 00:00:00",
       "viewCount": 4844
     },
     {
@@ -91,7 +91,7 @@
       "title": "설 연휴에 딱! 좋은 여행사 추천 이색 여행지",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.23",
+      "publishedAt": "2024-01-23 00:00:00",
       "viewCount": 4507
     },
     {
@@ -102,7 +102,7 @@
       "title": "역사와 문화가 살아 숨 쉬는 '비엔나 호프부르크 신왕궁', 이젠 한국어로 만난다",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.22",
+      "publishedAt": "2024-01-22 00:00:00",
       "viewCount": 2352
     },
     {
@@ -113,7 +113,7 @@
       "title": "한복 입고 광한루빵 한 입! 겨울에도 유쾌한 남원 시간여행",
       "categoryIdx": 1,
       "category": "여행",
-      "publishedDate": "2024.01.21",
+      "publishedAt": "2024-01-21 00:00:00",
       "viewCount": 7350
     }
   ]

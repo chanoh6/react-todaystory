@@ -14,7 +14,7 @@
       "title": "빙판길이 미끄러운 이유, 아직 모른다?",
       "categoryIdx": 7,
       "category": "날씨",
-      "publishedDate": "2024.01.24",
+      "publishedAt": "2024-01-24 00:00:00",
       "viewCount": 51852
     },
     {
@@ -25,7 +25,7 @@
       "title": "겨울철, 눈만 오면 ‘결항될까’ 무서운 제주공항…그 이유는?",
       "categoryIdx": 7,
       "category": "날씨",
-      "publishedDate": "2024.01.23",
+      "publishedAt": "2024-01-23 00:00:00",
       "viewCount": 50454
     },
     {
@@ -36,7 +36,7 @@
       "title": "‘체감온도’ 영하 20℃… 냉동고 한파 속 체감온도 올리는 법은?",
       "categoryIdx": 7,
       "category": "날씨",
-      "publishedDate": "2024.01.25",
+      "publishedAt": "2024-01-25 00:00:00",
       "viewCount": 50147
     },
     {
@@ -47,7 +47,7 @@
       "title": "기상관측 사상 역대 가장 ‘뜨거웠던’ 2023년, 기후변화 실감",
       "categoryIdx": 7,
       "category": "날씨",
-      "publishedDate": "2024.01.30",
+      "publishedAt": "2024-01-30 00:00:00",
       "viewCount": 40442
     }
   ]

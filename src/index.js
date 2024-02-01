@@ -16,7 +16,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'view/:contentId', element: <ContentDetail /> },
-      // channel, category 명만 와야됨.
+      // for test
+      // @TODO: router 설정 다시
       { path: '/:pageId', element: <Contents /> },
     ],
   },

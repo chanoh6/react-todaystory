@@ -2,6 +2,7 @@ import style from '../styles/CardList.module.css';
 import CardL from '../components/CardL';
 import CardM from '../components/CardM';
 import CardS from '../components/CardS';
+import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 
 const getList = (type, contents) => {
   let result = '';
@@ -59,6 +60,10 @@ const getList = (type, contents) => {
 function CardList(props) {
   const { type, contentType } = props;
   const contents = require(`../json/${contentType}.json`).data;
+
+  // for test
+  const value = useTodaystoryApi();
+  console.log(value);
 
   return <ul className={style.list}>{getList(type, contents)}</ul>;
 }

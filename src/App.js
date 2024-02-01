@@ -1,10 +1,13 @@
-import './styles/App.css';
 import { Outlet } from 'react-router-dom';
+import { TodaystoryApiProvider } from './context/TodaystoryApiContext';
+import './styles/App.css';
 
 function App() {
   return (
     <>
-      <Outlet />
+      <TodaystoryApiProvider>
+        <Outlet />
+      </TodaystoryApiProvider>
     </>
   );
 }
