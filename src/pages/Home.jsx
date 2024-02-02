@@ -1,21 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import style from '../styles/Home.module.css';
-import Category from '../components/Category';
+import CategoryList from '../components/CategoryList';
 import CardList from '../components/CardList';
 import CardEditor from '../components/CardEditor';
-import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 
 function Home() {
   const navigate = useNavigate();
   const date = new Date();
   const month = date.getMonth() + 1;
   const day = date.getDate();
-
-  // for test
-  // contextApi 사용
-  const { todaystory } = useTodaystoryApi();
-  const result = todaystory.posts();
-  console.log(result);
 
   return (
     <>
@@ -42,17 +35,17 @@ function Home() {
         </div>
       </header>
 
-      <Category />
+      <CategoryList />
 
       <main>
         <section className={style.content__wrap}>
           <h1 className={style.title}>top stories</h1>
-          <CardList type={1} contentType="topStories" />
+          <CardList list={1} title="top" index={0} />
         </section>
 
         <section className={style.content__wrap}>
           <h1 className={style.title}>best stories</h1>
-          <CardList type={4} contentType="bestStories1" />
+          <CardList list={4} title="best" index={1} />
         </section>
 
         <section className={style.editor__wrap}>
@@ -65,7 +58,7 @@ function Home() {
 
         <section className={style.content__wrap}>
           <h1 className={style.title}>best stories</h1>
-          <CardList type={4} contentType="bestStories2" />
+          <CardList list={4} title="best" index={2} />
         </section>
 
         <section className={style.content__wrap}>
@@ -74,14 +67,14 @@ function Home() {
             <button
               className={style.btn__more}
               onClick={() => {
-                navigate(`/${1}`);
+                navigate(`/${6}`, { state: { idx: 6 } });
               }}
             >
               <p>더보기</p>
               <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
-          <CardList type={3} contentType={`contents${1}`} />
+          <CardList list={3} title="category" index={6} />
         </section>
 
         <section className={style.content__wrap}>
@@ -90,14 +83,14 @@ function Home() {
             <button
               className={style.btn__more}
               onClick={() => {
-                navigate(`/${2}`);
+                navigate(`/${12}`, { state: { idx: 12 } });
               }}
             >
               <p>더보기</p>
               <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
-          <CardList type={2} contentType={`contents${2}`} />
+          <CardList list={2} title="category" index={12} />
         </section>
 
         <section className={style.content__wrap}>
@@ -106,14 +99,14 @@ function Home() {
             <button
               className={style.btn__more}
               onClick={() => {
-                navigate(`/${3}`);
+                navigate(`/${16}`, { state: { idx: 16 } });
               }}
             >
               <p>더보기</p>
               <img src="../assets/btn_more.svg" alt="btn more" />
             </button>
           </div>
-          <CardList type={4} contentType={`contents${3}`} />
+          <CardList list={4} title="category" index={16} />
         </section>
       </main>
 

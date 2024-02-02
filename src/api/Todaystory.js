@@ -3,8 +3,34 @@ class Todaystory {
     this.apiClient = apiClient;
   }
 
-  async posts() {
-    return this.apiClient.posts().then((res) => res.data);
+  // @TODO: 정리 필요
+
+  async categoryList() {
+    return this.apiClient.categoryList().then((res) => res.data.data);
+  }
+
+  async category(idx) {
+    return this.apiClient.category(idx).then((res) => res.data.data);
+  }
+
+  async channelList() {
+    return this.apiClient.channelList().then((res) => res.data.data);
+  }
+
+  async channel(idx) {
+    return this.apiClient.channel(idx).then((res) => res.data.data);
+  }
+
+  async top() {
+    return this.apiClient.top().then((res) => res.data.data);
+  }
+
+  async best(type) {
+    return this.apiClient.best(type).then((res) => res.data.data);
+  }
+
+  async editors() {
+    return this.apiClient.editors().then((res) => res.data.data);
   }
 }
 

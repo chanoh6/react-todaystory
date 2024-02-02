@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Card.css';
 import style from '../styles/CardS.module.css';
 
-function CardS(props) {
-  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = props.content;
+const onErrorImg = (e) => {
+  e.target.src = '/assets/no_image.png';
+};
+
+const CardS = ({ content }) => {
+  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = content;
   const baseURL = 'https://picks.my/ko/s/';
   const navigate = useNavigate();
 
@@ -18,13 +22,13 @@ function CardS(props) {
       <div className={style.card__info}>
         <div className={style.card__title}>
           <div className="cp">
-            <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
+            <img src={`${baseURL}cp/${logo}`} alt="cp logo" onError={onErrorImg} />
             <p>{channel}</p>
           </div>
           <p className="title">{title}</p>
         </div>
         <figure className={style.thumbnail}>
-          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
+          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" onError={onErrorImg} />
         </figure>
       </div>
       <div className="card__more">
@@ -43,6 +47,6 @@ function CardS(props) {
       </div>
     </li>
   );
-}
+};
 
 export default CardS;

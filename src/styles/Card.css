@@ -21,6 +21,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
+  background-color: var(--color-light-gray);
 }
 
 .card__title {
@@ -42,6 +43,7 @@
   height: 16px;
   object-fit: contain;
   border-radius: 100%;
+  background-color: var(--color-light-gray);
 }
 
 .cp p {

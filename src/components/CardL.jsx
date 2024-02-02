@@ -2,8 +2,12 @@ import { formatAgo } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Card.css';
 
-function CardL(props) {
-  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = props.content;
+const onErrorImg = (e) => {
+  e.target.src = '/assets/no_image.png';
+};
+
+const CardL = ({ content }) => {
+  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = content;
   const baseURL = 'https://picks.my/ko/s/';
   const navigate = useNavigate();
 
@@ -16,11 +20,11 @@ function CardL(props) {
       }}
     >
       <figure className="thumbnail">
-        <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
+        <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" onError={onErrorImg} />
       </figure>
       <div className="card__title">
         <div className="cp">
-          <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
+          <img src={`${baseURL}cp/${logo}`} alt="cp logo" onError={onErrorImg} />
           <p>{channel}</p>
         </div>
         <p className="title">{title}</p>
@@ -41,6 +45,6 @@ function CardL(props) {
       </div>
     </li>
   );
-}
+};
 
 export default CardL;

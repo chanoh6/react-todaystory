@@ -44,6 +44,7 @@
   transform: translate(-50%, -50%);
   height: 100%;
   object-fit: contain;
+  background-color: var(--color-light-gray);
   margin: 0;
 }
 
