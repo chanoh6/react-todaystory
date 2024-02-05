@@ -12,7 +12,6 @@
 .thumbnail {
   width: 100%;
   aspect-ratio: 4/3;
-  margin: 0;
 }
 
 .thumbnail img {
@@ -77,6 +76,16 @@
   padding: 8px 14px;
 }
 
+.card__more img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  padding: 2px;
+}
+
 .date {
   display: flex;
   align-items: center;
@@ -88,16 +97,6 @@
   align-items: center;
   justify-content: flex-end;
   gap: 6px;
-}
-
-.like img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  padding: 2px;
 }
 
 .view {

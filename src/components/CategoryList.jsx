@@ -52,9 +52,9 @@ function CategoryList() {
               navigate(`/${cat.idx}`);
             }}
           >
-            <div className={style.icon}>
+            <figure className={style.icon}>
               <img src={`${baseImgURL}${cat.icon}`} alt="category icon" />
-            </div>
+            </figure>
             <p>{cat.name}</p>
           </li>
         ))}

@@ -31,8 +31,8 @@ class TodaystoryClient {
     return this.httpClient.get(`/topStories.json`);
   }
 
-  async best(type) {
-    return this.httpClient.get(`/bestStories${type}.json`);
+  async best(index) {
+    return this.httpClient.get(`/bestStories${index}.json`);
   }
 
   async editors() {

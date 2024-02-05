@@ -39,10 +39,10 @@ const CardS = ({ content }) => {
         </div>
         <div className="like">
           <div className="view">
-            <img src="./assets/icon_view.svg" alt="icon view" />
+            <img src="/assets/icon_view.svg" alt="icon view" />
             <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
           </div>
-          <img src="./assets/icon_like.svg" alt="icon like" />
+          <img src="/assets/icon_like.svg" alt="icon like" />
         </div>
       </div>
     </li>

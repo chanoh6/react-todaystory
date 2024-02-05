@@ -25,8 +25,8 @@ class Todaystory {
     return this.apiClient.top().then((res) => res.data.data);
   }
 
-  async best(type) {
-    return this.apiClient.best(type).then((res) => res.data.data);
+  async best(index) {
+    return this.apiClient.best(index).then((res) => res.data.data);
   }
 
   async editors() {

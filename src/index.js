@@ -18,7 +18,7 @@ const router = createBrowserRouter([
       { path: 'view/:contentId', element: <ContentDetail /> },
       // for test
       // @TODO: router 설정 다시
-      { path: '/:pageId', element: <Contents /> },
+      { path: ':pageId', element: <Contents /> },
     ],
   },
 ]);

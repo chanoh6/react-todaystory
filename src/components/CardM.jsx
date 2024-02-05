@@ -30,12 +30,8 @@ const CardM = ({ content }) => {
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
-        <div className="date">
-          <span id="publishedDate">{formatAgo(publishedAt, 'ko')}</span>
-        </div>
-        <div className="like">
-          <img src="./assets/icon_like.svg" alt="icon like" />
-        </div>
+        <span id="publishedDate">{formatAgo(publishedAt, 'ko')}</span>
+        <img src="/assets/icon_like.svg" alt="icon like" />
       </div>
     </li>
   );
