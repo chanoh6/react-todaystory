@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 import style from '../styles/ContentList.module.css';
+import { ReactComponent as ArrowRightIcon } from '../assets/icon/ArrowRight.svg';
 import CardL from './CardL';
 import CardM from './CardM';
 import CardS from './CardS';
@@ -11,7 +12,7 @@ function ContentList({ list, type, title, index, more }) {
   const navigate = useNavigate();
   const { todaystory } = useTodaystoryApi();
   const [contents, setContents] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -23,28 +24,27 @@ function ContentList({ list, type, title, index, more }) {
       try {
         switch (type) {
           case 'top':
-            todaystory.top().then((res) => setContents(res));
-            break;
+            return todaystory.top();
           case 'best':
-            todaystory.best(index).then((res) => setContents(res));
-            break;
+            return todaystory.best(index);
           case 'category':
-            todaystory.category(index).then((res) => setContents(res));
-            break;
+            return todaystory.category(index);
           case 'channel':
-            todaystory.channel(index).then((res) => setContents(res));
-            break;
+            return todaystory.channel(index);
           default:
             break;
         }
       } catch (e) {
         setError(e);
       }
-
-      setLoading(false);
     };
 
-    fetchData();
+    fetchData().then((res) => {
+      setContents(res);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    });
   }, []);
 
   const getList = () => {
@@ -97,25 +97,20 @@ function ContentList({ list, type, title, index, more }) {
       {loading || error || !contents ? (
         <ListSkeleton />
       ) : (
-        <section className={style.content__wrap}>
+        <>
           <div className={style.content__title}>
             <h1 className={style.title}>{title}</h1>
             {!more ? (
               ''
             ) : (
-              <button
-                className={style.btn__more}
-                onClick={() => {
-                  navigate(`/${index}`, { state: { idx: index } });
-                }}
-              >
+              <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { idx: index } })}>
                 <p>더보기</p>
-                <img src="../assets/btn_more.svg" alt="btn more" />
+                <ArrowRightIcon />
               </button>
             )}
           </div>
           <ul className={style.list}>{getList()}</ul>
-        </section>
+        </>
       )}
     </>
   );

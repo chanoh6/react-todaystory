@@ -76,7 +76,7 @@
   padding: 8px 14px;
 }
 
-.card__more img {
+/* .card__more svg {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,7 +84,7 @@
   height: 20px;
   object-fit: contain;
   padding: 2px;
-}
+} */
 
 .date {
   display: flex;
@@ -96,11 +96,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
 }
 
 .view {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
 }

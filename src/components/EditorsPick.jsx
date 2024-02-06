@@ -4,13 +4,15 @@ import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 import { formatAgo } from '../utils/date';
 import '../styles/Card.css';
 import style from '../styles/EditorsPick.module.css';
+import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
+import { ReactComponent as ViewIcon } from '../assets/icon/View.svg';
 import ListSkeleton from './ListSkeleton';
 
 function EditorsPick() {
   const navigate = useNavigate();
   const { todaystory } = useTodaystoryApi();
   const [contents, setContents] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = 'https://picks.my/ko/s/';
 
@@ -21,21 +23,25 @@ function EditorsPick() {
       setContents(null);
 
       try {
-        todaystory.editors().then((res) => setContents(res));
+        return todaystory.editors();
       } catch (e) {
         setError(e);
       }
-
-      setLoading(false);
     };
 
-    fetchData();
+    fetchData().then((res) => {
+      setContents(res);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    });
   }, []);
 
   return (
     <>
       {loading || error || !contents ? (
-        <ListSkeleton />
+        // <ListSkeleton />
+        ''
       ) : (
         <section className={style.content__wrap}>
           <hgroup className={style.content__title}>
@@ -44,9 +50,7 @@ function EditorsPick() {
           </hgroup>
           <article
             className={style.card}
-            onClick={() => {
-              navigate(`/view/${contents.idx}`);
-            }}
+            onClick={() => navigate(`/view/${contents.idx}`, { state: { content: contents } })}
           >
             <div className={style.card__img}>
               <figure className={style.thumbnail}>
@@ -71,10 +75,10 @@ function EditorsPick() {
               </div>
               <div className="like">
                 <div className="view">
-                  <img src="./assets/icon_view.svg" alt="icon view" />
+                  <ViewIcon width={16} height={16} fill={'#459AFF'} />
                   <p id="viewCount">{contents.viewCount}</p>
                 </div>
-                <img src="./assets/icon_like.svg" alt="icon like" />
+                <LikeIcon width={16} height={16} fill={'#459AFF'} />
               </div>
             </div>
           </article>

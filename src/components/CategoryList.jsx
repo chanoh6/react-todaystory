@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTodaystoryApi } from '../context/TodaystoryApiContext';
 import style from '../styles/CategoryList.module.css';
+import Skeleton from 'react-loading-skeleton';
 
-function CategoryList() {
-  const [category, setCategory] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+function Nav() {
   const { todaystory } = useTodaystoryApi();
+  const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const baseImgURL = './assets/category/icon_';
 
@@ -18,49 +19,42 @@ function CategoryList() {
       setCategory(null);
 
       try {
-        todaystory.categoryList().then((res) => setCategory(res));
+        return todaystory.categoryList();
       } catch (e) {
         setError(e);
       }
-
-      setLoading(false);
     };
-    fetchData();
+
+    fetchData().then((res) => {
+      setCategory(res);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    });
   }, []);
 
-  if (loading) return <ul className={style.list}>로딩중</ul>;
-  if (error) return <ul className={style.list}>에러가 발생했습니다</ul>;
-  if (!category) return null;
   return (
-    <nav>
-      <ul className={style.list}>
-        <li
-          key={0}
-          className={`${style.item} ${style.active}`}
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          <img src={`${baseImgURL}all.svg`} alt="category icon" />
-          <p>전체보기</p>
-        </li>
-        {category.map((cat, i) => (
-          <li
-            key={i + 1}
-            className={style.item}
-            onClick={() => {
-              navigate(`/${cat.idx}`);
-            }}
-          >
-            <figure className={style.icon}>
-              <img src={`${baseImgURL}${cat.icon}`} alt="category icon" />
-            </figure>
-            <p>{cat.name}</p>
+    <ul className={style.list}>
+      {loading || error || !category ? (
+        new Array(10).fill(1).map((_, i) => <Skeleton key={i} width={'100px'} className={style.item} />)
+      ) : (
+        <>
+          <li key={0} className={`${style.item} ${style.active}`} onClick={() => navigate('/')}>
+            <img src={`${baseImgURL}all.svg`} alt="category icon" />
+            <p>전체보기</p>
           </li>
-        ))}
-      </ul>
-    </nav>
+          {category.map((cat, i) => (
+            <li key={i + 1} className={style.item} onClick={() => navigate(`/${cat.idx}`)}>
+              <figure className={style.icon}>
+                <img src={`${baseImgURL}${cat.icon}`} alt="category icon" />
+              </figure>
+              <p>{cat.name}</p>
+            </li>
+          ))}
+        </>
+      )}
+    </ul>
   );
 }
 
-export default CategoryList;
+export default Nav;

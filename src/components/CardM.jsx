@@ -2,6 +2,7 @@ import { formatAgo } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Card.css';
 import style from '../styles/CardM.module.css';
+import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
 
 const onErrorImg = (e) => {
   e.target.src = '/assets/no_image.png';
@@ -13,16 +14,11 @@ const CardM = ({ content }) => {
   const navigate = useNavigate();
 
   return (
-    <li
-      className={style.card}
-      onClick={() => {
-        navigate(`/view/${idx}`);
-      }}
-    >
+    <li className={style.card} onClick={() => navigate(`/view/${idx}`, { state: { content: content } })}>
       <figure className="thumbnail">
         <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" onError={onErrorImg} />
       </figure>
-      <div className="card__title">
+      <div className={style.card__title}>
         <div className="cp">
           <img src={`${baseURL}cp/${logo}`} alt="cp logo" onError={onErrorImg} />
           <p>{channel}</p>
@@ -31,7 +27,7 @@ const CardM = ({ content }) => {
       </div>
       <div className="card__more">
         <span id="publishedDate">{formatAgo(publishedAt, 'ko')}</span>
-        <img src="/assets/icon_like.svg" alt="icon like" />
+        <LikeIcon width={16} height={16} fill={'#459AFF'} />
       </div>
     </li>
   );
