@@ -39,7 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "main": "index.js",
-  "author": "hwakk <x_xhwakk@naver.com>",
-  "license": "MIT"
+  "main": "index.js"
 }
