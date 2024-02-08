@@ -13,6 +13,7 @@ import NotFound from './pages/NotFound';
  * 1. router 경로 재설정
  * 2. .env 파일 활용하여 param 설정
  * */
+
 const router = createBrowserRouter([
   {
     path: '/',

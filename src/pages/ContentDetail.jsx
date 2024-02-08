@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import style from '../styles/ContentDetail.module.css';
 import ContentList from '../components/ContentList';
 import { ReactComponent as BackIcon } from '../assets/icon/Back.svg';
@@ -21,10 +21,9 @@ import DetailSkeleton from '../components/DetailSkeleton';
  */
 
 function ContentDetail() {
-  const [post, setPost] = useState(null);
+  const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { contentId } = useParams();
   const {
     state: { content },
   } = useLocation();
@@ -37,11 +36,11 @@ function ContentDetail() {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      setPost(null);
+      setInfo(null);
     };
 
     fetchData().then(() => {
-      setPost(true);
+      setInfo(true);
       setTimeout(() => {
         setLoading(false);
       }, 300);
@@ -70,7 +69,7 @@ function ContentDetail() {
         </div>
       </header>
       <main>
-        {loading || error || !post ? (
+        {loading || error || !info ? (
           <DetailSkeleton />
         ) : (
           <section className={style.content__wrap}>

@@ -8,6 +8,11 @@ import CardM from './CardM';
 import CardS from './CardS';
 import ListSkeleton from './ListSkeleton';
 
+/**
+ * @TODOS
+ * 1. hooks 분리
+ */
+
 function ContentList({ list, type, title, index, more }) {
   const navigate = useNavigate();
   const { todaystory } = useTodaystoryApi();

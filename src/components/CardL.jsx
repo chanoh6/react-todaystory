@@ -30,10 +30,8 @@ const CardL = ({ content }) => {
           <span id="category">{category}</span>
         </div>
         <div className="like">
-          <div className="view">
-            <ViewIcon width={16} height={16} fill={'#459AFF'} />
-            <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          </div>
+          <ViewIcon width={16} height={16} fill={'#459AFF'} />
+          <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
           <LikeIcon width={16} height={16} fill={'#459AFF'} />
         </div>
       </div>
