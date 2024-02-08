@@ -69,9 +69,9 @@ function EditorsPick() {
             </div>
             <div className="card__more">
               <div className="date">
-                <span id="publishedDate">{formatAgo(contents.publishedAt, 'ko')}</span>
+                <span id="publishedAt">{formatAgo(contents.publishedAt, 'ko')}</span>
                 <span>|</span>
-                <span id="contentCategory">{contents.category}</span>
+                <span id="category">{contents.category}</span>
               </div>
               <div className="like">
                 <div className="view">

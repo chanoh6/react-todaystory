@@ -1,15 +1,17 @@
 import axios from 'axios';
 
+/**
+ * @TODOS
+ * 1. .env 파일 활용하여 param 설정
+ * 2. api url 변경
+ * */
+
 class TodaystoryClient {
   constructor() {
     this.httpClient = axios.create({
-      // for test
-      // @TODO: .env 파일 활용하여 param 설정
       baseURL: '/json',
     });
   }
-
-  // @TODO: api url 변경
 
   async categoryList() {
     return this.httpClient.get(`/categoryList.json`);

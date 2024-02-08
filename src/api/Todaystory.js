@@ -3,7 +3,9 @@ class Todaystory {
     this.apiClient = apiClient;
   }
 
-  // @TODO: 정리 필요
+  /**
+   * @TODOS : 정리 필요
+   */
 
   async categoryList() {
     return this.apiClient.categoryList().then((res) => res.data.data);

@@ -8,6 +8,11 @@ import ContentDetail from './pages/ContentDetail';
 import Contents from './pages/Contents';
 import NotFound from './pages/NotFound';
 
+/**
+ * @TODOS
+ * 1. router 경로 재설정
+ * 2. .env 파일 활용하여 param 설정
+ * */
 const router = createBrowserRouter([
   {
     path: '/',
@@ -16,8 +21,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'view/:contentId', element: <ContentDetail /> },
-      // for test
-      // @TODO: router 설정 다시
       { path: ':pageId', element: <Contents /> },
     ],
   },

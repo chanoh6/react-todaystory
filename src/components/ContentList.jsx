@@ -14,6 +14,12 @@ function ContentList({ list, type, title, index, more }) {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const moreButton = (
+    <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { title } })}>
+      <p>더보기</p>
+      <ArrowRightIcon />
+    </button>
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,26 +98,15 @@ function ContentList({ list, type, title, index, more }) {
     }
   };
 
+  if (loading || error || !contents) return <ListSkeleton />;
+
   return (
     <>
-      {loading || error || !contents ? (
-        <ListSkeleton />
-      ) : (
-        <>
-          <div className={style.content__title}>
-            <h1 className={style.title}>{title}</h1>
-            {!more ? (
-              ''
-            ) : (
-              <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { idx: index } })}>
-                <p>더보기</p>
-                <ArrowRightIcon />
-              </button>
-            )}
-          </div>
-          <ul className={style.list}>{getList()}</ul>
-        </>
-      )}
+      <div className={style.content__title}>
+        <h1 className={style.title}>{title}</h1>
+        {!more ? '' : moreButton}
+      </div>
+      <ul className={style.list}>{getList()}</ul>
     </>
   );
 }

@@ -5,17 +5,15 @@ import style from '../styles/CardS.module.css';
 import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
 import { ReactComponent as ViewIcon } from '../assets/icon/View.svg';
 
-const onErrorImg = (e) => {
-  e.target.src = '/assets/no_image.png';
-};
+const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 const CardS = ({ content }) => {
-  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = content;
-  const baseURL = 'https://picks.my/ko/s/';
   const navigate = useNavigate();
+  const baseURL = 'https://picks.my/ko/s/';
+  const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
 
   return (
-    <li className="card" onClick={() => navigate(`/view/${idx}`, { state: { content: content } })}>
+    <li className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
       <div className={style.card__info}>
         <div className={style.card__title}>
           <div className="cp">
@@ -30,9 +28,9 @@ const CardS = ({ content }) => {
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedDate">{formatAgo(publishedAt, 'ko')}</span>
+          <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
           <span>|</span>
-          <span id="contentCategory">{category}</span>
+          <span id="category">{category}</span>
         </div>
         <div className="like">
           <div className="view">

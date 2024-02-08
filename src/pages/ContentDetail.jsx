@@ -11,24 +11,26 @@ import DetailSkeleton from '../components/DetailSkeleton';
 
 /**
  * @TODOS
- * 1) 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
- * 2) 좋아요 기능 추가
- * 3) 공유 기능 추가
- * 4) 더보기 메뉴 추가
- * 5) 에디터 스타일
- * 6) 아이콘 통합 정리
+ * 1. 콘텐츠 상세 api 연결
+ * 2. 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
+ * 3. 좋아요 기능 추가
+ * 4. 공유 기능 추가
+ * 5. 더보기 메뉴 추가
+ * 6. 에디터 스타일
+ * 7. 아이콘 통합 정리
  */
 
 function ContentDetail() {
-  // for test
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { contentId } = useParams();
   const {
     state: { content },
   } = useLocation();
   const navigate = useNavigate();
-  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = content;
+  // const { idx, thumbnail, logo, channel, title, , category, publishedAt, viewCount } = content;
+  const { thumbnail, channelIdx, channel, title, category, publishedAt } = content;
   const baseURL = 'https://picks.my/ko/s/';
 
   useEffect(() => {
@@ -51,16 +53,16 @@ function ContentDetail() {
       <header className={style.header}>
         <div className={style.header__btn}>
           <button className={style.icon} onClick={() => navigate(-1)}>
-            <BackIcon style={{ marginRight: '1px' }} />
+            <BackIcon style={{ marginRight: '2px' }} />
           </button>
           <button className={style.icon}>
             <LikeIcon width={14} height={14} fill="black" />
           </button>
         </div>
-        <h1 onClick={() => navigate(`/${channel}`)}>{channel}</h1>
+        <h1 onClick={() => navigate(`/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
         <div className={style.header__btn}>
           <button className={style.icon}>
-            <ShareIcon style={{ marginBottom: '1px' }} />
+            <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
           <button className={style.icon}>
             <MoreIcon />
@@ -107,7 +109,7 @@ function ContentDetail() {
               </p>
             </div>
             <div className={style.content__more}>
-              <button className={style.more} onClick={() => navigate(`/${channel}`)}>
+              <button className={style.more} onClick={() => navigate(`/${channelIdx}`, { state: { title: channel } })}>
                 <span>&lt;{channel}&gt; 최신 기사 읽기</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>

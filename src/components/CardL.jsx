@@ -4,17 +4,15 @@ import '../styles/Card.css';
 import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
 import { ReactComponent as ViewIcon } from '../assets/icon/View.svg';
 
-const onErrorImg = (e) => {
-  e.target.src = '/assets/no_image.png';
-};
+const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 const CardL = ({ content }) => {
-  const { idx, thumbnail, logo, channel, title, categoryIdx, category, publishedAt, viewCount } = content;
-  const baseURL = 'https://picks.my/ko/s/';
   const navigate = useNavigate();
+  const baseURL = 'https://picks.my/ko/s/';
+  const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
 
   return (
-    <li data-idx={idx} className="card" onClick={() => navigate(`/view/${idx}`, { state: { content: content } })}>
+    <li data-idx={idx} className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
       <figure className="thumbnail">
         <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" onError={onErrorImg} />
       </figure>
@@ -27,9 +25,9 @@ const CardL = ({ content }) => {
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedDate">{formatAgo(publishedAt, 'ko')}</span>
+          <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
           <span>|</span>
-          <span id="contentCategory">{category}</span>
+          <span id="category">{category}</span>
         </div>
         <div className="like">
           <div className="view">
