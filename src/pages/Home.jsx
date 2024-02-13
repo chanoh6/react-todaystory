@@ -1,10 +1,12 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import style from '../styles/Home.module.css';
-import { ReactComponent as SearchIcon } from '../assets/icon/Search.svg';
-import { ReactComponent as MenuIcon } from '../assets/icon/Menu.svg';
-import CategoryList from '../components/CategoryList';
-import ContentList from '../components/ContentList';
-import EditorsPick from '../components/EditorsPick';
+import style from 'styles/Home.module.css';
+import { ReactComponent as SearchIcon } from 'assets/icon/Search.svg';
+import { ReactComponent as MenuIcon } from 'assets/icon/Menu.svg';
+import CategoryList from 'components/CategoryList';
+import ContentList from 'components/ContentList';
+import EditorsPick from 'components/EditorsPick';
+import Menu from 'components/Modal/Menu';
 
 /**
  * @TODOS
@@ -16,9 +18,11 @@ import EditorsPick from '../components/EditorsPick';
 
 function Home() {
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
   const date = new Date();
   const month = date.getMonth() + 1;
   const day = date.getDate();
+  const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
 
   return (
     <>
@@ -30,17 +34,24 @@ function Home() {
           </h2>
         </hgroup>
         <div className={style.menu}>
-          <figure className={style.icon}>
+          <button className={style.icon}>
             <SearchIcon width={20} height={20} fill={'black'} />
-          </figure>
-          <figure className={style.icon}>
+          </button>
+          <button className={style.icon} onClick={() => setShowMenu(true)}>
             <MenuIcon width={20} height={20} fill={'black'} />
-          </figure>
+          </button>
+          {showMenu && <Menu onClose={() => setShowMenu(false)} />}
         </div>
       </header>
 
       <nav className={style.nav}>
         <CategoryList />
+        <div className={style.nav__ad}>
+          <button className={style.ad__item} onClick={() => navigate('/')}>
+            <img src={`${baseImgURL}fortune.svg`} alt="category icon" />
+            <p>오늘의 별자리 운세</p>
+          </button>
+        </div>
       </nav>
 
       <main>

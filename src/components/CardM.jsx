@@ -1,14 +1,14 @@
-import { formatAgo } from '../utils/date';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Card.css';
-import style from '../styles/CardM.module.css';
-import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
+import { formatAgo } from 'utils/date';
+import 'styles/Card.css';
+import style from 'styles/CardM.module.css';
+import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 const CardM = ({ content }) => {
   const navigate = useNavigate();
-  const baseURL = 'https://picks.my/ko/s/';
+  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, publishedAt } = content;
 
   return (

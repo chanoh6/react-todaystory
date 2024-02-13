@@ -1,4 +1,4 @@
-import style from '../styles/ContentDetail.module.css';
+import style from 'styles/ContentDetail.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 export default function DetailSkeleton() {

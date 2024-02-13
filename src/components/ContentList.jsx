@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from '../context/TodaystoryApiContext';
-import style from '../styles/ContentList.module.css';
-import { ReactComponent as ArrowRightIcon } from '../assets/icon/ArrowRight.svg';
-import CardL from './CardL';
-import CardM from './CardM';
-import CardS from './CardS';
-import ListSkeleton from './ListSkeleton';
+import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import CardL from 'components/CardL';
+import CardM from 'components/CardM';
+import CardS from 'components/CardS';
+import ListSkeleton from 'components/ListSkeleton';
+import style from 'styles/ContentList.module.css';
+import { ReactComponent as ArrowRightIcon } from 'assets/icon/ArrowRight.svg';
 
 /**
  * @TODOS
@@ -22,7 +22,7 @@ function ContentList({ list, type, title, index, more }) {
   const moreButton = (
     <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { title } })}>
       <p>더보기</p>
-      <ArrowRightIcon />
+      <ArrowRightIcon width={6} height={10} />
     </button>
   );
 

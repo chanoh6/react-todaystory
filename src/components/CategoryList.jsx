@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from '../context/TodaystoryApiContext';
-import style from '../styles/CategoryList.module.css';
+import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import style from 'styles/CategoryList.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 function CategoryList() {
+  const navigate = useNavigate();
   const { todaystory } = useTodaystoryApi();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
-  const baseImgURL = './assets/category/icon_';
+  const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
 
   useEffect(() => {
     const fetchData = async () => {

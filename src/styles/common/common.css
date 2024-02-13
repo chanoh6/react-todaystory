@@ -1,6 +1,6 @@
-@import url('./normalize.css');
-@import url('./colors.css');
-@import url('./font.css');
+@import url('styles/common/normalize.css');
+@import url('styles/common/colors.css');
+@import url('styles/common/font.css');
 
 * {
   font-family: 'Pretendard', sans-serif;
@@ -24,6 +24,10 @@ body {
   margin: 0 auto;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 figure {
   padding: 0;
   margin: 0;
@@ -41,6 +45,7 @@ button {
   background: none;
   padding: 0;
   margin: 0;
+  color: var(--color-black);
 }
 
 a {

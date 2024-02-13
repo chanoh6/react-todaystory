@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
-import TodaystoryClient from '../api/TodaystoryClient';
-import Todaystory from '../api/Todaystory';
+import TodaystoryClient from 'api/TodaystoryClient';
+import Todaystory from 'api/Todaystory';
 
 const client = new TodaystoryClient();
 const todaystory = new Todaystory(client);

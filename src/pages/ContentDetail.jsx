@@ -1,13 +1,13 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import style from '../styles/ContentDetail.module.css';
-import ContentList from '../components/ContentList';
-import { ReactComponent as BackIcon } from '../assets/icon/Back.svg';
-import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
-import { ReactComponent as ShareIcon } from '../assets/icon/Share.svg';
-import { ReactComponent as MoreIcon } from '../assets/icon/More.svg';
-import { ReactComponent as ArrowTopIcon } from '../assets/icon/ArrowTop.svg';
 import { useEffect, useState } from 'react';
-import DetailSkeleton from '../components/DetailSkeleton';
+import { useLocation, useNavigate } from 'react-router-dom';
+import ContentList from 'components/ContentList';
+import DetailSkeleton from 'components/DetailSkeleton';
+import style from 'styles/ContentDetail.module.css';
+import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
+import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
+import { ReactComponent as ShareIcon } from 'assets/icon/Share.svg';
+import { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
+import { ReactComponent as ArrowTopIcon } from 'assets/icon/ArrowTop.svg';
 
 /**
  * @TODOS

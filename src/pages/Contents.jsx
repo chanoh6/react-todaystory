@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useTodaystoryApi } from '../context/TodaystoryApiContext';
-import style from '../styles/Contents.module.css';
-import { ReactComponent as BackIcon } from '../assets/icon/Back.svg';
-import { ReactComponent as MoreIcon } from '../assets/icon/More.svg';
-import CardS from '../components/CardS';
+import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import style from 'styles/Contents.module.css';
+import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
+import { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
+import CardS from 'components/CardS';
 
 function Contents() {
   const { pageId } = useParams();
@@ -39,8 +39,6 @@ function Contents() {
     });
   }, []);
 
-  if (loading || error || !contents) return null;
-
   return (
     <>
       <header className={style.header}>
@@ -53,13 +51,17 @@ function Contents() {
         </button>
       </header>
       <main>
-        <section className={style.content__wrap}>
-          <ul className={style.list}>
-            {contents.map((content, i) => (
-              <CardS key={i} content={content} />
-            ))}
-          </ul>
-        </section>
+        {loading || error || !contents ? (
+          ''
+        ) : (
+          <section className={style.content__wrap}>
+            <ul className={style.list}>
+              {contents.map((content, i) => (
+                <CardS key={i} content={content} />
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
     </>
   );

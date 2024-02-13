@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.css';
-import App from './App';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home';
-import ContentDetail from './pages/ContentDetail';
-import Contents from './pages/Contents';
-import NotFound from './pages/NotFound';
+import 'styles/index.css';
+import App from 'App';
+import Home from 'pages/Home';
+import ContentDetail from 'pages/ContentDetail';
+import Contents from 'pages/Contents';
+import NotFound from 'pages/NotFound';
 
 /**
  * @TODOS

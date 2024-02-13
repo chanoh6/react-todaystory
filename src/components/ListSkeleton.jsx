@@ -1,6 +1,6 @@
-import style from '../styles/ContentList.module.css';
-import '../styles/Card.css';
-import card from '../styles/CardS.module.css';
+import style from 'styles/ContentList.module.css';
+import 'styles/Card.css';
+import card from 'styles/CardS.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 

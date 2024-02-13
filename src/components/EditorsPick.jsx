@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from '../context/TodaystoryApiContext';
-import { formatAgo } from '../utils/date';
-import '../styles/Card.css';
-import style from '../styles/EditorsPick.module.css';
-import { ReactComponent as LikeIcon } from '../assets/icon/Like.svg';
-import { ReactComponent as ViewIcon } from '../assets/icon/View.svg';
+import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import { formatAgo } from 'utils/date';
+import 'styles/Card.css';
+import style from 'styles/EditorsPick.module.css';
+import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
+import { ReactComponent as ViewIcon } from 'assets/icon/View.svg';
 
 function EditorsPick() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function EditorsPick() {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const baseURL = 'https://picks.my/ko/s/';
+  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
 
   useEffect(() => {
     const fetchData = async () => {

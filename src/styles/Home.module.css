@@ -52,6 +52,23 @@
   z-index: 10;
 }
 
+.nav__ad {
+  padding: 0 15px 4px 15px;
+}
+
+.ad__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.ad__item p {
+  font-size: 18px;
+  font-weight: 800;
+}
+
 .content__wrap {
   display: flex;
   flex-direction: column;
