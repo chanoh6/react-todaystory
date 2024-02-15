@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import { useApi } from 'context/ApiContext';
 import CardL from 'components/CardL';
 import CardM from 'components/CardM';
 import CardS from 'components/CardS';
@@ -15,7 +15,7 @@ import { ReactComponent as ArrowRightIcon } from 'assets/icon/ArrowRight.svg';
 
 function ContentList({ list, type, title, index, more }) {
   const navigate = useNavigate();
-  const { todaystory } = useTodaystoryApi();
+  const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,13 +35,13 @@ function ContentList({ list, type, title, index, more }) {
       try {
         switch (type) {
           case 'top':
-            return todaystory.top();
+            return api.top();
           case 'best':
-            return todaystory.best(index);
+            return api.best(index);
           case 'category':
-            return todaystory.category(index);
+            return api.category(index);
           case 'channel':
-            return todaystory.channel(index);
+            return api.channel(index);
           default:
             break;
         }

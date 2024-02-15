@@ -28,20 +28,20 @@ function Menu({ onClose }) {
         <div className={style.menu}>
           <ul>
             <li className={style.menu__item}>
-              <LikeIcon width={20} height={20} fill={'var(--color-blue)'} />
+              <LikeIcon width={18} height={18} fill={'var(--color-blue)'} />
               <p>공감한 콘텐츠</p>
             </li>
             <li className={style.menu__item}>
-              <ClockIcon width={20} height={20} fill={'var(--color-purple)'} />
+              <ClockIcon width={18} height={18} fill={'var(--color-purple)'} />
               <p>최근 본 콘텐츠</p>
             </li>
           </ul>
           <div className={style.menu__drop}>
-            <button className={style.menu__drop} onClick={() => setShowCategory(!showCategory)}>
+            <button onClick={() => setShowCategory(!showCategory)}>
               <p>카테고리</p>
               <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showCategory })} />
             </button>
-            <ul className={cn(style.drop__menu, { [style.active]: showCategory })}>
+            <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
               <li className={style.drop__item}>
                 <figure>
                   <img src={`${process.env.REACT_APP_CATEGORY_ICON}all.svg`} alt="category icon" />
@@ -51,11 +51,11 @@ function Menu({ onClose }) {
             </ul>
           </div>
           <div className={style.menu__drop}>
-            <button className={style.menu__drop} onClick={() => setShowChannel(!showChannel)}>
+            <button onClick={() => setShowChannel(!showChannel)}>
               <p>채널</p>
               <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showChannel })} />
             </button>
-            <ul className={cn(style.drop__menu, { [style.active]: showChannel })}></ul>
+            <ul className={cn(style.drop__list, { [style.active]: showChannel })}></ul>
           </div>
         </div>
         <div className={style.footer}>

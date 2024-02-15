@@ -60,11 +60,6 @@
   font-weight: 600;
 }
 
-/* .menu__drop {
-  position: relative;
-  overflow: hidden;
-} */
-
 .menu__drop button {
   display: flex;
   justify-content: space-between;
@@ -90,49 +85,15 @@
   font-weight: 700;
 }
 
-/* .drop__menu {
-  position: absolute;
-  top: 37px;
+.drop__list {
+  display: none;
   margin-top: 8px;
-  animation: slideup 0.4s ease-in-out;
-
-  &.active {
-    animation: slidedown 0.4s ease-in-out;
-  }
-} */
-
-.drop__menu {
-  visibility: hidden;
-  max-height: 0;
-  margin-top: 8px;
-  overflow: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out, max-height 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  transition: all 0.4s ease-in-out;
 
   &.active {
-    visibility: visible;
-    max-height: 100%;
+    display: block;
     opacity: 1;
-  }
-}
-
-@keyframes slideup {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes slidedown {
-  0% {
-    transform: translateY(-100%);
-  }
-
-  100% {
-    transform: translateY(0);
   }
 }
 

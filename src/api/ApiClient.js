@@ -6,7 +6,7 @@ import axios from 'axios';
  * 2. api url 변경
  * */
 
-class TodaystoryClient {
+class ApiClient {
   constructor() {
     this.httpClient = axios.create({
       baseURL: '/json',
@@ -42,4 +42,4 @@ class TodaystoryClient {
   }
 }
 
-export default TodaystoryClient;
+export default ApiClient;

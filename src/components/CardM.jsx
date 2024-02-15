@@ -25,7 +25,7 @@ const CardM = ({ content }) => {
       </div>
       <div className="card__more">
         <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
-        <LikeIcon width={16} height={16} fill={'#459AFF'} />
+        <LikeIcon width={16} height={16} fill={'var(--color-blue)'} />
       </div>
     </li>
   );

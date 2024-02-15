@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import { useApi } from 'context/ApiContext';
 import style from 'styles/CategoryList.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 function CategoryList() {
   const navigate = useNavigate();
-  const { todaystory } = useTodaystoryApi();
+  const { api } = useApi();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ function CategoryList() {
       setCategory(null);
 
       try {
-        return todaystory.categoryList();
+        return api.categoryList();
       } catch (e) {
         setError(e);
       }

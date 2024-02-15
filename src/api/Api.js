@@ -1,4 +1,4 @@
-class Todaystory {
+class Api {
   constructor(apiClient) {
     this.apiClient = apiClient;
   }
@@ -36,4 +36,4 @@ class Todaystory {
   }
 }
 
-export default Todaystory;
+export default Api;

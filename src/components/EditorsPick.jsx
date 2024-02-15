@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import { useApi } from 'context/ApiContext';
 import { formatAgo } from 'utils/date';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
@@ -9,7 +9,7 @@ import { ReactComponent as ViewIcon } from 'assets/icon/View.svg';
 
 function EditorsPick() {
   const navigate = useNavigate();
-  const { todaystory } = useTodaystoryApi();
+  const { api } = useApi();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,7 +22,7 @@ function EditorsPick() {
       setContent(null);
 
       try {
-        return todaystory.editors();
+        return api.editors();
       } catch (e) {
         setError(e);
       }
@@ -67,9 +67,9 @@ function EditorsPick() {
             <span id="category">{content.category}</span>
           </div>
           <div className="like">
-            <ViewIcon width={16} height={16} fill={'#459AFF'} />
+            <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
             <p id="viewCount">{content.viewCount}</p>
-            <LikeIcon width={16} height={16} fill={'#459AFF'} />
+            <LikeIcon width={16} height={16} fill={'var(--color-blue)'} />
           </div>
         </div>
       </article>

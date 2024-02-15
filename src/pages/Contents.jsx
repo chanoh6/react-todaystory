@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useTodaystoryApi } from 'context/TodaystoryApiContext';
+import { useApi } from 'context/ApiContext';
 import style from 'styles/Contents.module.css';
 import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
 import { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
@@ -12,7 +12,7 @@ function Contents() {
     state: { title },
   } = useLocation();
   const navigate = useNavigate();
-  const { todaystory } = useTodaystoryApi();
+  const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,7 @@ function Contents() {
 
       try {
         // for test
-        return todaystory.category(6);
+        return api.category(6);
       } catch (e) {
         setError(e);
       }
