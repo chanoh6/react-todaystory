@@ -76,3 +76,7 @@
   /* padding: 36px 15px 25px 15px; */
   padding: 36px 15px;
 }
+
+.content__wrap.top {
+  padding: 28px 15px 36px 15px;
+}

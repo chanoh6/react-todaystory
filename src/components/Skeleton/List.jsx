@@ -1,10 +1,10 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import style from 'styles/ContentList.module.css';
 import 'styles/Card.css';
 import card from 'styles/CardS.module.css';
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
 
-function ListSkeleton() {
+export default function List() {
   return (
     <>
       <Skeleton className={style.title} width={'150px'}></Skeleton>
@@ -30,5 +30,3 @@ function ListSkeleton() {
     </>
   );
 }
-
-export default ListSkeleton;

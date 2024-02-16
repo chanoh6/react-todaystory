@@ -1,0 +1,36 @@
+{
+  "header": {
+    "logo": "오늘의 스토리",
+    "date": "{{val, datetime}}"
+  },
+  "menu": {
+    "title": "메뉴",
+    "favorites": "공감한 콘텐츠",
+    "history": "최근 본 콘텐츠",
+    "category": "카테고리",
+    "channel": "채널",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
+    "copyright": "Copyright ®{{year}} Weathernews Inc. All rights reserved"
+  },
+  "nav": {
+    "fortune": "오늘의 별자리 운세",
+    "all": "전체보기"
+  },
+  "main": {
+    "top": "top stories",
+    "best": "best stories",
+    "more": "더보기"
+  },
+  "detail": {
+    "more-latest": "<{{channel}}> 최신 기사 읽기",
+    "more-from": "더 알아보기"
+  },
+  "editor": {
+    "title": "editor's pick",
+    "sub-title": "{{sentence}}"
+  },
+  "card": {
+    "date": "{{val, relativetime}}"
+  }
+}

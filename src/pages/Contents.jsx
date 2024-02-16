@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
+import { CardS } from 'components';
+import { BackIcon, MoreIcon } from 'assets';
 import style from 'styles/Contents.module.css';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
-import { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
-import CardS from 'components/CardS';
 
 function Contents() {
   const { pageId } = useParams();

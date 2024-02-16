@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'context/ApiContext';
 import { formatAgo } from 'utils/date';
+import { LikeUnfilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
-import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
-import { ReactComponent as ViewIcon } from 'assets/icon/View.svg';
 
 function EditorsPick() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
+
+  // for test
+  const subTitle = 'Notable content';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,8 +45,8 @@ function EditorsPick() {
   return (
     <section className={style.content__wrap}>
       <hgroup className={style.content__title}>
-        <h1>editors' pick</h1>
-        <h2>주목할 만한 콘텐츠</h2>
+        <h1>{t(`editor.title`)}</h1>
+        <h2>{t(`editor.sub-title`, { sentence: subTitle })}</h2>
       </hgroup>
       <article className={style.card} onClick={() => navigate(`/view/${content.idx}`, { state: { content } })}>
         <div className={style.card__img}>
@@ -69,7 +73,7 @@ function EditorsPick() {
           <div className="like">
             <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
             <p id="viewCount">{content.viewCount}</p>
-            <LikeIcon width={16} height={16} fill={'var(--color-blue)'} />
+            <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
           </div>
         </div>
       </article>

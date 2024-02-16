@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
+import { LikeUnfilledIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/CardM.module.css';
-import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
@@ -25,7 +25,7 @@ const CardM = ({ content }) => {
       </div>
       <div className="card__more">
         <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
-        <LikeIcon width={16} height={16} fill={'var(--color-blue)'} />
+        <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
       </div>
     </li>
   );

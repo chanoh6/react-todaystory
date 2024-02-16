@@ -1,0 +1,36 @@
+{
+  "header": {
+    "logo": "今日のストーリー",
+    "date": "{{val, datetime}}"
+  },
+  "menu": {
+    "title": "メニュー",
+    "favorites": "共感した記事",
+    "history": "最近見た記事",
+    "category": "カテゴリー",
+    "channel": "水路",
+    "privacy": "プライバシー規約",
+    "terms": "利用規約",
+    "copyright": "Copyright ®{{year}} Weathernews Inc. All rights reserved"
+  },
+  "nav": {
+    "fortune": "今日の星座占い",
+    "all": "すべて表示"
+  },
+  "main": {
+    "top": "top stories",
+    "best": "best stories",
+    "more": "もっと見る"
+  },
+  "detail": {
+    "more-latest": "<{{channel}}> 最新の記事を読むこと",
+    "more-from": "もっと調べよう"
+  },
+  "editor": {
+    "title": "editor's pick",
+    "sub-title": "{{sentence}}"
+  },
+  "card": {
+    "date": "{{val, relativetime}}"
+  }
+}

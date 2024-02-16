@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
+import { LikeUnfilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
-import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
-import { ReactComponent as ViewIcon } from 'assets/icon/View.svg';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
@@ -32,7 +31,7 @@ const CardL = ({ content }) => {
         <div className="like">
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          <LikeIcon width={16} height={16} fill={'var(--color-blue)'} />
+          <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
         </div>
       </div>
     </li>

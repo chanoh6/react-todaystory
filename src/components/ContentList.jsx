@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'context/ApiContext';
-import CardL from 'components/CardL';
-import CardM from 'components/CardM';
-import CardS from 'components/CardS';
-import ListSkeleton from 'components/ListSkeleton';
+import { CardL, CardM, CardS, ListSkeleton } from 'components';
+import { ArrowRightIcon } from 'assets';
 import style from 'styles/ContentList.module.css';
-import { ReactComponent as ArrowRightIcon } from 'assets/icon/ArrowRight.svg';
 
 /**
  * @TODOS
@@ -15,13 +13,14 @@ import { ReactComponent as ArrowRightIcon } from 'assets/icon/ArrowRight.svg';
 
 function ContentList({ list, type, title, index, more }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const moreButton = (
     <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { title } })}>
-      <p>더보기</p>
+      <p>{t(`main.more`)}</p>
       <ArrowRightIcon width={6} height={10} />
     </button>
   );

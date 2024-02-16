@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'context/ApiContext';
 import style from 'styles/CategoryList.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 function CategoryList() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,7 +49,7 @@ function CategoryList() {
     <ul className={style.list}>
       <li key={0} className={`${style.item} ${style.active}`} onClick={() => navigate('/')}>
         <img src={`${baseImgURL}all.svg`} alt="category icon" />
-        <p>전체보기</p>
+        <p>{t(`nav.all`)}</p>
       </li>
       {category.map((cat, i) => (
         <li key={i + 1} className={style.item} onClick={() => navigate(`/${cat.idx}`, { state: { title: cat.name } })}>

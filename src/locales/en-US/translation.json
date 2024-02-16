@@ -1,0 +1,36 @@
+{
+  "header": {
+    "logo": "Todaystory",
+    "date": "{{val, datetime}}"
+  },
+  "menu": {
+    "title": "Menu",
+    "favorites": "Favorites",
+    "history": "History",
+    "category": "Category",
+    "channel": "Channel",
+    "privacy": "Privacy Policy",
+    "terms": "Terms and Conditions",
+    "copyright": "Copyright ®{{year}} Weathernews Inc. All rights reserved"
+  },
+  "nav": {
+    "fortune": "Today's horoscope",
+    "all": "View all"
+  },
+  "main": {
+    "top": "top stories",
+    "best": "best stories",
+    "more": "more"
+  },
+  "detail": {
+    "more-latest": "<{{channel}}> read more latest",
+    "more-from": "more from"
+  },
+  "editor": {
+    "title": "editor's pick",
+    "sub-title": "{{sentence}}"
+  },
+  "card": {
+    "date": "{{val, relativetime}}"
+  }
+}

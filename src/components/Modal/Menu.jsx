@@ -1,13 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { CloseIcon, LikeFilledIcon, ClockIcon, ArrowRightIcon } from 'assets';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
-import { ReactComponent as CloseIcon } from 'assets/icon/Close.svg';
-import { ReactComponent as LikeIcon } from 'assets/icon/LikeFilled.svg';
-import { ReactComponent as ClockIcon } from 'assets/icon/Clock.svg';
-import { ReactComponent as ArrowRightIcon } from 'assets/icon/ArrowRight.svg';
 
 function Menu({ onClose }) {
+  const { t } = useTranslation();
   const [showCategory, setShowCategory] = useState(false);
   const [showChannel, setShowChannel] = useState(false);
   const year = new Date().getFullYear();
@@ -20,7 +19,7 @@ function Menu({ onClose }) {
     <Modal>
       <div className={style.wrap}>
         <div className={style.header}>
-          <h1>메뉴</h1>
+          <h1>{t(`menu.title`)}</h1>
           <button onClick={handleClose}>
             <CloseIcon width={16} height={16} fill={'black'} />
           </button>
@@ -28,17 +27,17 @@ function Menu({ onClose }) {
         <div className={style.menu}>
           <ul>
             <li className={style.menu__item}>
-              <LikeIcon width={18} height={18} fill={'var(--color-blue)'} />
-              <p>공감한 콘텐츠</p>
+              <LikeFilledIcon width={18} height={18} fill={'var(--color-blue)'} />
+              <p>{t(`menu.favorites`)}</p>
             </li>
             <li className={style.menu__item}>
               <ClockIcon width={18} height={18} fill={'var(--color-purple)'} />
-              <p>최근 본 콘텐츠</p>
+              <p>{t(`menu.history`)}</p>
             </li>
           </ul>
           <div className={style.menu__drop}>
             <button onClick={() => setShowCategory(!showCategory)}>
-              <p>카테고리</p>
+              <p>{t(`menu.category`)}</p>
               <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showCategory })} />
             </button>
             <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
@@ -46,13 +45,13 @@ function Menu({ onClose }) {
                 <figure>
                   <img src={`${process.env.REACT_APP_CATEGORY_ICON}all.svg`} alt="category icon" />
                 </figure>
-                <p>전체보기</p>
+                <p>{t(`nav.all`)}</p>
               </li>
             </ul>
           </div>
           <div className={style.menu__drop}>
             <button onClick={() => setShowChannel(!showChannel)}>
-              <p>채널</p>
+              <p>{t(`menu.channel`)}</p>
               <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showChannel })} />
             </button>
             <ul className={cn(style.drop__list, { [style.active]: showChannel })}></ul>
@@ -60,9 +59,9 @@ function Menu({ onClose }) {
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
-            <span>개인정보처리방침</span>|<span>이용약관</span>
+            <span>{t(`menu.privacy`)}</span>|<span>{t(`menu.terms`)}</span>
           </div>
-          <p>Copyright ®{year} Weathernews Inc. All rights reserved</p>
+          <p>{t(`menu.copyright`, { year })}</p>
         </div>
       </div>
     </Modal>

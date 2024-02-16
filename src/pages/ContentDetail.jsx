@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ContentList from 'components/ContentList';
-import DetailSkeleton from 'components/DetailSkeleton';
+import { useTranslation } from 'react-i18next';
+import { ContentList, DetailSkeleton } from 'components';
+import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
-import { ReactComponent as LikeIcon } from 'assets/icon/LikeUnfilled.svg';
-import { ReactComponent as ShareIcon } from 'assets/icon/Share.svg';
-import { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
-import { ReactComponent as ArrowTopIcon } from 'assets/icon/ArrowTop.svg';
 
 /**
  * @TODOS
@@ -21,6 +17,7 @@ import { ReactComponent as ArrowTopIcon } from 'assets/icon/ArrowTop.svg';
  */
 
 function ContentDetail() {
+  const { t } = useTranslation();
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,7 +52,7 @@ function ContentDetail() {
             <BackIcon style={{ marginRight: '2px' }} />
           </button>
           <button className={style.icon}>
-            <LikeIcon width={14} height={14} fill="black" />
+            <LikeUnfilledIcon width={14} height={14} fill="black" />
           </button>
         </div>
         <h1 onClick={() => navigate(`/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
@@ -109,21 +106,20 @@ function ContentDetail() {
             </div>
             <div className={style.content__more}>
               <button className={style.more} onClick={() => navigate(`/${channelIdx}`, { state: { title: channel } })}>
-                <span>&lt;{channel}&gt; 최신 기사 읽기</span>
+                <span>{t(`detail.more-latest`, { channel })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>
             </div>
           </section>
         )}
         <section className={style.category__wrap}>
-          {loading ? '' : <p>더 알아보기</p>}
+          {loading ? '' : <p>{t(`detail.more-from`)}</p>}
           <ContentList list={4} type="best" title={channel} index={1} more={false} />
         </section>
         <section className={style.category__wrap}>
-          <ContentList list={4} type="best" title="best stories" index={2} more={false} />
+          <ContentList list={4} type="best" title={t(`main.best`)} index={2} more={false} />
         </section>
         <section className={style.category__wrap}>
-          {/* index={categoryIdx} */}
           <ContentList list={4} type="category" title={category} index={12} more={true} />
         </section>
       </main>
