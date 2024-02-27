@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ContentList, DetailSkeleton } from 'components';
+import { ContentList, DetailSkeleton, MoreMenu } from 'components';
 import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
 
@@ -21,6 +21,7 @@ function ContentDetail() {
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isOpen, setOpen] = useState(false);
   const {
     state: { content },
   } = useLocation();
@@ -60,8 +61,9 @@ function ContentDetail() {
           <button className={style.icon}>
             <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
-          <button className={style.icon}>
+          <button className={style.icon} onClick={() => setOpen(!isOpen)}>
             <MoreIcon />
+            {isOpen ? <MoreMenu /> : ''}
           </button>
         </div>
       </header>

@@ -3,7 +3,7 @@ import 'styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from 'App';
-import { Home, ContentDetail, Contents, NotFound } from 'pages';
+import { Home, ContentDetail, Contents, NotFound, LikeContents, RecentlyViewContents } from 'pages';
 import 'locales/i18n';
 
 /**
@@ -21,6 +21,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'view/:contentId', element: <ContentDetail /> },
       { path: ':pageId', element: <Contents /> },
+      { path: 'like', element: <LikeContents /> },
+      { path: 'recently', element: <RecentlyViewContents /> },
     ],
   },
 ]);

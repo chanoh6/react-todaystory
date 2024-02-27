@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon, LikeFilledIcon, ClockIcon, ArrowRightIcon } from 'assets';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
 
 function Menu({ onClose }) {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [showCategory, setShowCategory] = useState(false);
   const [showChannel, setShowChannel] = useState(false);
@@ -26,11 +28,11 @@ function Menu({ onClose }) {
         </div>
         <div className={style.menu}>
           <ul>
-            <li className={style.menu__item}>
+            <li className={style.menu__item} onClick={() => navigate('/like')}>
               <LikeFilledIcon width={18} height={18} fill={'var(--color-blue)'} />
               <p>{t(`menu.favorites`)}</p>
             </li>
-            <li className={style.menu__item}>
+            <li className={style.menu__item} onClick={() => navigate('/recently')}>
               <ClockIcon width={18} height={18} fill={'var(--color-purple)'} />
               <p>{t(`menu.history`)}</p>
             </li>

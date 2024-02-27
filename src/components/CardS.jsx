@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { formatAgo } from 'utils/date';
-import { LikeUnfilledIcon, ViewIcon } from 'assets';
+import { LikeUnfilledIcon, LikeFilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/CardS.module.css';
 
@@ -10,7 +11,7 @@ const CardS = ({ content }) => {
   const navigate = useNavigate();
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
-
+  const [like, setLike] = useState(false);
   return (
     <li className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
       <div className={style.card__info}>
@@ -31,10 +32,20 @@ const CardS = ({ content }) => {
           <span>|</span>
           <span id="category">{category}</span>
         </div>
-        <div className="like">
+        <div
+          className="like"
+          onClick={(e) => {
+            e.stopPropagation();
+            setLike(!like);
+          }}
+        >
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+          {like ? (
+            <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+          ) : (
+            <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+          )}
         </div>
       </div>
     </li>
