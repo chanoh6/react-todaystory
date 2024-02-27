@@ -9,15 +9,13 @@ import style from 'styles/EditorsPick.module.css';
 
 function EditorsPick() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { api } = useApi();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
-
-  // for test
-  const subTitle = 'Notable content';
+  const lang = i18n.language;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +24,7 @@ function EditorsPick() {
       setContent(null);
 
       try {
-        return api.editors();
+        return api.editors(lang);
       } catch (e) {
         setError(e);
       }
@@ -46,7 +44,7 @@ function EditorsPick() {
     <section className={style.content__wrap}>
       <hgroup className={style.content__title}>
         <h1>{t(`editor.title`)}</h1>
-        <h2>{t(`editor.sub-title`, { sentence: subTitle })}</h2>
+        <h2>{content.subtitle}</h2>
       </hgroup>
       <article className={style.card} onClick={() => navigate(`/view/${content.idx}`, { state: { content } })}>
         <div className={style.card__img}>

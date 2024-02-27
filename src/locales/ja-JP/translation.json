@@ -27,8 +27,7 @@
     "more-from": "もっと調べよう"
   },
   "editor": {
-    "title": "editor's pick",
-    "sub-title": "{{sentence}}"
+    "title": "editor's pick"
   },
   "card": {
     "date": "{{val, relativetime}}"

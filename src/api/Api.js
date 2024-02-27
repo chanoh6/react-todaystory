@@ -31,8 +31,8 @@ class Api {
     return this.apiClient.best(index).then((res) => res.data.data);
   }
 
-  async editors() {
-    return this.apiClient.editors().then((res) => res.data.data);
+  async editors(lang) {
+    return this.apiClient.editors(lang).then((res) => res.data.data);
   }
 }
 

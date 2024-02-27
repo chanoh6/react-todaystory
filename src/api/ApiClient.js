@@ -37,8 +37,8 @@ class ApiClient {
     return this.httpClient.get(`/bestStories${index}.json`);
   }
 
-  async editors() {
-    return this.httpClient.get(`/editorsPick.json`);
+  async editors(lang) {
+    return this.httpClient.get(`/${lang}/editorsPick.json`);
   }
 }
 

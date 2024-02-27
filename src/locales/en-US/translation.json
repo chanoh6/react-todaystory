@@ -27,8 +27,7 @@
     "more-from": "more from"
   },
   "editor": {
-    "title": "editor's pick",
-    "sub-title": "{{sentence}}"
+    "title": "editor's pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
