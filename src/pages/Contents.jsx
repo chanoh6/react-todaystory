@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
-import { CardS } from 'components';
+import { TypeC } from 'components';
 import { BackIcon, MoreIcon } from 'assets';
 import style from 'styles/Contents.module.css';
 
@@ -56,7 +56,7 @@ function Contents() {
           <section className={style.content__wrap}>
             <ul className={style.list}>
               {contents.map((content, i) => (
-                <CardS key={i} content={content} />
+                <TypeC key={i} content={content} />
               ))}
             </ul>
           </section>

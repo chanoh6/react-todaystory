@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { formatAgo } from 'utils/date';
 import { LikeUnfilledIcon, LikeFilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
-import style from 'styles/CardS.module.css';
+import style from 'styles/TypeC.module.css';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
-const CardS = ({ content }) => {
+const TypeC = ({ content }) => {
   const navigate = useNavigate();
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
@@ -52,4 +52,4 @@ const CardS = ({ content }) => {
   );
 };
 
-export default CardS;
+export default TypeC;

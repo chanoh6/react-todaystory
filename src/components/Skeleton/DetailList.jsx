@@ -1,6 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
 import style from 'styles/LikeContents.module.css';
-import card from 'styles/CardS.module.css';
+import card from 'styles/TypeC.module.css';
 
 export default function DetailList() {
   return (

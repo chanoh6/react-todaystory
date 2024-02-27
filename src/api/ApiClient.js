@@ -13,8 +13,8 @@ class ApiClient {
     });
   }
 
-  async categoryList() {
-    return this.httpClient.get(`/categoryList.json`);
+  async categoryList(lang) {
+    return this.httpClient.get(`/${lang}/categoryList.json`);
   }
 
   async category(idx) {
@@ -29,8 +29,8 @@ class ApiClient {
     return this.httpClient.get(`/channel${idx}.json`);
   }
 
-  async top() {
-    return this.httpClient.get(`/topStories.json`);
+  async top(lang) {
+    return this.httpClient.get(`/${lang}/topStories.json`);
   }
 
   async best(index) {

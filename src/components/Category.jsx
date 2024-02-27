@@ -2,17 +2,18 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'context/ApiContext';
-import style from 'styles/CategoryList.module.css';
+import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 
-function CategoryList() {
+function Category() {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { api } = useApi();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
+  const lang = i18n.language;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +22,7 @@ function CategoryList() {
       setCategory(null);
 
       try {
-        return api.categoryList();
+        return api.categoryList(lang);
       } catch (e) {
         setError(e);
       }
@@ -63,4 +64,4 @@ function CategoryList() {
   );
 }
 
-export default CategoryList;
+export default Category;

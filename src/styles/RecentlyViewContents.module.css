@@ -40,7 +40,6 @@
 .content__wrap {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, var(--color-white) 0%, var(--background-color) 100%);
   padding: 8px 15px 36px 15px;
 }
 

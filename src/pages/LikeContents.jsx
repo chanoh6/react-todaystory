@@ -4,7 +4,7 @@ import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
 import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
 import { useApi } from 'context/ApiContext';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CardS, DetailListSkeleton } from 'components';
+import { DetailListSkeleton, TypeC } from 'components';
 
 function LikeContents() {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ function LikeContents() {
           <section className={style.content__wrap}>
             <ul className={style.list}>
               {contents.map((content, i) => (
-                <CardS key={i} content={content} />
+                <TypeC key={i} content={content} />
               ))}
             </ul>
           </section>

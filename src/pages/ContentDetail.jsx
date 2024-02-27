@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ContentList, DetailSkeleton, MoreMenu } from 'components';
+import { ContentDetailSkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu } from 'components';
 import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
 
@@ -69,7 +69,7 @@ function ContentDetail() {
       </header>
       <main>
         {loading || error || !info ? (
-          <DetailSkeleton />
+          <ContentDetailSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <h1 className={style.title}>{title}</h1>
@@ -116,13 +116,13 @@ function ContentDetail() {
         )}
         <section className={style.category__wrap}>
           {loading ? '' : <p>{t(`detail.more-from`)}</p>}
-          <ContentList list={4} type="best" title={channel} index={1} more={false} />
+          <ChannelStories title={channel} />
         </section>
         <section className={style.category__wrap}>
-          <ContentList list={4} type="best" title={t(`main.best`)} index={2} more={false} />
+          <BestStories start={1} />
         </section>
         <section className={style.category__wrap}>
-          <ContentList list={4} type="category" title={category} index={12} more={true} />
+          <CategoryStories list={4} title={category} index={12} />
         </section>
       </main>
       <footer></footer>

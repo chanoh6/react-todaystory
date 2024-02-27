@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, CategoryList, ContentList, EditorsPick } from 'components';
+import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories } from 'components';
 import { SearchIcon, MenuIcon } from 'assets';
 import { useTranslation } from 'react-i18next';
 // import i18n from 'locales/i18n';
@@ -49,7 +49,7 @@ function Home() {
       </header>
 
       <nav className={style.nav}>
-        <CategoryList />
+        <Category />
         <div className={style.nav__ad}>
           <button className={style.ad__item} onClick={() => window.open('http://s.sazoo.com/fortune/tarot.html')}>
             <img src={`${baseImgURL}fortune.svg`} alt="category icon" />
@@ -60,23 +60,23 @@ function Home() {
 
       <main>
         <section className={cn(style.content__wrap, style.top)}>
-          <ContentList list={1} type="top" title={t(`main.top`)} index={0} more={false} />
+          <TopStories />
         </section>
         <section className={style.content__wrap}>
-          <ContentList list={4} type="best" title={t(`main.best`)} index={1} more={false} />
+          <BestStories start={1} />
         </section>
         <EditorsPick />
         <section className={style.content__wrap}>
-          <ContentList list={4} type="best" title={t(`main.best`)} index={2} more={false} />
+          <BestStories start={2} />
         </section>
         <section className={style.content__wrap}>
-          <ContentList list={3} type="category" title="여행" index={6} more={true} />
+          <CategoryStories list={2} title="여행" index={6} />
         </section>
         <section className={style.content__wrap}>
-          <ContentList list={2} type="category" title="라이프스타일" index={12} more={true} />
+          <CategoryStories list={1} title="라이프스타일" index={12} />
         </section>
         <section className={style.content__wrap}>
-          <ContentList list={4} type="category" title="건강" index={16} more={true} />
+          <CategoryStories list={3} title="건강" index={16} />
         </section>
       </main>
 

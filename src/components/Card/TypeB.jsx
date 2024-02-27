@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
 import { LikeUnfilledIcon } from 'assets';
 import 'styles/Card.css';
-import style from 'styles/CardM.module.css';
+import style from 'styles/TypeB.module.css';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
-const CardM = ({ content }) => {
+const TypeB = ({ content }) => {
   const navigate = useNavigate();
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, publishedAt } = content;
@@ -31,4 +31,4 @@ const CardM = ({ content }) => {
   );
 };
 
-export default CardM;
+export default TypeB;

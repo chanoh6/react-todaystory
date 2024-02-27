@@ -5,7 +5,7 @@ import 'styles/Card.css';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
-const CardL = ({ content }) => {
+const TypeA = ({ content }) => {
   const navigate = useNavigate();
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
@@ -38,4 +38,4 @@ const CardL = ({ content }) => {
   );
 };
 
-export default CardL;
+export default TypeA;

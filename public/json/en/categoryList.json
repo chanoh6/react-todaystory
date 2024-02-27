@@ -1,0 +1,55 @@
+{
+  "code": "0",
+  "msg": {
+    "en": null,
+    "ko": null,
+    "jp": null
+  },
+  "data": [
+    {
+      "idx": 6,
+      "name": "Travel",
+      "icon": "travel.svg"
+    },
+    {
+      "idx": 12,
+      "name": "Lifestyle",
+      "icon": "lifestyle.svg"
+    },
+    {
+      "idx": 16,
+      "name": "Health",
+      "icon": "health.svg"
+    },
+    {
+      "idx": 4,
+      "name": "Food",
+      "icon": "recipe.svg"
+    },
+    {
+      "idx": 9,
+      "name": "Fashion",
+      "icon": "fashion.svg"
+    },
+    {
+      "idx": 24,
+      "name": "Mindfulness",
+      "icon": "healing.svg"
+    },
+    {
+      "idx": 8,
+      "name": "Weather",
+      "icon": "weather.svg"
+    },
+    {
+      "idx": 26,
+      "name": "Sports",
+      "icon": "sport.svg"
+    },
+    {
+      "idx": 7,
+      "name": "Sights",
+      "icon": "sights.svg"
+    }
+  ]
+}

@@ -7,8 +7,8 @@ class Api {
    * @TODOS : 정리 필요
    */
 
-  async categoryList() {
-    return this.apiClient.categoryList().then((res) => res.data.data);
+  async categoryList(lang) {
+    return this.apiClient.categoryList(lang).then((res) => res.data.data);
   }
 
   async category(idx) {
@@ -23,8 +23,8 @@ class Api {
     return this.apiClient.channel(idx).then((res) => res.data.data);
   }
 
-  async top() {
-    return this.apiClient.top().then((res) => res.data.data);
+  async top(lang) {
+    return this.apiClient.top(lang).then((res) => res.data.data);
   }
 
   async best(index) {
