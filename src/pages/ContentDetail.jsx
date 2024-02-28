@@ -122,7 +122,7 @@ function ContentDetail() {
           <BestStories start={1} />
         </section>
         <section className={style.category__wrap}>
-          <CategoryStories list={4} title={category} index={12} />
+          <CategoryStories list={3} index={12} />
         </section>
       </main>
       <footer></footer>

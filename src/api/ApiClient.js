@@ -9,12 +9,12 @@ import axios from 'axios';
 class ApiClient {
   constructor() {
     this.httpClient = axios.create({
-      baseURL: '/json',
+      baseURL: `/json/${process.env.REACT_APP_LOCALE}`,
     });
   }
 
-  async categoryList(lang) {
-    return this.httpClient.get(`/${lang}/categoryList.json`);
+  async categoryList() {
+    return this.httpClient.get(`/categoryList.json`);
   }
 
   async category(idx) {
@@ -29,16 +29,16 @@ class ApiClient {
     return this.httpClient.get(`/channel${idx}.json`);
   }
 
-  async top(lang) {
-    return this.httpClient.get(`/${lang}/topStories.json`);
+  async top() {
+    return this.httpClient.get(`/topStories.json`);
   }
 
   async best(index) {
     return this.httpClient.get(`/bestStories${index}.json`);
   }
 
-  async editors(lang) {
-    return this.httpClient.get(`/${lang}/editorsPick.json`);
+  async editors() {
+    return this.httpClient.get(`/editorsPick.json`);
   }
 }
 

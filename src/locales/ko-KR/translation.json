@@ -27,9 +27,12 @@
     "more-from": "더 알아보기"
   },
   "editor": {
-    "title": "editor's pick"
+    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
+  },
+  "history": {
+    "clear": "지우기"
   }
 }

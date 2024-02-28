@@ -7,13 +7,12 @@ import Skeleton from 'react-loading-skeleton';
 
 function Category() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
-  const lang = i18n.language;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +21,7 @@ function Category() {
       setCategory(null);
 
       try {
-        return api.categoryList(lang);
+        return api.categoryList();
       } catch (e) {
         setError(e);
       }

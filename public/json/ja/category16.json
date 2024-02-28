@@ -1,0 +1,133 @@
+{
+  "code": "0",
+  "msg": {
+    "en": null,
+    "ko": null,
+    "ja": null
+  },
+  "data": {
+    "category": "健康",
+    "contents": [
+      {
+        "idx": 23201,
+        "thumbnail": "a904a50df355d460dca203641bc41e033aee532e.JPG",
+        "logo": "b4abbf561210fe6e4f8714df4632f34b69464e4f.png",
+        "channelIdx": 115,
+        "channel": "ウーマンセンス",
+        "title": "姿勢を矯正するだけで健康になれる",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-31 00:00:00",
+        "viewCount": 5
+      },
+      {
+        "idx": 23143,
+        "thumbnail": "4fe927266d1eaca5dbd16686dc314ca5e7dd1790.JPG",
+        "logo": "2f6a73d15591eb7d169b8e1922efd6df4e008dc3.png",
+        "channelIdx": 116,
+        "channel": "中央日報ヘルスメディア",
+        "title": "ダイエットする時、周りにこういう人が必ずいるか？",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-30 00:00:00",
+        "viewCount": 7161
+      },
+      {
+        "idx": 23146,
+        "thumbnail": "30b4b2312590c6cbac372562861d1be2c97b962f.jpg",
+        "logo": "722e91f087e04a266cc2e6e395920a803576b27d.png",
+        "channelIdx": 117,
+        "channel": "オルブランTV",
+        "title": "パートナーとの全身運動",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-30 00:00:00",
+        "viewCount": 1549
+      },
+      {
+        "idx": 23134,
+        "thumbnail": "549d951d4472e899497d584fed5d85c17422578c.jpeg",
+        "logo": "2f6a73d15591eb7d169b8e1922efd6df4e008dc3.png",
+        "channelIdx": 116,
+        "channel": "中央日報ヘルスメディア",
+        "title": "小児骨折の20%が成長板損傷···正しく対処する方法",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-29 00:00:00",
+        "viewCount": 1423
+      },
+      {
+        "idx": 23125,
+        "thumbnail": "1ba7ee3ff8b6a94352be165ff04a96dccf66ad02.JPG",
+        "logo": "2f6a73d15591eb7d169b8e1922efd6df4e008dc3.png",
+        "channelIdx": 116,
+        "channel": "中央日報ヘルスメディア",
+        "title": "寒冷疾患を避けるためには「この時間帯」の活動に注意すべき",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-28 00:00:00",
+        "viewCount": 6754
+      },
+      {
+        "idx": 23121,
+        "thumbnail": "e16a6ee2987541a80ed64b9e5ece05837cdfd1b7.JPG",
+        "logo": "3c1bdfed1fe505e6eefec0bd1ff8ad5627b8c4d8.png",
+        "channelIdx": 111,
+        "channel": "ブラボー·マイ·ライフ",
+        "title": "新年には禁煙に成功してみようか？ 禁断症状の克服がカギ",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-28 00:00:00",
+        "viewCount": 2653
+      },
+      {
+        "idx": 23109,
+        "thumbnail": "c27c54b0d4eed2bb40203e79816938890bf2ba55.JPG",
+        "logo": "2f6a73d15591eb7d169b8e1922efd6df4e008dc3.png",
+        "channelIdx": 116,
+        "channel": "中央日報ヘルスメディア",
+        "title": "「1日4時間以上ゲームしたら脳機能が悪くなる」",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-27 00:00:00",
+        "viewCount": 2537
+      },
+      {
+        "idx": 23050,
+        "thumbnail": "6ac3438d0fe7b4cb565a5e88c0b4ed3ded7d24da.JPG",
+        "logo": "2f6a73d15591eb7d169b8e1922efd6df4e008dc3.png",
+        "channelIdx": 116,
+        "channel": "中央日報ヘルスメディア",
+        "title": "慢性的な腰痛があるなら実践すべき生活習慣",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-24 00:00:00",
+        "viewCount": 5944
+      },
+      {
+        "idx": 23063,
+        "thumbnail": "1a307f5826e2bd0d259b4a365a843117686ad8f2.JPG",
+        "logo": "b9ca060be8d6e30cc5cd96b4950c6a52feb18c4b.png",
+        "channelIdx": 104,
+        "channel": "亜洲大学病院",
+        "title": "第2のコロナと呼ばれる「肺炎」がある？！ 乳幼児の間で大流行中のマイコプラズマ肺炎、原因から治療法まで🚨小児青少年科チョン·ヒョンジュ教授",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-23 00:00:00",
+        "viewCount": 18095
+      },
+      {
+        "idx": 23032,
+        "thumbnail": "9574b1a194656e24ded385bc07b0e9f66db4c4a9.JPG",
+        "logo": "aa2eaae84313074cf70274275adceb28e3e1b924.png",
+        "channelIdx": 103,
+        "channel": "デーリー",
+        "title": "突然倒れた家族を私が生き返らせる唯一の方法",
+        "categoryIdx": 16,
+        "category": "健康",
+        "publishedAt": "2024-01-22 00:00:00",
+        "viewCount": 2133
+      }
+    ]
+  }
+}

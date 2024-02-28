@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'context/ApiContext';
@@ -11,10 +11,11 @@ import style from 'styles/Stories.module.css';
  * 1. hooks 분리
  */
 
-function CategoryStories({ list, type, title, index }) {
+function CategoryStories({ list, index }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useApi();
+  const category = useRef(null);
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +34,8 @@ function CategoryStories({ list, type, title, index }) {
     };
 
     fetchData().then((res) => {
-      setContents(res);
+      category.current = res.category;
+      setContents(res.contents);
       setTimeout(() => {
         setLoading(false);
       }, 300);
@@ -79,8 +81,11 @@ function CategoryStories({ list, type, title, index }) {
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title}>{title}</h1>
-        <button className={style.btn__more} onClick={() => navigate(`/${index}`, { state: { title } })}>
+        <h1 className={style.title}>{category.current}</h1>
+        <button
+          className={style.btn__more}
+          onClick={() => navigate(`/${index}`, { state: { title: category.current } })}
+        >
           <p>{t(`main.more`)}</p>
           <ArrowRightIcon width={6} height={10} />
         </button>

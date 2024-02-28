@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
 import ModalContainer from 'components/Modal/ModalContainer';
+import { styled } from 'styled-components';
+
+const FontWrapper = styled.div`
+  font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
+`;
 
 function Modal({ children }) {
   useEffect(() => {
@@ -11,7 +16,11 @@ function Modal({ children }) {
     };
   }, []);
 
-  return <ModalContainer>{children}</ModalContainer>;
+  return (
+    <ModalContainer>
+      <FontWrapper>{children}</FontWrapper>
+    </ModalContainer>
+  );
 }
 
 export default Modal;

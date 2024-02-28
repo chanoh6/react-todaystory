@@ -27,9 +27,12 @@
     "more-from": "もっと調べよう"
   },
   "editor": {
-    "title": "editor's pick"
+    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
+  },
+  "history": {
+    "clear": "消すんです"
   }
 }

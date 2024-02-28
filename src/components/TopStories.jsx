@@ -5,12 +5,11 @@ import { useTranslation } from 'react-i18next';
 import style from 'styles/Stories.module.css';
 
 function TopStories() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const lang = i18n.language;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +18,7 @@ function TopStories() {
       setContents(null);
 
       try {
-        return api.top(lang);
+        return api.top();
       } catch (e) {
         setError(e);
       }

@@ -1,0 +1,58 @@
+{
+  "code": "0",
+  "msg": {
+    "en": null,
+    "ko": null,
+    "ja": null
+  },
+  "data": [
+    {
+      "idx": 23077,
+      "thumbnail": "a2d1f60898ac3939ba95acc5a0adeda8e0deba4b.JPG",
+      "logo": "aa2eaae84313074cf70274275adceb28e3e1b924.png",
+      "channelIdx": 103,
+      "channel": "Daily",
+      "title": "2,200 people? The world's largest cafe in Korea",
+      "categoryIdx": 9,
+      "category": "Sights",
+      "publishedAt": "2024-01-25 00:00:00",
+      "viewCount": 23819
+    },
+    {
+      "idx": 23063,
+      "thumbnail": "1a307f5826e2bd0d259b4a365a843117686ad8f2.JPG",
+      "logo": "b9ca060be8d6e30cc5cd96b4950c6a52feb18c4b.png",
+      "channelIdx": 104,
+      "channel": "Ajou University Hospital",
+      "title": "There is a 'pneumonia' called the second corona?! Mycoplasma pneumonia, which is in vogue among infants and toddlers, from cause to cure 🚨 Professor Jeong Hyeon-ju of Pediatrics and Adolescents",
+      "categoryIdx": 3,
+      "category": "Health",
+      "publishedAt": "2024-01-23 00:00:00",
+      "viewCount": 18095
+    },
+    {
+      "idx": 23084,
+      "thumbnail": "6e74c4385549dac2ed9ee2eddcff8f62fcf9f977.JPG",
+      "logo": "28c04f4a2de592e80e308ef7a06e1862f6fc2284.png",
+      "channelIdx": 102,
+      "channel": "Travie",
+      "title": "A place to visit in January where you can get the spirit of the dragon. 5",
+      "categoryIdx": 9,
+      "category": "Sights",
+      "publishedAt": "2024-01-25 00:00:00",
+      "viewCount": 17123
+    },
+    {
+      "idx": 22650,
+      "thumbnail": "6034bcf3364f0fc6a247e6c9ee0f4c0701586606.jpg",
+      "logo": "35eb78d6f21ce598e08c871ee2407a2b8c9c3c04.png",
+      "channelIdx": 101,
+      "channel": "Mindswitch",
+      "title": "The blue sky and the white ski resort",
+      "categoryIdx": 6,
+      "category": "Mindfulness",
+      "publishedAt": "2024-01-23 00:00:00",
+      "viewCount": 16297
+    }
+  ]
+}

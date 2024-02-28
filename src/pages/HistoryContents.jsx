@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import style from 'styles/RecentlyViewContents.module.css';
+import style from 'styles/HistoryContents.module.css';
 import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
 import { useApi } from 'context/ApiContext';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DetailListSkeleton, TypeC } from 'components';
+import { useTranslation } from 'react-i18next';
 
-function RecentlyViewContents() {
+function HistoryContents() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -26,7 +28,7 @@ function RecentlyViewContents() {
     };
 
     fetchData().then((res) => {
-      setContents(res);
+      setContents(res.contents);
       setTimeout(() => {
         setLoading(false);
       }, 300);
@@ -39,8 +41,8 @@ function RecentlyViewContents() {
         <button className={style.icon} onClick={() => navigate(-1)}>
           <BackIcon style={{ marginRight: '2px' }} />
         </button>
-        <h1>최근 본 콘텐츠</h1>
-        <p>지우기</p>
+        <h1>{t(`menu.history`)}</h1>
+        <p>{t(`history.clear`)}</p>
       </header>
       <main>
         {loading || error || !contents ? (
@@ -59,4 +61,4 @@ function RecentlyViewContents() {
   );
 }
 
-export default RecentlyViewContents;
+export default HistoryContents;

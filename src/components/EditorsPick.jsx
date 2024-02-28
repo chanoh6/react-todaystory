@@ -9,13 +9,13 @@ import style from 'styles/EditorsPick.module.css';
 
 function EditorsPick() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const locale = process.env.REACT_APP_LOCALE;
+  const { t } = useTranslation();
   const { api } = useApi();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
-  const lang = i18n.language;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +24,7 @@ function EditorsPick() {
       setContent(null);
 
       try {
-        return api.editors(lang);
+        return api.editors();
       } catch (e) {
         setError(e);
       }
@@ -64,7 +64,7 @@ function EditorsPick() {
         </div>
         <div className="card__more">
           <div className="date">
-            <span id="publishedAt">{formatAgo(content.publishedAt, 'ko')}</span>
+            <span id="publishedAt">{formatAgo(content.publishedAt, locale)}</span>
             <span>|</span>
             <span id="category">{content.category}</span>
           </div>

@@ -27,9 +27,12 @@
     "more-from": "more from"
   },
   "editor": {
-    "title": "editor's pick"
+    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
+  },
+  "history": {
+    "clear": "clear"
   }
 }

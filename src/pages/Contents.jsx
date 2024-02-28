@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
-import { TypeC } from 'components';
+import { DetailListSkeleton, TypeC } from 'components';
 import { BackIcon, MoreIcon } from 'assets';
 import style from 'styles/Contents.module.css';
 
@@ -31,7 +31,7 @@ function Contents() {
     };
 
     fetchData().then((res) => {
-      setContents(res);
+      setContents(res.contents);
       setTimeout(() => {
         setLoading(false);
       }, 300);
@@ -51,7 +51,7 @@ function Contents() {
       </header>
       <main>
         {loading || error || !contents ? (
-          ''
+          <DetailListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories } from 'components';
 import { SearchIcon, MenuIcon } from 'assets';
 import { useTranslation } from 'react-i18next';
-// import i18n from 'locales/i18n';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
 
@@ -70,13 +69,13 @@ function Home() {
           <BestStories start={2} />
         </section>
         <section className={style.content__wrap}>
-          <CategoryStories list={2} title="여행" index={6} />
+          <CategoryStories list={2} index={6} />
         </section>
         <section className={style.content__wrap}>
-          <CategoryStories list={1} title="라이프스타일" index={12} />
+          <CategoryStories list={1} index={12} />
         </section>
         <section className={style.content__wrap}>
-          <CategoryStories list={3} title="건강" index={16} />
+          <CategoryStories list={3} index={16} />
         </section>
       </main>
 
