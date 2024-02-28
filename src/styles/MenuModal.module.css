@@ -1,7 +1,7 @@
 .modal__wrap {
   width: 40%;
-  position: absolute;
-  top: 1%;
+  position: fixed;
+  top: 5%;
   right: 5%;
   text-align: center;
   color: var(--color-black);

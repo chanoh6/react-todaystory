@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ContentDetailSkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu } from 'components';
 import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
+import Modal from 'components/Modal/Modal';
 
 /**
  * @TODOS
@@ -29,6 +30,8 @@ function ContentDetail() {
   // const { idx, thumbnail, logo, channel, title, , category, publishedAt, viewCount } = content;
   const { thumbnail, channelIdx, channel, title, category, publishedAt } = content;
   const baseURL = 'https://picks.my/ko/s/';
+  const menuModalRef = useRef();
+  const [isScroll, setScroll] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,11 +46,39 @@ function ContentDetail() {
         setLoading(false);
       }, 300);
     });
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+  };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [isScroll]);
+
+  //모달창 바깥 영역 클릭시 닫힘
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (isOpen && menuModalRef.current && !menuModalRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <header className={style.header}>
+      <header className={style.header} ref={menuModalRef}>
         <div className={style.header__btn}>
           <button className={style.icon} onClick={() => navigate(-1)}>
             <BackIcon style={{ marginRight: '2px' }} />
@@ -63,7 +94,6 @@ function ContentDetail() {
           </button>
           <button className={style.icon} onClick={() => setOpen(!isOpen)}>
             <MoreIcon />
-            {isOpen ? <MoreMenu /> : ''}
           </button>
         </div>
       </header>
@@ -126,6 +156,7 @@ function ContentDetail() {
         </section>
       </main>
       <footer></footer>
+      {isOpen ? <MoreMenu /> : ''}
     </>
   );
 }
