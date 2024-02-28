@@ -61,11 +61,28 @@ const TypeA = ({ content }) => {
   };
 
   const onClick = () => {
+    if (isFavorite) {
+      deleteFavorites(idx);
+    } else {
+      saveFavorites(idx);
+    }
     setIsFavorite(!isFavorite);
-    saveFavorites(idx);
   };
 
   // 4. 좋아요 다시 누를시 로컬스토리지에서 해당 idx 삭제
+  const deleteFavorites = (idx) => {
+    // 로컬스토리지 데이터 꺼냄
+    let favorites = localStorage.getItem('favorites');
+
+    if (favorites) {
+      favorites = JSON.parse(favorites);
+
+      favorites = favorites.filter((i) => i !== idx);
+
+      // 로컬스토리지에 json 자료형으로 저장
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  };
 
   return (
     <li data-idx={idx} className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
@@ -88,11 +105,13 @@ const TypeA = ({ content }) => {
         <div className="like" onClick={(e) => e.stopPropagation()}>
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          {isFavorite ? (
-            <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
-          ) : (
-            <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} onClick={onClick} />
-          )}
+          <button onClick={onClick}>
+            {isFavorite ? (
+              <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+            ) : (
+              <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+            )}
+          </button>
         </div>
       </div>
     </li>
