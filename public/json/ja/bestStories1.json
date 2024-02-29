@@ -1,0 +1,58 @@
+{
+  "code": "0",
+  "msg": {
+    "en": null,
+    "ko": null,
+    "ja": null
+  },
+  "data": [
+    {
+      "idx": 23115,
+      "thumbnail": "3eeb1e14cff36d62c78b669ceb8906bafa6637a6.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channelIdx": 100,
+      "channel": "ウェザーニュース",
+      "title": "凍った道が滑る理由、まだ分からないか？",
+      "categoryIdx": 7,
+      "category": "天気",
+      "publishedAt": "2024-01-24 00:00:00",
+      "viewCount": 51852
+    },
+    {
+      "idx": 23101,
+      "thumbnail": "2aafbf89235c688d4c35156ee1c4240a4e9ea36c.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channelIdx": 100,
+      "channel": "ウェザーニュース",
+      "title": "冬、雪が降ると「欠航になるか」恐ろしい済州空港···その理由は？",
+      "categoryIdx": 7,
+      "category": "天気",
+      "publishedAt": "2024-01-23 00:00:00",
+      "viewCount": 50454
+    },
+    {
+      "idx": 23149,
+      "thumbnail": "c4e8a67a0b9e071e2139a2df175198aba09a1b4d.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channelIdx": 100,
+      "channel": "ウェザーニュース",
+      "title": "体感温度:氷点下20℃··· 冷凍庫の寒波の中で体感温度を上げる方法は？",
+      "categoryIdx": 7,
+      "category": "天気",
+      "publishedAt": "2024-01-25 00:00:00",
+      "viewCount": 50147
+    },
+    {
+      "idx": 23205,
+      "thumbnail": "93355ce19a064723cfe4aff50f5a1488360466d9.jpg",
+      "logo": "296a7057ad72409be2d2f29297f78f7e8e6de2f8.png",
+      "channelIdx": 100,
+      "channel": "ウェザーニュース",
+      "title": "気象観測史上最も「熱かった」2023年、気候変動を実感",
+      "categoryIdx": 7,
+      "category": "天気",
+      "publishedAt": "2024-01-30 00:00:00",
+      "viewCount": 40442
+    }
+  ]
+}

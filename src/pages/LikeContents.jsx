@@ -5,9 +5,12 @@ import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
 import { useApi } from 'context/ApiContext';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DetailListSkeleton, TypeC } from 'components';
+import { useTranslation } from 'react-i18next';
+import Loading from 'components/Loading';
 
 function LikeContents() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useApi();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +31,7 @@ function LikeContents() {
     };
 
     fetchData().then((res) => {
-      setContents(res);
+      setContents(res.contents);
       setTimeout(() => {
         setLoading(false);
       }, 300);
@@ -37,24 +40,17 @@ function LikeContents() {
 
   return (
     <>
+      {loading || error || !contents}
       <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
           <BackIcon style={{ marginRight: '2px' }} />
         </button>
-        <h1>공감한 콘텐츠</h1>
+        <h1>{t(`menu.favorites`)}</h1>
       </header>
-      {/* <div className="like" onClick={() => setLike(!like)}>
-        {like ? (
-          <LikeFilledIcon width={40} height={40} fill={'var(--color-blue)'} />
-        ) : (
-          <LikeUnfilledIcon width={40} height={40} fill={'var(--color-blue)'} />
-        )}
-      </div> */}
       <main>
         {loading || error || !contents ? (
           <DetailListSkeleton />
         ) : (
-          // <DetailListSkeleton />
           <section className={style.content__wrap}>
             <ul className={style.list}>
               {contents.map((content, i) => (

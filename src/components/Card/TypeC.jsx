@@ -9,9 +9,11 @@ const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 const TypeC = ({ content }) => {
   const navigate = useNavigate();
+  const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
   const [like, setLike] = useState(false);
+
   return (
     <li className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
       <div className={style.card__info}>
@@ -28,7 +30,7 @@ const TypeC = ({ content }) => {
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
+          <span id="publishedAt">{formatAgo(publishedAt, locale)}</span>
           <span>|</span>
           <span id="category">{category}</span>
         </div>

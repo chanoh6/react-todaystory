@@ -8,6 +8,7 @@ const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 const TypeB = ({ content }) => {
   const navigate = useNavigate();
+  const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, publishedAt } = content;
 
@@ -24,7 +25,7 @@ const TypeB = ({ content }) => {
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
-        <span id="publishedAt">{formatAgo(publishedAt, 'ko')}</span>
+        <span id="publishedAt">{formatAgo(publishedAt, locale)}</span>
         <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
       </div>
     </li>

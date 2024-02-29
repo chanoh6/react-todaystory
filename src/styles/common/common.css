@@ -2,10 +2,6 @@
 @import url('styles/common/colors.css');
 @import url('styles/common/font.css');
 
-* {
-  font-family: 'Pretendard', sans-serif;
-}
-
 *,
 *::before,
 *::after {
