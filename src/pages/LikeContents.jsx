@@ -6,7 +6,6 @@ import { useApi } from 'context/ApiContext';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DetailListSkeleton, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
-import Loading from 'components/Loading';
 
 function LikeContents() {
   const navigate = useNavigate();
@@ -15,7 +14,6 @@ function LikeContents() {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [like, setLike] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +38,6 @@ function LikeContents() {
 
   return (
     <>
-      {loading || error || !contents}
       <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
           <BackIcon style={{ marginRight: '2px' }} />
