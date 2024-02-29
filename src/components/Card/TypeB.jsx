@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
-import { LikeUnfilledIcon } from 'assets';
+import { useFavorite } from 'hooks/favorite';
+import { LikeFilledIcon, LikeUnfilledIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeB.module.css';
 
@@ -11,6 +12,7 @@ const TypeB = ({ content }) => {
   const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, publishedAt } = content;
+  const { favorite, handleClick } = useFavorite(idx);
 
   return (
     <li className={style.card} onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
@@ -26,7 +28,13 @@ const TypeB = ({ content }) => {
       </div>
       <div className="card__more">
         <span id="publishedAt">{formatAgo(publishedAt, locale)}</span>
-        <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+        <button onClick={handleClick}>
+          {favorite ? (
+            <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+          ) : (
+            <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+          )}
+        </button>
       </div>
     </li>
   );
