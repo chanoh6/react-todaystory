@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
-import { useFavorite } from 'hooks/favorite';
-import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
+import { LikeButton } from 'components';
+import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
@@ -12,7 +11,6 @@ const TypeA = ({ content }) => {
   const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
-  const { favorite, handleClick } = useFavorite(idx);
 
   return (
     <li data-idx={idx} className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
@@ -35,13 +33,7 @@ const TypeA = ({ content }) => {
         <div className="like">
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          <button onClick={handleClick}>
-            {favorite ? (
-              <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
-            ) : (
-              <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
-            )}
-          </button>
+          <LikeButton idx={idx} />
         </div>
       </div>
     </li>

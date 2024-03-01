@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import style from 'styles/LikeContents.module.css';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
-import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { DetailListSkeleton, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
+import { DetailListSkeleton, TypeC } from 'components';
+import { BackIcon } from 'assets';
+import style from 'styles/LikeContents.module.css';
 
 function LikeContents() {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ function LikeContents() {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [like, setLike] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,13 +43,6 @@ function LikeContents() {
         </button>
         <h1>{t(`menu.favorites`)}</h1>
       </header>
-      {/* <div className="like" onClick={() => setLike(!like)}>
-        {like ? (
-          <LikeFilledIcon width={40} height={40} fill={'var(--color-blue)'} />
-        ) : (
-          <LikeUnfilledIcon width={40} height={40} fill={'var(--color-blue)'} />
-        )}
-      </div> */}
       <main>
         {loading || error || !contents ? (
           <DetailListSkeleton />
