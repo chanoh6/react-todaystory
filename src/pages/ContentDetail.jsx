@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ContentDetailSkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu } from 'components';
-import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon } from 'assets';
+import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
 import Modal from 'components/Modal/Modal';
+import { useFavorite } from 'hooks/favorite';
+import { useHistory } from 'hooks/history';
 
 /**
  * @TODOS
@@ -27,11 +29,14 @@ function ContentDetail() {
     state: { content },
   } = useLocation();
   const navigate = useNavigate();
-  // const { idx, thumbnail, logo, channel, title, , category, publishedAt, viewCount } = content;
-  const { thumbnail, channelIdx, channel, title, category, publishedAt } = content;
-  const baseURL = 'https://picks.my/ko/s/';
+  const { idx, thumbnail, channelIdx, channel, title, category, publishedAt } = content;
+  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
+  const { favorite, saveFavorite } = useFavorite(idx);
+  const { saveHistory } = useHistory(idx);
   const menuModalRef = useRef();
   const [isScroll, setScroll] = useState(0);
+
+  saveHistory(idx);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,8 +88,12 @@ function ContentDetail() {
           <button className={style.icon} onClick={() => navigate(-1)}>
             <BackIcon style={{ marginRight: '2px' }} />
           </button>
-          <button className={style.icon}>
-            <LikeUnfilledIcon width={14} height={14} fill="black" />
+          <button className={style.icon} onClick={saveFavorite}>
+            {favorite ? (
+              <LikeFilledIcon width={14} height={14} fill="black" />
+            ) : (
+              <LikeUnfilledIcon width={14} height={14} fill="black" />
+            )}
           </button>
         </div>
         <h1 onClick={() => navigate(`/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>

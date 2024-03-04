@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
 import { formatAgo } from 'utils/date';
-import { LikeUnfilledIcon, LikeFilledIcon, ViewIcon } from 'assets';
+import { LikeButton } from 'components';
+import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
@@ -12,7 +12,6 @@ const TypeC = ({ content }) => {
   const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
-  const [like, setLike] = useState(false);
 
   return (
     <li className="card" onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
@@ -34,20 +33,10 @@ const TypeC = ({ content }) => {
           <span>|</span>
           <span id="category">{category}</span>
         </div>
-        <div
-          className="like"
-          onClick={(e) => {
-            e.stopPropagation();
-            setLike(!like);
-          }}
-        >
+        <div className="like">
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount.toLocaleString('ko-KR')}</p>
-          {like ? (
-            <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
-          ) : (
-            <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
-          )}
+          <LikeButton idx={idx} />
         </div>
       </div>
     </li>

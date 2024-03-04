@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import style from 'styles/LikeContents.module.css';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
-import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { DetailListSkeleton, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
+import { DetailListSkeleton, TypeC } from 'components';
+import { BackIcon } from 'assets';
+import style from 'styles/LikeContents.module.css';
 
 function LikeContents() {
   const navigate = useNavigate();

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import style from 'styles/HistoryContents.module.css';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApi } from 'context/ApiContext';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { DetailListSkeleton, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
+import { DetailListSkeleton, TypeC } from 'components';
+import { useHistory } from 'hooks/history';
+import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
+import style from 'styles/HistoryContents.module.css';
 
 function HistoryContents() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ function HistoryContents() {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { clearHistory } = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +44,7 @@ function HistoryContents() {
           <BackIcon style={{ marginRight: '2px' }} />
         </button>
         <h1>{t(`menu.history`)}</h1>
-        <p>{t(`history.clear`)}</p>
+        <p onClick={clearHistory}>{t(`history.clear`)}</p>
       </header>
       <main>
         {loading || error || !contents ? (
