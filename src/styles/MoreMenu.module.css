@@ -1,8 +1,10 @@
 .modal__wrap {
   position: fixed;
-  left: 0;
+  left: calc(50% + 200px);
   top: 50px;
-  width: 100%;
+  transform: translateX(-50%);
+  min-width: 100px;
+  width: auto;
   text-align: center;
   color: var(--color-black);
   border-radius: 15px;
@@ -20,4 +22,10 @@
 
 .modal__wrap ul li:last-child {
   border-bottom: 0;
+}
+
+@media screen and (max-width: 540px) {
+  .modal__wrap {
+    left: calc(50% + 135px);
+  }
 }

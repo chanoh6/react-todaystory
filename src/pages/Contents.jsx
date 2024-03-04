@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useApi } from 'context/ApiContext';
-import { DetailListSkeleton, TypeC } from 'components';
-import { BackIcon, MoreIcon } from 'assets';
+import { useAPI } from 'context/APIContext_';
+import { DetailListSkeleton, Menu, TypeC } from 'components';
+import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
+import { useMenu } from 'hooks/home';
 import style from 'styles/Contents.module.css';
 
 function Contents() {
@@ -11,10 +12,11 @@ function Contents() {
     state: { title },
   } = useLocation();
   const navigate = useNavigate();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { showMenu, clickMenu } = useMenu();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +42,7 @@ function Contents() {
 
   return (
     <>
-      <header className={style.header}>
+      {/* <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
           <BackIcon style={{ marginRight: '2px' }} />
         </button>
@@ -48,6 +50,16 @@ function Contents() {
         <button className={style.icon}>
           <MoreIcon />
         </button>
+      </header> */}
+      <header className={style.header}>
+        <button onClick={() => navigate(-1)}>
+          <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
+        </button>
+        <h1>{title}</h1>
+        <button onClick={clickMenu}>
+          <MenuIcon width={20} height={20} fill={'black'} />
+        </button>
+        {showMenu && <Menu onClose={clickMenu} />}
       </header>
       <main>
         {loading || error || !contents ? (

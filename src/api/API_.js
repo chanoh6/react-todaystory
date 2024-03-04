@@ -1,4 +1,4 @@
-class Api {
+class API {
   constructor(apiClient) {
     this.apiClient = apiClient;
   }
@@ -36,4 +36,4 @@ class Api {
   }
 }
 
-export default Api;
+export default API;

@@ -73,7 +73,7 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 1;
-  padding: 8px 14px;
+  padding: 4px 10px 4px 14px;
 }
 
 /* .card__more svg {
@@ -85,6 +85,11 @@
   object-fit: contain;
   padding: 2px;
 } */
+
+.card__more button {
+  display: flex;
+  padding: 4px;
+}
 
 .date {
   display: flex;
@@ -99,5 +104,5 @@
 }
 
 .like p {
-  margin: 0 8px 0 4px;
+  margin: 0 4px;
 }

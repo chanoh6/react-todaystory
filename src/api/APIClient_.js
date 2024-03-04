@@ -6,7 +6,7 @@ import axios from 'axios';
  * 2. api url 변경
  * */
 
-class ApiClient {
+class APIClient {
   constructor() {
     this.httpClient = axios.create({
       baseURL: `/json/${process.env.REACT_APP_LOCALE}`,
@@ -42,4 +42,4 @@ class ApiClient {
   }
 }
 
-export default ApiClient;
+export default APIClient;

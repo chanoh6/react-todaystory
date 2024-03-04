@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from 'context/ApiContext';
+import { useAPI } from 'context/APIContext_';
 import { useTranslation } from 'react-i18next';
 import { DetailListSkeleton, TypeC } from 'components';
 import { useHistory } from 'hooks/history';
@@ -10,7 +10,7 @@ import style from 'styles/HistoryContents.module.css';
 function HistoryContents() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

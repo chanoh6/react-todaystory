@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useApi } from 'context/ApiContext';
+import { useAPI } from 'context/APIContext_';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
 import style from 'styles/Stories.module.css';
 
 function TopStories() {
   const { t } = useTranslation();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
