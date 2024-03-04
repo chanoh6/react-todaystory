@@ -7,6 +7,6 @@ register('ko', koLocale);
 register('ja', jaLocale);
 register('en', enLocale);
 
-export function formatAgo(date, lang = 'en_US') {
+export const formatAgo = (date, lang = 'en_US') => {
   return format(date, lang);
-}
+};

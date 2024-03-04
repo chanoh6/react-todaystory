@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'context/ApiContext';
+import { useAPI } from 'context/APIContext';
 import { TypeD } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
 function EditorsPick() {
   const { t } = useTranslation();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

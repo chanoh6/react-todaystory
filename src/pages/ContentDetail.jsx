@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
  * @TODOS
  * 1. 콘텐츠 상세 api 연결
  * 2. 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
- * 3. 좋아요 기능 추가
+ * -- 3. 좋아요 기능 추가
  * 4. 공유 기능 추가
  * 5. 더보기 메뉴 추가
  * 6. 에디터 스타일
@@ -23,6 +23,7 @@ import Loading from 'components/Loading';
 const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 
 function ContentDetail() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [info, setInfo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,7 +32,6 @@ function ContentDetail() {
   const {
     state: { content },
   } = useLocation();
-  const navigate = useNavigate();
   const spinner = useLoading();
   const { idx, thumbnail, channelIdx, channel, title, category, publishedAt, logo } = content;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
@@ -39,7 +39,9 @@ function ContentDetail() {
   const { saveHistory } = useHistory(idx);
   const menuModalRef = useRef();
   const [isScroll, setScroll] = useState(0);
+
   saveHistory(idx);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);

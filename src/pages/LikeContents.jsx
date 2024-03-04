@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useApi } from 'context/ApiContext';
+import { useAPI } from 'context/APIContext';
 import { useTranslation } from 'react-i18next';
 import { DetailListSkeleton, TypeC } from 'components';
 import { BackIcon } from 'assets';
@@ -9,7 +9,7 @@ import style from 'styles/LikeContents.module.css';
 function LikeContents() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

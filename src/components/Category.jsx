@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'context/ApiContext';
+import { useAPI } from 'context/APIContext';
 import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 function Category() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { api } = useApi();
+  const { api } = useAPI();
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

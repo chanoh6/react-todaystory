@@ -1,24 +1,25 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useMenu } from 'hooks/home';
 import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories } from 'components';
 import { SearchIcon, MenuIcon } from 'assets';
-import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
 
 /**
  * @TODOS
- * 1. 좋아요 기능 추가
+ * -- 1. 좋아요 기능 추가
  * 2. 상단 카테고리 swiper 적용
  * 3. 하단 카테고리 콘텐츠 무한 스크롤 적용
  * 4. 아이콘 함수 사용?
- * 5. formatAgo 다국어 설정 어떻게 할건지
+ * -- 5. formatAgo 다국어 설정 어떻게 할건지
+ * 6. 로딩 화면 확인
  */
 
 function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [showMenu, setShowMenu] = useState(false);
+  const { showMenu, clickMenu } = useMenu();
   const date = new Date();
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
 
@@ -40,10 +41,10 @@ function Home() {
           <button className={style.icon}>
             <SearchIcon width={20} height={20} fill={'black'} />
           </button>
-          <button className={style.icon} onClick={() => setShowMenu(true)}>
+          <button className={style.icon} onClick={clickMenu}>
             <MenuIcon width={20} height={20} fill={'black'} />
           </button>
-          {showMenu && <Menu onClose={() => setShowMenu(false)} />}
+          {showMenu && <Menu onClose={clickMenu} />}
         </div>
       </header>
 

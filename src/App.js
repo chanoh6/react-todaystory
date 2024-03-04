@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { ApiProvider } from 'context/ApiContext';
+import { APIProvider } from 'context/APIContext';
 import { ScrollToTop } from 'components';
 import 'styles/App.css';
 import { styled } from 'styled-components';
@@ -15,12 +16,12 @@ function App() {
   const loading = useLoading();
   return (
     <>
-      <ApiProvider>
+      <APIProvider>
         <FontWrapper>
           <ScrollToTop />
           {loading ? <Loading /> : <Outlet />}
         </FontWrapper>
-      </ApiProvider>
+      </APIProvider>
     </>
   );
 }
