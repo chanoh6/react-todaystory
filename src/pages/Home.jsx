@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useMenu } from 'hooks/home';
+import { useMenu } from 'hooks/useMenu';
+import { useHome } from 'hooks/useHome';
 import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories } from 'components';
 import { SearchIcon, MenuIcon } from 'assets';
 import cn from 'classnames';
@@ -17,25 +17,24 @@ import style from 'styles/Home.module.css';
  */
 
 function Home() {
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { showMenu, clickMenu } = useMenu();
-  const date = new Date();
+  const { showMenu, clickMenu, closeMenu } = useMenu();
+  const { clickLogo, clickFortune } = useHome();
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
+  const fortuneImg = `${baseImgURL}fortune.svg`;
+  const date = t(`header.date`, {
+    val: new Date(),
+    formatParams: {
+      val: { month: 'long', day: 'numeric' },
+    },
+  });
 
   return (
     <>
       <header className={style.header}>
         <hgroup className={style.logo}>
-          <h1 onClick={() => navigate('/')}>{t(`header.logo`)}</h1>
-          <h2>
-            {t(`header.date`, {
-              val: date,
-              formatParams: {
-                val: { month: 'long', day: 'numeric' },
-              },
-            })}
-          </h2>
+          <h1 onClick={clickLogo}>{t(`header.logo`)}</h1>
+          <h2>{date}</h2>
         </hgroup>
         <div className={style.menu}>
           <button className={style.icon}>
@@ -44,15 +43,15 @@ function Home() {
           <button className={style.icon} onClick={clickMenu}>
             <MenuIcon width={20} height={20} fill={'black'} />
           </button>
-          {showMenu && <Menu onClose={clickMenu} />}
+          {showMenu && <Menu onClose={closeMenu} />}
         </div>
       </header>
 
       <nav className={style.nav}>
         <Category />
         <div className={style.nav__ad}>
-          <button className={style.ad__item} onClick={() => window.open('http://s.sazoo.com/fortune/tarot.html')}>
-            <img src={`${baseImgURL}fortune.svg`} alt="category icon" />
+          <button className={style.ad__item} onClick={clickFortune}>
+            <img src={fortuneImg} alt="category icon" />
             <p>{t(`nav.fortune`)}</p>
           </button>
         </div>

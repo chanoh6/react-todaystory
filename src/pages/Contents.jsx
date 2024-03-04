@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
-import { DetailListSkeleton, Menu, TypeC } from 'components';
+import { ContentListSkeleton, Menu, TypeC } from 'components';
 import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
-import { useMenu } from 'hooks/home';
+import { useMenu } from 'hooks/useMenu';
 import style from 'styles/Contents.module.css';
 
 function Contents() {
@@ -16,7 +16,7 @@ function Contents() {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { showMenu, clickMenu } = useMenu();
+  const { showMenu, clickMenu, closeMenu } = useMenu();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,7 +25,6 @@ function Contents() {
       setContents(null);
 
       try {
-        // for test
         return api.category(6);
       } catch (e) {
         setError(e);
@@ -59,11 +58,11 @@ function Contents() {
         <button onClick={clickMenu}>
           <MenuIcon width={20} height={20} fill={'black'} />
         </button>
-        {showMenu && <Menu onClose={clickMenu} />}
+        {showMenu && <Menu onClose={closeMenu} />}
       </header>
       <main>
         {loading || error || !contents ? (
-          <DetailListSkeleton />
+          <ContentListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>

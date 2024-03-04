@@ -1,4 +1,3 @@
-import { useAPI } from 'context/APIContext';
 import { useState } from 'react';
 
 export const useMenu = () => {
@@ -8,9 +7,9 @@ export const useMenu = () => {
     setShowMenu((prev) => !prev);
   };
 
-  return { showMenu, clickMenu };
-};
+  const closeMenu = () => {
+    setShowMenu(false);
+  };
 
-export const useCategory = () => {
-  const { api } = useAPI();
+  return { showMenu, clickMenu, closeMenu };
 };

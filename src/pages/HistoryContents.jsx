@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
 import { useTranslation } from 'react-i18next';
-import { DetailListSkeleton, TypeC } from 'components';
-import { useHistory } from 'hooks/history';
+import { ContentListSkeleton, TypeC } from 'components';
+import { useHistory } from 'hooks/useHistory';
 import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
 import style from 'styles/HistoryContents.module.css';
 
@@ -48,7 +48,7 @@ function HistoryContents() {
       </header>
       <main>
         {loading || error || !contents ? (
-          <DetailListSkeleton />
+          <ContentListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>

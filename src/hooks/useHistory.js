@@ -1,4 +1,4 @@
-import { resaveLoaclStorage, clearLocalStorage } from 'utils/localStorage';
+import { clearLocalStorage, resaveLoaclStorage } from 'utils/localStorage';
 
 export const useHistory = (idx = null) => {
   const saveHistory = (idx) => {

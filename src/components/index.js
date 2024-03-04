@@ -16,7 +16,8 @@ export { default as CategoryStories } from 'components/CategoryStories';
 export { default as ChannelStories } from 'components/ChannelStories';
 
 export { default as ContentDetailSkeleton } from 'components/Skeleton/ContentDetail';
-export { default as DetailListSkeleton } from 'components/Skeleton/DetailList';
+export { default as ContentListSkeleton } from 'components/Skeleton/ContentList';
 export { default as StoriesSkeleton } from 'components/Skeleton/Stories';
 
+export { default as Loading } from 'components/Loading';
 export { default as ScrollToTop } from 'components/ScrollToTop';

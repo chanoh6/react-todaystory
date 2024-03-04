@@ -12,7 +12,7 @@ class API {
   }
 
   async category(idx) {
-    return this.apiClient.category(idx).then((res) => res.data.data);
+    return this.apiClient.category(idx).then((res) => res.data.data.contents);
   }
 
   async channelList() {

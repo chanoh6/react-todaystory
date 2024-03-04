@@ -1,36 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useAPI } from 'context/APIContext';
-import { StoriesSkeleton, TypeC } from 'components';
 import { useTranslation } from 'react-i18next';
+import { useBestStories } from 'hooks/useStories';
+import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
 function BestStories({ start }) {
   const { t } = useTranslation();
-  const { api } = useAPI();
-  const [contents, setContents] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setContents(null);
-
-      try {
-        return api.best(start);
-      } catch (e) {
-        setError(e);
-      }
-    };
-
-    fetchData().then((res) => {
-      setContents(res);
-      setTimeout(() => {
-        setLoading(false);
-      }, 300);
-    });
-  }, []);
+  const { loading, error, contents } = useBestStories(start);
 
   if (loading || error || !contents) return <StoriesSkeleton />;
 

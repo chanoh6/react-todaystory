@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
 import { useTranslation } from 'react-i18next';
-import { DetailListSkeleton, TypeC } from 'components';
+import { ContentListSkeleton, TypeC } from 'components';
 import { BackIcon } from 'assets';
 import style from 'styles/LikeContents.module.css';
 
@@ -45,7 +45,7 @@ function LikeContents() {
       </header>
       <main>
         {loading || error || !contents ? (
-          <DetailListSkeleton />
+          <ContentListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
