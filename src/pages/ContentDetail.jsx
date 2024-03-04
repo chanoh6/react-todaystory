@@ -6,7 +6,7 @@ import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFill
 import style from 'styles/ContentDetail.module.css';
 import { useFavorite } from 'hooks/useFavorite';
 import { useHistory } from 'hooks/useHistory';
-import { useLoading } from 'hooks/loading';
+import { useLoading } from 'hooks/useLoading';
 import Loading from 'components/Loading';
 
 /**

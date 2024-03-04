@@ -1,39 +1,39 @@
-export const checkLocalStorage = (name, idx) => {
-  let item = localStorage.getItem(name);
-  if (!item) return false;
-  item = JSON.parse(item);
-  item = new Set(item);
-  return item.has(idx);
+export const checkLocalStorage = (key, value) => {
+  let data = localStorage.getItem(key);
+  if (!data) return false;
+  data = JSON.parse(data);
+  data = new Set(data);
+  return data.has(value);
 };
 
-export const saveLocalStorage = (name, idx) => {
-  let item = localStorage.getItem(name);
-  item = item ? JSON.parse(item) : [];
-  item = new Set(item);
-  item.add(idx);
-  item = [...item];
-  localStorage.setItem(name, JSON.stringify(item));
+export const saveLocalStorage = (key, value) => {
+  let data = localStorage.getItem(key);
+  data = data ? JSON.parse(data) : [];
+  data = new Set(data);
+  data.add(value);
+  data = [...data];
+  localStorage.setItem(key, JSON.stringify(data));
 };
 
-export const resaveLoaclStorage = (name, idx) => {
-  let item = localStorage.getItem(name);
-  item = item ? JSON.parse(item) : [];
-  item = new Set(item);
-  if (item.has(idx)) item.delete(idx);
-  item.add(idx);
-  item = [...item];
-  localStorage.setItem(name, JSON.stringify(item));
-}
+export const resaveLoaclStorage = (key, value) => {
+  let data = localStorage.getItem(key);
+  data = data ? JSON.parse(data) : [];
+  data = new Set(data);
+  if (data.has(value)) data.delete(value);
+  data.add(value);
+  data = [...data];
+  localStorage.setItem(key, JSON.stringify(data));
+};
 
-export const deleteLocalStorage = (name, idx) => {
-  let item = localStorage.getItem(name);
-  if (item) {
-    item = JSON.parse(item);
-    item = item.filter((i) => i !== idx);
-    localStorage.setItem(name, JSON.stringify(item));
+export const deleteLocalStorage = (key, value) => {
+  let data = localStorage.getItem(key);
+  if (data) {
+    data = JSON.parse(data);
+    data = data.filter((i) => i !== value);
+    localStorage.setItem(key, JSON.stringify(data));
   }
 };
 
-export const clearLocalStorage = (name) => {
-  localStorage.removeItem(name);
-}
+export const clearLocalStorage = (key) => {
+  localStorage.removeItem(key);
+};

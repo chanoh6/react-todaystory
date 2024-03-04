@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { APIProvider } from 'context/APIContext';
 import { ScrollToTop } from 'components';
 import { styled } from 'styled-components';
-import { useLoading } from 'hooks/loading';
+import { useLoading } from 'hooks/useLoading';
 import Loading from 'components/Loading';
 import 'styles/App.css';
 

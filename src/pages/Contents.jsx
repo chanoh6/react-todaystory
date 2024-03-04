@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAPI } from 'context/APIContext';
 import { ContentListSkeleton, Menu, TypeC } from 'components';
 import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
 import { useMenu } from 'hooks/useMenu';
 import style from 'styles/Contents.module.css';
+import { useCategoryStories } from 'hooks/useContents';
 
 function Contents() {
   const { pageId } = useParams();
@@ -12,32 +11,8 @@ function Contents() {
     state: { title },
   } = useLocation();
   const navigate = useNavigate();
-  const { api } = useAPI();
-  const [contents, setContents] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { showMenu, clickMenu, closeMenu } = useMenu();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setContents(null);
-
-      try {
-        return api.category(6);
-      } catch (e) {
-        setError(e);
-      }
-    };
-
-    fetchData().then((res) => {
-      setContents(res.contents);
-      setTimeout(() => {
-        setLoading(false);
-      }, 300);
-    });
-  }, []);
+  const { loading, error, category, contents } = useCategoryStories(6);
 
   return (
     <>
@@ -61,12 +36,12 @@ function Contents() {
         {showMenu && <Menu onClose={closeMenu} />}
       </header>
       <main>
-        {loading || error || !contents ? (
+        {loading || error || !contents.contents ? (
           <ContentListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-              {contents.map((content, i) => (
+              {contents.contents.map((content, i) => (
                 <TypeC key={i} content={content} />
               ))}
             </ul>

@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAPI } from 'context/APIContext';
 import { useTranslation } from 'react-i18next';
+import { useCategoryStories } from 'hooks/useContents';
 import { ContentListSkeleton, TypeC } from 'components';
 import { useHistory } from 'hooks/useHistory';
 import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
@@ -10,32 +9,8 @@ import style from 'styles/HistoryContents.module.css';
 function HistoryContents() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { api } = useAPI();
-  const [contents, setContents] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { clearHistory } = useHistory();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setContents(null);
-
-      try {
-        return api.category(6);
-      } catch (e) {
-        setError(e);
-      }
-    };
-
-    fetchData().then((res) => {
-      setContents(res.contents);
-      setTimeout(() => {
-        setLoading(false);
-      }, 300);
-    });
-  }, []);
+  const { loading, error, category, contents } = useCategoryStories(6);
 
   return (
     <>
@@ -47,12 +22,12 @@ function HistoryContents() {
         <p onClick={clearHistory}>{t(`history.clear`)}</p>
       </header>
       <main>
-        {loading || error || !contents ? (
+        {loading || error || !contents.contents ? (
           <ContentListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-              {contents.map((content, i) => (
+              {contents.contents.map((content, i) => (
                 <TypeC key={i} content={content} />
               ))}
             </ul>

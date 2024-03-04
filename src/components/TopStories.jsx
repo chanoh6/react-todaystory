@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useTopStories } from 'hooks/useStories';
+import { useTopStories } from 'hooks/useContents';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 

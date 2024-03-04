@@ -55,7 +55,13 @@ export const useCategoryStories = (index) => {
     if (contents) {
       category.current = contents.category;
     }
-  }, []);
+  }, [contents]);
 
-  return { category, contents, loading, error };
+  return { loading, error, category, contents };
 };
+
+export const useChannelStories = (index) => {};
+
+export const useLikeStories = () => {};
+
+export const useHistoryStories = () => {};

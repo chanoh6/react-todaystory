@@ -7,8 +7,5 @@ export const useHome = () => {
 
   const clickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
-  return {
-    clickLogo,
-    clickFortune,
-  };
+  return { clickLogo, clickFortune };
 };

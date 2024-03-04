@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategoryStories } from 'hooks/useStories';
+import { useCategoryStories } from 'hooks/useContents';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
@@ -44,7 +44,7 @@ function CategoryStories({ list, index }) {
   const { t } = useTranslation();
   const { loading, error, category, contents } = useCategoryStories(index);
 
-  if (loading || error || !contents) return <StoriesSkeleton />;
+  if (loading || error || !contents.contents) return <StoriesSkeleton />;
 
   return (
     <>
@@ -58,7 +58,7 @@ function CategoryStories({ list, index }) {
           <ArrowRightIcon width={6} height={10} />
         </button>
       </div>
-      <ul className={style.list}>{getList(list, contents)}</ul>
+      <ul className={style.list}>{getList(list, contents.contents)}</ul>
     </>
   );
 }

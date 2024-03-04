@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategory } from 'hooks/useStories';
+import { useCategory } from 'hooks/useContents';
 import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 
