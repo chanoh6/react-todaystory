@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useAPI } from 'context/APIContext_';
+import { useAPI } from 'context/APIContext';
 import { DetailListSkeleton, Menu, TypeC } from 'components';
 import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
 import { useMenu } from 'hooks/home';

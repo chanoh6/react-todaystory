@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAPI } from 'context/APIContext_';
+import { useAPI } from 'context/APIContext';
 import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 

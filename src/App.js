@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { APIProvider } from 'context/APIContext_';
+import { APIProvider } from 'context/APIContext';
 import { ScrollToTop } from 'components';
 import 'styles/App.css';
 import { styled } from 'styled-components';

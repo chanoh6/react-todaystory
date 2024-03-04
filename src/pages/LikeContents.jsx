@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAPI } from 'context/APIContext_';
+import { useAPI } from 'context/APIContext';
 import { useTranslation } from 'react-i18next';
 import { DetailListSkeleton, TypeC } from 'components';
 import { BackIcon } from 'assets';

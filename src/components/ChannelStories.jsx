@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAPI } from 'context/APIContext_';
+import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 

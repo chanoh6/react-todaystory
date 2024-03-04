@@ -1,4 +1,4 @@
-import { useAPI } from 'context/APIContext_';
+import { useAPI } from 'context/APIContext';
 import { useState } from 'react';
 
 export const useMenu = () => {
