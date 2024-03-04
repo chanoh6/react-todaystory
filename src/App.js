@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 // 한국/글로벌/일본 별도 폰트 적용
 const FontWrapper = styled.div`
   font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
-  transform: scale(1);
 `;
 
 function App() {

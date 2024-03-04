@@ -1,5 +1,5 @@
 import React, { useEffect, useState, forwardRef } from 'react';
-import style from 'styles/MenuModal.module.css';
+import style from 'styles/MoreMenu.module.css';
 
 function MoreMenu() {
   const menuTitle = ['메뉴1', '메뉴2', '메뉴3', '메뉴4'];

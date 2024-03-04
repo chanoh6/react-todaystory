@@ -83,8 +83,8 @@ function ContentDetail() {
 
   return (
     <>
-      <header className={style.header} ref={menuModalRef}>
-        <div className={style.header__btn}>
+      <header className={style.header}>
+        <div className={style.header__btn} ref={menuModalRef}>
           <button className={style.icon} onClick={() => navigate(-1)}>
             <BackIcon style={{ marginRight: '2px' }} />
           </button>
@@ -106,6 +106,7 @@ function ContentDetail() {
           </button>
         </div>
       </header>
+      {isOpen ? <MoreMenu /> : ''}
       <main>
         {loading || error || !info ? (
           <ContentDetailSkeleton />
@@ -165,7 +166,6 @@ function ContentDetail() {
         </section>
       </main>
       <footer></footer>
-      {isOpen ? <MoreMenu /> : ''}
     </>
   );
 }
