@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { ContentDetailSkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu } from 'components';
 import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
-import { useFavorite } from 'hooks/favorite';
-import { useHistory } from 'hooks/history';
+import { useFavorite } from 'hooks/useFavorite';
+import { useHistory } from 'hooks/useHistory';
 import { useLoading } from 'hooks/loading';
 import Loading from 'components/Loading';
 
@@ -36,7 +36,9 @@ function ContentDetail() {
   const { idx, thumbnail, channelIdx, channel, title, category, publishedAt, logo } = content;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { favorite, saveFavorite } = useFavorite(idx);
-  const { saveHistory } = useHistory(idx);
+  const { saveHistory } = useHistory();
+  const menuModalRef = useRef();
+  const [isScroll, setScroll] = useState(0);
 
   saveHistory(idx);
 
