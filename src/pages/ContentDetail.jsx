@@ -37,8 +37,6 @@ function ContentDetail() {
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { favorite, saveFavorite } = useFavorite(idx);
   const { saveHistory } = useHistory(idx);
-  const menuModalRef = useRef();
-  const [isScroll, setScroll] = useState(0);
 
   saveHistory(idx);
 
