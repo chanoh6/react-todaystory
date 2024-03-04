@@ -39,37 +39,30 @@ function ContentDetail() {
   const { saveHistory } = useHistory(idx);
   const menuModalRef = useRef();
   const [isScroll, setScroll] = useState(0);
-
   saveHistory(idx);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
       setInfo(null);
     };
-
     fetchData().then(() => {
       setInfo(true);
       setTimeout(() => {
         setLoading(false);
       }, 300);
     });
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const handleScroll = () => {
     setScroll(window.scrollY);
   };
-
   useEffect(() => {
     setOpen(false);
   }, [isScroll]);
-
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
     const clickOutside = (e) => {
@@ -77,9 +70,7 @@ function ContentDetail() {
         setOpen(false);
       }
     };
-
     document.addEventListener('mousedown', clickOutside);
-
     return () => {
       document.removeEventListener('mousedown', clickOutside);
     };
@@ -186,5 +177,4 @@ function ContentDetail() {
     </>
   );
 }
-
 export default ContentDetail;
