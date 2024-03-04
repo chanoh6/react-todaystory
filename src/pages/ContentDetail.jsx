@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ContentDetailSkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu } from 'components';
 import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import style from 'styles/ContentDetail.module.css';
+import Modal from 'components/Modal/Modal';
 import { useFavorite } from 'hooks/favorite';
 import { useHistory } from 'hooks/history';
 
@@ -32,7 +33,9 @@ function ContentDetail() {
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
   const { favorite, saveFavorite } = useFavorite(idx);
   const { saveHistory } = useHistory(idx);
-  
+  const menuModalRef = useRef();
+  const [isScroll, setScroll] = useState(0);
+
   saveHistory(idx);
 
   useEffect(() => {
@@ -48,12 +51,40 @@ function ContentDetail() {
         setLoading(false);
       }, 300);
     });
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+  };
+
+  useEffect(() => {
+    setOpen(false);
+  }, [isScroll]);
+
+  //모달창 바깥 영역 클릭시 닫힘
+  useEffect(() => {
+    const clickOutside = (e) => {
+      if (isOpen && menuModalRef.current && !menuModalRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', clickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <>
       <header className={style.header}>
-        <div className={style.header__btn}>
+        <div className={style.header__btn} ref={menuModalRef}>
           <button className={style.icon} onClick={() => navigate(-1)}>
             <BackIcon style={{ marginRight: '2px' }} />
           </button>
@@ -72,10 +103,10 @@ function ContentDetail() {
           </button>
           <button className={style.icon} onClick={() => setOpen(!isOpen)}>
             <MoreIcon />
-            {isOpen ? <MoreMenu /> : ''}
           </button>
         </div>
       </header>
+      {isOpen ? <MoreMenu /> : ''}
       <main>
         {loading || error || !info ? (
           <ContentDetailSkeleton />

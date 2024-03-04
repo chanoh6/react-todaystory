@@ -1,8 +1,8 @@
 .modal__wrap {
-  width: 40%;
-  position: absolute;
-  top: 1%;
-  right: 5%;
+  position: fixed;
+  left: 0;
+  top: 50px;
+  width: 100%;
   text-align: center;
   color: var(--color-black);
   border-radius: 15px;
