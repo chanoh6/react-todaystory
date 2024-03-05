@@ -1,8 +1,8 @@
 import Skeleton from 'react-loading-skeleton';
-import style from 'styles/LikeContents.module.css';
+import style from 'styles/FavoriteStories.module.css';
 import card from 'styles/TypeC.module.css';
 
-export default function DetailList() {
+export default function CardList() {
   return (
     <section className={style.content__wrap}>
       <ul className={style.list}>

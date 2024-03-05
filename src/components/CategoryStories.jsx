@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategoryStories } from 'hooks/useContents';
+import { useCategoryStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
+import { useEffect, useState } from 'react';
 
 const getList = (list, contents) => {
   switch (list) {
@@ -44,15 +45,26 @@ function CategoryStories({ list, index }) {
   const { t } = useTranslation();
   const { loading, error, category, contents } = useCategoryStories(index);
 
+  // for test
+  const [color, setColor] = useState(null);
+  const colors = ['#FEBD1A', '#4ACAA8', '#F05650'];
+  const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min);
+
+  useEffect(() => {
+    setColor(getRandom(0, colors.length));
+  }, [color]);
+
   if (loading || error || !contents.contents) return <StoriesSkeleton />;
 
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title}>{category.current}</h1>
+        <h1 className={style.title} style={{ color: colors[color] }}>
+          {category.current}
+        </h1>
         <button
           className={style.btn__more}
-          onClick={() => navigate(`/${index}`, { state: { title: category.current } })}
+          onClick={() => navigate(`/category/${index}`, { state: { title: category.current } })}
         >
           <p>{t(`main.more`)}</p>
           <ArrowRightIcon width={6} height={10} />

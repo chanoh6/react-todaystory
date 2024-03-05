@@ -3,13 +3,13 @@ import { useState } from 'react';
 export const useMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
 
-  const clickMenu = () => {
+  const handleClickMenu = () => {
     setShowMenu((prev) => !prev);
   };
 
-  const closeMenu = () => {
+  const handleCloseMenu = () => {
     setShowMenu(false);
   };
 
-  return { showMenu, clickMenu, closeMenu };
+  return { showMenu, handleClickMenu, handleCloseMenu };
 };

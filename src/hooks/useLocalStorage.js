@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { checkLocalStorage, deleteLocalStorage, saveLocalStorage } from 'utils/localStorage';
+import {
+  checkLocalStorage,
+  resaveLoaclStorage,
+  saveLocalStorage,
+  deleteLocalStorage,
+  clearLocalStorage,
+} from 'utils/localStorage';
 
 export const useFavorite = (idx) => {
   const [favorite, setFavorite] = useState(false);
@@ -21,4 +27,16 @@ export const useFavorite = (idx) => {
   };
 
   return { favorite, saveFavorite };
+};
+
+export const useHistory = (idx = null) => {
+  const saveHistory = (idx) => {
+    resaveLoaclStorage('history', idx);
+  };
+
+  const clearHistory = () => {
+    clearLocalStorage('history');
+  };
+
+  return { saveHistory, clearHistory };
 };

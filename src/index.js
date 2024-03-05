@@ -1,9 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  Home,
+  Story,
+  CategoryStories,
+  ChannelStories,
+  FavoriteStories,
+  HistoryStories,
+  NotFound,
+  PrivacyPolicy,
+  TermsOfService,
+} from 'pages';
 import 'styles/index.css';
 import App from 'App';
-import { Home, ContentDetail, Contents, NotFound, LikeContents, HistoryContents } from 'pages';
 import 'locales/i18n';
 
 /**
@@ -19,10 +29,13 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'view/:contentId', element: <ContentDetail /> },
-      { path: ':pageId', element: <Contents /> },
-      { path: 'like', element: <LikeContents /> },
-      { path: 'recently', element: <HistoryContents /> },
+      { path: 'view/:contentId', element: <Story /> },
+      { path: 'category/:pageId', element: <CategoryStories /> },
+      { path: 'channel/:pageId', element: <ChannelStories /> },
+      { path: 'favorite', element: <FavoriteStories /> },
+      { path: 'history', element: <HistoryStories /> },
+      { path: 'policy/privacy', element: <PrivacyPolicy /> },
+      { path: 'policy/service', element: <TermsOfService /> },
     ],
   },
 ]);

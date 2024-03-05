@@ -32,24 +32,24 @@ const useDataFetching = (apiFunction, ...args) => {
 };
 
 export const useCategory = () => {
-  return useDataFetching((api) => api.categoryList());
+  return useDataFetching((api) => api.category());
 };
 
 export const useTopStories = () => {
-  return useDataFetching((api) => api.top());
+  return useDataFetching((api) => api.topStories());
 };
 
 export const useBestStories = (start) => {
-  return useDataFetching((api) => api.best(start), start);
+  return useDataFetching((api) => api.bestStories(start), start);
 };
 
 export const useEditorsPick = () => {
-  return useDataFetching((api) => api.editors());
+  return useDataFetching((api) => api.editorsPick());
 };
 
 export const useCategoryStories = (index) => {
   const category = useRef(null);
-  const { loading, error, contents } = useDataFetching((api) => api.category(index), index);
+  const { loading, error, contents } = useDataFetching((api) => api.categoryStories(index), index);
 
   useEffect(() => {
     if (contents) {

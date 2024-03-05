@@ -1,10 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'hooks/useMenu';
-import { useHome } from 'hooks/useHome';
-import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories } from 'components';
+import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories, Loading } from 'components';
 import { SearchIcon, MenuIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
+import { useLoading } from 'hooks/useLoading';
 
 /**
  * @TODOS
@@ -17,9 +18,10 @@ import style from 'styles/Home.module.css';
  */
 
 function Home() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { showMenu, clickMenu, closeMenu } = useMenu();
-  const { clickLogo, clickFortune } = useHome();
+  const { showMenu, handleClickMenu, handleCloseMenu } = useMenu();
+  const { loading } = useLoading();
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
   const fortuneImg = `${baseImgURL}fortune.svg`;
   const date = t(`header.date`, {
@@ -28,29 +30,33 @@ function Home() {
       val: { month: 'long', day: 'numeric' },
     },
   });
+  const handleClickLogo = () => navigate('/');
+  const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
+
+  if (loading) return <Loading />;
 
   return (
     <>
       <header className={style.header}>
         <hgroup className={style.logo}>
-          <h1 onClick={clickLogo}>{t(`header.logo`)}</h1>
+          <h1 onClick={handleClickLogo}>{t(`header.logo`)}</h1>
           <h2>{date}</h2>
         </hgroup>
         <div className={style.menu}>
           <button className={style.icon}>
             <SearchIcon width={20} height={20} fill={'black'} />
           </button>
-          <button className={style.icon} onClick={clickMenu}>
+          <button className={style.icon} onClick={handleClickMenu}>
             <MenuIcon width={20} height={20} fill={'black'} />
           </button>
-          {showMenu && <Menu onClose={closeMenu} />}
+          {showMenu && <Menu onClose={handleCloseMenu} />}
         </div>
       </header>
 
       <nav className={style.nav}>
         <Category />
         <div className={style.nav__ad}>
-          <button className={style.ad__item} onClick={clickFortune}>
+          <button className={style.ad__item} onClick={handleClickFortune}>
             <img src={fortuneImg} alt="category icon" />
             <p>{t(`nav.fortune`)}</p>
           </button>

@@ -1,6 +1,6 @@
 import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
-import { useBestStories } from 'hooks/useContents';
+import { useBestStories } from 'hooks/useStories';
 
 function ChannelStories({ title }) {
   const { loading, error, contents } = useBestStories(1);

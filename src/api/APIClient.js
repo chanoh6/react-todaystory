@@ -13,31 +13,31 @@ class APIClient {
     });
   }
 
-  async categoryList() {
-    return this.httpClient.get(`/categoryList.json`);
+  async category() {
+    return this.httpClient.get(`/category.json`);
   }
 
-  async category(idx) {
-    return this.httpClient.get(`/category${idx}.json`);
+  async categoryStories(idx) {
+    return this.httpClient.get(`/categoryStories${idx}.json`);
   }
 
-  async channelList() {
-    return this.httpClient.get(`/channelList.json`);
+  async channel() {
+    return this.httpClient.get(`/channel.json`);
   }
 
-  async channel(idx) {
-    return this.httpClient.get(`/channel${idx}.json`);
+  async channelStories(idx) {
+    return this.httpClient.get(`/channelStories${idx}.json`);
   }
 
-  async top() {
+  async topStories() {
     return this.httpClient.get(`/topStories.json`);
   }
 
-  async best(index) {
+  async bestStories(index) {
     return this.httpClient.get(`/bestStories${index}.json`);
   }
 
-  async editors() {
+  async editorsPick() {
     return this.httpClient.get(`/editorsPick.json`);
   }
 }

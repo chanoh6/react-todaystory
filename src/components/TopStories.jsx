@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useTopStories } from 'hooks/useContents';
+import { useTopStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
@@ -12,7 +12,9 @@ function TopStories() {
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title}>{t(`main.top`)}</h1>
+        <h1 className={style.title} style={{ color: `var(--color-dark-blue)` }}>
+          {t(`main.top`)}
+        </h1>
       </div>
       <ul className={style.list}>
         <TypeA key={0} content={contents[0]} />

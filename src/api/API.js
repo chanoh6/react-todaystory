@@ -7,32 +7,32 @@ class API {
    * @TODOS : 정리 필요
    */
 
-  async categoryList() {
-    return this.apiClient.categoryList().then((res) => res.data.data);
+  async category() {
+    return this.apiClient.category().then((res) => res.data.data);
   }
 
-  async category(idx) {
-    return this.apiClient.category(idx).then((res) => res.data.data);
+  async categoryStories(idx) {
+    return this.apiClient.categoryStories(idx).then((res) => res.data.data);
   }
 
-  async channelList() {
-    return this.apiClient.channelList().then((res) => res.data.data);
+  async channel() {
+    return this.apiClient.channel().then((res) => res.data.data);
   }
 
-  async channel(idx) {
-    return this.apiClient.channel(idx).then((res) => res.data.data);
+  async channelStories(idx) {
+    return this.apiClient.channelStories(idx).then((res) => res.data.data);
   }
 
-  async top() {
-    return this.apiClient.top().then((res) => res.data.data);
+  async topStories() {
+    return this.apiClient.topStories().then((res) => res.data.data);
   }
 
-  async best(index) {
-    return this.apiClient.best(index).then((res) => res.data.data);
+  async bestStories(index) {
+    return this.apiClient.bestStories(index).then((res) => res.data.data);
   }
 
-  async editors() {
-    return this.apiClient.editors().then((res) => res.data.data);
+  async editorsPick() {
+    return this.apiClient.editorsPick().then((res) => res.data.data);
   }
 }
 

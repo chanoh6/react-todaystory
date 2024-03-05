@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CloseIcon, LikeFilledIcon, ClockIcon, ArrowRightIcon } from 'assets';
-import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
@@ -28,11 +28,11 @@ function Menu({ onClose }) {
         </div>
         <div className={style.menu}>
           <ul>
-            <li className={style.menu__item} onClick={() => navigate('/like')}>
+            <li className={style.menu__item} onClick={() => navigate('/favorite')}>
               <LikeFilledIcon width={18} height={18} fill={'var(--color-blue)'} />
               <p>{t(`menu.favorites`)}</p>
             </li>
-            <li className={style.menu__item} onClick={() => navigate('/recently')}>
+            <li className={style.menu__item} onClick={() => navigate('/history')}>
               <ClockIcon width={18} height={18} fill={'var(--color-purple)'} />
               <p>{t(`menu.history`)}</p>
             </li>
@@ -61,7 +61,8 @@ function Menu({ onClose }) {
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
-            <span>{t(`menu.privacy`)}</span>|<span>{t(`menu.terms`)}</span>
+            <span onClick={() => navigate('/policy/privacy')}>{t(`menu.privacy`)}</span>|
+            <span onClick={() => navigate('/policy/service')}>{t(`menu.service`)}</span>
           </div>
           <p>{t(`menu.copyright`, { year })}</p>
         </div>

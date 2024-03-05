@@ -21,6 +21,13 @@
   cursor: pointer;
 }
 
+.item__skeleton {
+  flex: 0 0 auto;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .item:active,
 .item.active {
   background-color: var(--color-black);

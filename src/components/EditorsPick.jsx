@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useEditorsPick } from 'hooks/useContents';
+import { useEditorsPick } from 'hooks/useStories';
 import { TypeD } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';

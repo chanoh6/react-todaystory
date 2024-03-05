@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategory } from 'hooks/useContents';
+import { useCategory } from 'hooks/useStories';
 import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 
@@ -14,7 +14,7 @@ function Category() {
     return (
       <ul className={style.list}>
         {new Array(10).fill(1).map((_, i) => (
-          <Skeleton key={i} width={'100px'} className={style.item} />
+          <Skeleton key={i} width={'100px'} className={style.item__skeleton} />
         ))}
       </ul>
     );
@@ -27,7 +27,11 @@ function Category() {
         <p>{t(`nav.all`)}</p>
       </li>
       {contents.map((cat, i) => (
-        <li key={i + 1} className={style.item} onClick={() => navigate(`/${cat.idx}`, { state: { title: cat.name } })}>
+        <li
+          key={i + 1}
+          className={style.item}
+          onClick={() => navigate(`/category/${cat.idx}`, { state: { title: cat.name } })}
+        >
           <figure className={style.icon}>
             <img src={`${baseImgURL}${cat.icon}`} alt="category icon" />
           </figure>

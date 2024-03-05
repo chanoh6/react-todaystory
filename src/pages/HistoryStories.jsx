@@ -1,29 +1,41 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategoryStories } from 'hooks/useContents';
-import { ContentListSkeleton, TypeC } from 'components';
-import { useHistory } from 'hooks/useHistory';
+import { useCategoryStories } from 'hooks/useStories';
+import { useHistory } from 'hooks/useLocalStorage';
+import { CardListSkeleton, Loading, TypeC } from 'components';
 import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
-import style from 'styles/HistoryContents.module.css';
+import style from 'styles/HistoryStories.module.css';
+import { ArrowRightIcon } from 'assets';
 
-function HistoryContents() {
+function HistoryStories() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { clearHistory } = useHistory();
   const { loading, error, category, contents } = useCategoryStories(6);
 
+  if (loading || error) return <Loading />;
+
   return (
     <>
-      <header className={style.header}>
+      {/* <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
           <BackIcon style={{ marginRight: '2px' }} />
         </button>
         <h1>{t(`menu.history`)}</h1>
         <p onClick={clearHistory}>{t(`history.clear`)}</p>
+      </header> */}
+
+      <header className={style.header}>
+        <button onClick={() => navigate(-1)}>
+          <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
+        </button>
+        <h1>{t(`menu.history`)}</h1>
+        <p onClick={clearHistory}>{t(`history.clear`)}</p>
       </header>
+
       <main>
-        {loading || error || !contents.contents ? (
-          <ContentListSkeleton />
+        {!contents.contents ? (
+          <CardListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
@@ -38,4 +50,4 @@ function HistoryContents() {
   );
 }
 
-export default HistoryContents;
+export default HistoryStories;

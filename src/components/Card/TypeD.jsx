@@ -1,48 +1,44 @@
-import { useNavigate } from "react-router-dom";
-import { formatAgo } from "utils/date";
-import { LikeButton } from "components";
-import { ViewIcon } from "assets";
+import { useCard } from 'hooks/useCard';
+import { LikeButton } from 'components';
+import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
-
 const TypeD = ({ content }) => {
-  const navigate = useNavigate();
-  const locale = process.env.REACT_APP_LOCALE;
-  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
-  const { idx, thumbnail, logo, channel, title, category, publishedAt, viewCount } = content;
+  const { idx, category, channel, title, thumbnail, logo, publishedAt, viewCount, handleClick, onErrorImg } =
+    useCard(content);
 
   return (
-    <article className={style.card} onClick={() => navigate(`/view/${idx}`, { state: { content } })}>
+    <article className={style.card} onClick={handleClick}>
       <div className={style.card__img}>
         <figure className={style.thumbnail}>
-          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
+          <img src={thumbnail} alt="thumbnail" onError={onErrorImg} />
         </figure>
         <figure className={style.background}>
-          <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="background" />
+          <img src={thumbnail} alt="background" onError={onErrorImg} />
         </figure>
       </div>
       <div className="card__title">
         <div className="cp">
-          <img src={`${baseURL}cp/${logo}`} alt="cp logo" />
+          <img src={logo} alt="cp logo" onError={onErrorImg} />
           <p>{channel}</p>
         </div>
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedAt">{formatAgo(publishedAt, locale)}</span>
+          <span id="publishedAt">{publishedAt}</span>
           <span>|</span>
           <span id="category">{category}</span>
         </div>
         <div className="like">
           <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
           <p id="viewCount">{viewCount}</p>
-          <LikeButton idx={idx}/>
+          <LikeButton idx={idx} />
         </div>
       </div>
     </article>
   );
-}
+};
 
 export default TypeD;

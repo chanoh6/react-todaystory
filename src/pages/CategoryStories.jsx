@@ -1,43 +1,36 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ContentListSkeleton, Menu, TypeC } from 'components';
-import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
 import { useMenu } from 'hooks/useMenu';
-import style from 'styles/Contents.module.css';
-import { useCategoryStories } from 'hooks/useContents';
+import { useCategoryStories } from 'hooks/useStories';
+import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
+import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
+import style from 'styles/CategoryStories.module.css';
 
-function Contents() {
+function CategoryStories() {
   const { pageId } = useParams();
   const {
     state: { title },
   } = useLocation();
   const navigate = useNavigate();
-  const { showMenu, clickMenu, closeMenu } = useMenu();
+  const { showMenu, handleClickMenu, handleCloseMenu } = useMenu();
   const { loading, error, category, contents } = useCategoryStories(6);
+
+  if (loading || error) return <Loading />;
 
   return (
     <>
-      {/* <header className={style.header}>
-        <button className={style.icon} onClick={() => navigate(-1)}>
-          <BackIcon style={{ marginRight: '2px' }} />
-        </button>
-        <h1>{title}</h1>
-        <button className={style.icon}>
-          <MoreIcon />
-        </button>
-      </header> */}
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
           <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
         </button>
         <h1>{title}</h1>
-        <button onClick={clickMenu}>
+        <button onClick={handleClickMenu}>
           <MenuIcon width={20} height={20} fill={'black'} />
         </button>
-        {showMenu && <Menu onClose={closeMenu} />}
+        {showMenu && <Menu onClose={handleCloseMenu} />}
       </header>
       <main>
-        {loading || error || !contents.contents ? (
-          <ContentListSkeleton />
+        {!contents.contents ? (
+          <CardListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
@@ -52,4 +45,4 @@ function Contents() {
   );
 }
 
-export default Contents;
+export default CategoryStories;

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useBestStories } from 'hooks/useContents';
+import { useBestStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
