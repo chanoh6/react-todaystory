@@ -21,6 +21,11 @@
   flex: 1;
 }
 
+.header button {
+  display: flex;
+  padding: 2px;
+}
+
 .icon {
   display: flex;
   justify-content: center;

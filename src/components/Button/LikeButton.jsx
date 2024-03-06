@@ -7,9 +7,9 @@ const LikeButton = ({ idx }) => {
   return (
     <button onClick={saveFavorite}>
       {favorite ? (
-        <LikeFilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+        <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
       ) : (
-        <LikeUnfilledIcon width={16} height={16} fill={'var(--color-blue)'} />
+        <LikeUnfilledIcon width={18} height={16} fill={'var(--color-blue)'} />
       )}
     </button>
   );

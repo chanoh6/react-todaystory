@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategoryStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
-import { useEffect, useState } from 'react';
 
 const getList = (list, contents) => {
   switch (list) {

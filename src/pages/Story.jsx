@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading } from 'components';
-import { BackIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
+import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
+import cn from 'classnames';
 import style from 'styles/Story.module.css';
 
 /**
@@ -25,7 +26,7 @@ function Story() {
   const {
     state: { content },
   } = useLocation();
-  const { idx, thumbnail, channelIdx, channel, title, category, publishedAt, logo } = content;
+  const { idx, thumbnail, channelIdx, channel, title, publishedAt, logo } = content;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
 
   const [info, setInfo] = useState(null);
@@ -92,22 +93,22 @@ function Story() {
       <header className={style.header}>
         <div className={style.header__btn}>
           <button className={style.icon} onClick={() => navigate(-1)}>
-            <BackIcon style={{ marginRight: '2px' }} />
+            <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
           </button>
           <button className={style.icon} onClick={saveFavorite}>
             {favorite ? (
-              <LikeFilledIcon width={14} height={14} fill="black" />
+              <LikeFilledIcon width={16} height={14} fill="black" style={{ marginBottom: '1px' }} />
             ) : (
-              <LikeUnfilledIcon width={14} height={14} fill="black" />
+              <LikeUnfilledIcon width={16} height={14} fill="black" style={{ marginBottom: '1px' }} />
             )}
           </button>
         </div>
         <h1 onClick={() => navigate(`/channel/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
         <div className={style.header__btn}>
           <button className={style.icon}>
-            <ShareIcon style={{ marginBottom: '2px' }} />
+            <ShareIcon style={{ marginBottom: '1px' }} />
           </button>
-          <button className={style.icon} ref={moreMenuRef} onClick={handleMoreMenu}>
+          <button className={cn(style.icon, isOpen && style.active)} ref={moreMenuRef} onClick={handleMoreMenu}>
             <MoreIcon />
           </button>
         </div>

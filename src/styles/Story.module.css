@@ -32,9 +32,11 @@
   border-radius: 100%;
   background-color: var(--color-light-gray);
   cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
 }
 
-.icon:active {
+.icon:active,
+.icon.active {
   opacity: 0.5;
 }
 
@@ -108,7 +110,7 @@
   text-overflow: ellipsis;
   white-space: normal;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-black);
   overflow: hidden;
 }

@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useMenu } from 'hooks/useMenu';
 import { useCategoryStories } from 'hooks/useStories';
 import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
-import { ArrowRightIcon, BackIcon, MenuIcon, MoreIcon } from 'assets';
+import { ArrowLeftIcon, MenuIcon, MoreIcon } from 'assets';
 import style from 'styles/CategoryStories.module.css';
 
 function CategoryStories() {
@@ -20,11 +20,11 @@ function CategoryStories() {
     <>
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
-          <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
+          <ArrowLeftIcon width={12} height={20} />
         </button>
         <h1>{title}</h1>
         <button onClick={handleClickMenu}>
-          <MenuIcon width={20} height={20} fill={'black'} />
+          <MenuIcon width={20} height={20} fill={'var(--color-black)'} />
         </button>
         {showMenu && <Menu onClose={handleCloseMenu} />}
       </header>

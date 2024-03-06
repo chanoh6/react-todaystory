@@ -1,20 +1,21 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useLoading } from 'hooks/useLoading';
 import { useMenu } from 'hooks/useMenu';
 import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories, Loading } from 'components';
-import { SearchIcon, MenuIcon } from 'assets';
+import { SearchIcon, MenuIcon, LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
-import { useLoading } from 'hooks/useLoading';
 
 /**
  * @TODOS
  * -- 1. 좋아요 기능 추가
  * 2. 상단 카테고리 swiper 적용
- * 3. 하단 카테고리 콘텐츠 무한 스크롤 적용
- * 4. 아이콘 함수 사용?
+ * 3. 무한 스크롤 구현
+ * -- 4. 아이콘 함수 사용? 나중에
  * -- 5. formatAgo 다국어 설정 어떻게 할건지
- * 6. 로딩 화면 확인
+ * -- 6. 로딩 화면 확인
+ * 7. 로딩 화면 고도화
  */
 
 function Home() {
@@ -22,8 +23,6 @@ function Home() {
   const { t } = useTranslation();
   const { showMenu, handleClickMenu, handleCloseMenu } = useMenu();
   const { loading } = useLoading();
-  const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
-  const fortuneImg = `${baseImgURL}fortune.svg`;
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
@@ -44,10 +43,10 @@ function Home() {
         </hgroup>
         <div className={style.menu}>
           <button className={style.icon}>
-            <SearchIcon width={20} height={20} fill={'black'} />
+            <SearchIcon width={20} height={20} fill={'var(--color-black)'} />
           </button>
           <button className={style.icon} onClick={handleClickMenu}>
-            <MenuIcon width={20} height={20} fill={'black'} />
+            <MenuIcon width={20} height={20} fill={'var(--color-black)'} />
           </button>
           {showMenu && <Menu onClose={handleCloseMenu} />}
         </div>
@@ -57,7 +56,7 @@ function Home() {
         <Category />
         <div className={style.nav__ad}>
           <button className={style.ad__item} onClick={handleClickFortune}>
-            <img src={fortuneImg} alt="category icon" />
+            <LuckIcon width={18} height={20} fill="var(--color-black)" />
             <p>{t(`nav.fortune`)}</p>
           </button>
         </div>

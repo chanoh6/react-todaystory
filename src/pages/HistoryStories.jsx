@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useCategoryStories } from 'hooks/useStories';
 import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, TypeC } from 'components';
-import { ReactComponent as BackIcon } from 'assets/icon/Back.svg';
 import style from 'styles/HistoryStories.module.css';
-import { ArrowRightIcon } from 'assets';
+import { ArrowLeftIcon } from 'assets';
 
 function HistoryStories() {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ function HistoryStories() {
     <>
       {/* <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
-          <BackIcon style={{ marginRight: '2px' }} />
+          <ArrowLeftIcon width={12} height={20} style={{ marginRight: '2px' }} />
         </button>
         <h1>{t(`menu.history`)}</h1>
         <p onClick={clearHistory}>{t(`history.clear`)}</p>
@@ -27,7 +26,7 @@ function HistoryStories() {
 
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
-          <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
+          <ArrowLeftIcon width={12} height={20} />
         </button>
         <h1>{t(`menu.history`)}</h1>
         <p onClick={clearHistory}>{t(`history.clear`)}</p>

@@ -1,31 +1,41 @@
 .modal__wrap {
   position: fixed;
-  left: calc(50% + 200px);
+  left: calc(50% + 152px);
   top: 50px;
   transform: translateX(-50%);
-  min-width: 100px;
+  min-width: 200px;
   width: auto;
   text-align: center;
   color: var(--color-black);
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.85);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(15px);
   z-index: 10;
-  box-shadow: -1px 6px 5px 0px #0000001f;
+  box-shadow: -1px 5px 55px 0px var(--border-color);
 }
 
 .modal__wrap ul li {
-  border-bottom: 1px solid #bcbbb9;
-  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 15px 8px 30px;
 }
 
 .modal__wrap ul li:last-child {
   border-bottom: 0;
 }
 
+.modal__wrap ul li p {
+  font-size: 15px;
+  text-align: left;
+}
+
 @media screen and (max-width: 540px) {
   .modal__wrap {
-    left: calc(50% + 135px);
+    left: unset;
+    right: 0;
+    transform: none;
+    margin-right: 17px;
   }
 }

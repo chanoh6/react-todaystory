@@ -1,14 +1,19 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import { ArrowRightIcon } from 'assets';
 import style from 'styles/MoreMenu.module.css';
 
 function MoreMenu() {
-  const menuTitle = ['메뉴1', '메뉴2', '메뉴3', '메뉴4'];
+  const menuTitle = ['링크 복사', '채널 보러가기'];
 
   return (
     <div className={style.modal__wrap}>
       <ul>
         {menuTitle.map((category, idx) => {
-          return <li key={idx}>{category}</li>;
+          return (
+            <li key={idx}>
+              <p>{category}</p>
+              <ArrowRightIcon width={6} height={10} />
+            </li>
+          );
         })}
       </ul>
     </div>

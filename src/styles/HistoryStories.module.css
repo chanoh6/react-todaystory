@@ -21,6 +21,11 @@
   flex: 1;
 }
 
+.header button {
+  display: flex;
+  padding: 2px;
+}
+
 .header p {
   color: var(--color-red);
   font-size: 14px;

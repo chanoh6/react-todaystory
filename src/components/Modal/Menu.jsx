@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { CloseIcon, LikeFilledIcon, ClockIcon, ArrowRightIcon } from 'assets';
+import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
@@ -29,18 +29,18 @@ function Menu({ onClose }) {
         <div className={style.menu}>
           <ul>
             <li className={style.menu__item} onClick={() => navigate('/favorite')}>
-              <LikeFilledIcon width={18} height={18} fill={'var(--color-blue)'} />
+              <LikeFilledIcon width={20} height={18} fill={'var(--color-blue)'} />
               <p>{t(`menu.favorites`)}</p>
             </li>
             <li className={style.menu__item} onClick={() => navigate('/history')}>
-              <ClockIcon width={18} height={18} fill={'var(--color-purple)'} />
+              <HistoryIcon width={20} height={18} fill={'var(--color-purple)'} />
               <p>{t(`menu.history`)}</p>
             </li>
           </ul>
           <div className={style.menu__drop}>
             <button onClick={() => setShowCategory(!showCategory)}>
               <p>{t(`menu.category`)}</p>
-              <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showCategory })} />
+              <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showCategory })} />
             </button>
             <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
               <li className={style.drop__item}>
@@ -54,7 +54,7 @@ function Menu({ onClose }) {
           <div className={style.menu__drop}>
             <button onClick={() => setShowChannel(!showChannel)}>
               <p>{t(`menu.channel`)}</p>
-              <ArrowRightIcon width={8} height={12} className={cn({ [style.active]: showChannel })} />
+              <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showChannel })} />
             </button>
             <ul className={cn(style.drop__list, { [style.active]: showChannel })}></ul>
           </div>

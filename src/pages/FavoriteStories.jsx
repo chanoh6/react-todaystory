@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategoryStories } from 'hooks/useStories';
 import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
-import { ArrowRightIcon, BackIcon } from 'assets';
+import { ArrowRightIcon, ArrowLeftIcon } from 'assets';
 import style from 'styles/FavoriteStories.module.css';
 
 function FavoriteStories() {
@@ -16,14 +16,14 @@ function FavoriteStories() {
     <>
       {/* <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
-          <BackIcon style={{ marginRight: '2px' }} />
+          <ArrowLeftIcon width={12} height={20} style={{ marginRight: '2px' }} />
         </button>
         <h1>{t(`menu.favorites`)}</h1>
       </header> */}
 
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
-          <ArrowRightIcon width={10} height={20} style={{ rotate: '180deg' }} />
+          <ArrowLeftIcon width={12} height={20} />
         </button>
         <h1>{t(`menu.favorites`)}</h1>
       </header>
