@@ -97,16 +97,16 @@ function Story() {
           </button>
           <button className={style.icon} onClick={saveFavorite}>
             {favorite ? (
-              <LikeFilledIcon width={16} height={14} fill="black" style={{ marginBottom: '1px' }} />
+              <LikeFilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
             ) : (
-              <LikeUnfilledIcon width={16} height={14} fill="black" style={{ marginBottom: '1px' }} />
+              <LikeUnfilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
             )}
           </button>
         </div>
         <h1 onClick={() => navigate(`/channel/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
         <div className={style.header__btn}>
           <button className={style.icon}>
-            <ShareIcon style={{ marginBottom: '1px' }} />
+            <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
           <button className={cn(style.icon, isOpen && style.active)} ref={moreMenuRef} onClick={handleMoreMenu}>
             <MoreIcon />

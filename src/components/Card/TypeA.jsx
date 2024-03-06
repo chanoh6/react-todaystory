@@ -26,7 +26,7 @@ const TypeA = ({ content }) => {
           <span id="category">{category}</span>
         </div>
         <div className="like">
-          <ViewIcon width={16} height={16} fill={'var(--color-blue)'} />
+          <ViewIcon width={16} height={16} />
           <p id="viewCount">{viewCount}</p>
           <LikeButton idx={idx} />
         </div>

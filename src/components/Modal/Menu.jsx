@@ -23,7 +23,7 @@ function Menu({ onClose }) {
         <div className={style.header}>
           <h1>{t(`menu.title`)}</h1>
           <button onClick={handleClose}>
-            <CloseIcon width={16} height={16} fill={'black'} />
+            <CloseIcon width={16} height={16} fill={'var(--color-black)'} />
           </button>
         </div>
         <div className={style.menu}>

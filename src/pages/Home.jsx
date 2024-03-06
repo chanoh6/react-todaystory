@@ -15,7 +15,6 @@ import style from 'styles/Home.module.css';
  * -- 4. 아이콘 함수 사용? 나중에
  * -- 5. formatAgo 다국어 설정 어떻게 할건지
  * -- 6. 로딩 화면 확인
- * 7. 로딩 화면 고도화
  */
 
 function Home() {
