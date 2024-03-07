@@ -20,7 +20,7 @@ function CategoryStories() {
     <>
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
-          <ArrowLeftIcon width={12} height={20} />
+          <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{title}</h1>
         <button onClick={handleClickMenu}>

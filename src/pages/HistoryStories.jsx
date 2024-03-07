@@ -18,7 +18,7 @@ function HistoryStories() {
     <>
       {/* <header className={style.header}>
         <button className={style.icon} onClick={() => navigate(-1)}>
-          <ArrowLeftIcon width={12} height={20} style={{ marginRight: '2px' }} />
+          <ArrowLeftIcon width={10} height={18} style={{ marginRight: '2px' }} />
         </button>
         <h1>{t(`menu.history`)}</h1>
         <p onClick={clearHistory}>{t(`history.clear`)}</p>
@@ -26,7 +26,7 @@ function HistoryStories() {
 
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
-          <ArrowLeftIcon width={12} height={20} />
+          <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{t(`menu.history`)}</h1>
         <p onClick={clearHistory}>{t(`history.clear`)}</p>
