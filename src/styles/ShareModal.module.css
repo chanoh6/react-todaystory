@@ -1,0 +1,10 @@
+.dimm {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.85);
+}

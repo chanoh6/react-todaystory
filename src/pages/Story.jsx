@@ -6,6 +6,7 @@ import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, 
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Story.module.css';
+import ShareModal from 'components/Modal/ShareModal';
 
 /**
  * @TODOS
@@ -38,6 +39,7 @@ function Story() {
 
   const moreMenuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(0);
 
   useEffect(() => {
@@ -86,6 +88,8 @@ function Story() {
 
   const handleMoreMenu = () => setIsOpen(!isOpen);
 
+  const handleShareMenu = () => setShareOpen(!shareOpen);
+
   if (loading || error) return <Loading />;
 
   return (
@@ -105,7 +109,7 @@ function Story() {
         </div>
         <h1 onClick={() => navigate(`/channel/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
         <div className={style.header__btn}>
-          <button className={style.icon}>
+          <button className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
           <button className={cn(style.icon, isOpen && style.active)} ref={moreMenuRef} onClick={handleMoreMenu}>
@@ -114,6 +118,7 @@ function Story() {
         </div>
       </header>
       {isOpen && <MoreMenu />}
+      {shareOpen && <ShareModal />}
       <main>
         {loading || error || !info ? (
           <StorySkeleton />
