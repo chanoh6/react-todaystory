@@ -61,8 +61,16 @@ function Menu({ onClose }) {
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
-            <span onClick={() => navigate('/policy/privacy')}>{t(`menu.privacy`)}</span>|
+            <span onClick={() => navigate('/policy/privacy')}>{t(`menu.privacy`)}</span>
             <span onClick={() => navigate('/policy/service')}>{t(`menu.service`)}</span>
+            {process.env.REACT_APP_LOCALE === 'en' ? (
+              <>
+                <span onClick={() => navigate('/policy/privacy')}>CookieList</span>
+                <span onClick={() => navigate('/policy/service')}>Do not sell my personal information</span>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <p>{t(`menu.copyright`, { year })}</p>
         </div>

@@ -11,6 +11,8 @@ import {
   NotFound,
   PrivacyPolicy,
   TermsOfService,
+  CookieList,
+  DoNotSellInfo,
 } from 'pages';
 import 'styles/index.css';
 import App from 'App';
@@ -36,6 +38,8 @@ const router = createBrowserRouter([
       { path: 'history', element: <HistoryStories /> },
       { path: 'policy/privacy', element: <PrivacyPolicy /> },
       { path: 'policy/service', element: <TermsOfService /> },
+      { path: 'policy/cookie', element: <CookieList /> },
+      { path: 'policy/doNotSell', element: <DoNotSellInfo /> },
     ],
   },
 ]);

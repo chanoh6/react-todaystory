@@ -19,5 +19,9 @@ export { default as BestStories } from 'components/BestStories';
 export { default as EditorsPick } from 'components/EditorsPick';
 export { default as CategoryStories } from 'components/CategoryStories';
 export { default as ChannelStories } from 'components/ChannelStories';
+export { default as Policy } from 'components/Policy';
+export { default as PolicyEn } from 'components/PolicyEn';
+export { default as Service } from 'components/Service';
+export { default as ServiceEn } from 'components/ServiceEn';
 
 export { default as ScrollToTop } from 'components/ScrollToTop';

@@ -134,8 +134,8 @@
 .footer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center;
+  align-items: center; */
   gap: 8px;
   padding: 50px 0 20px 0;
 }
@@ -143,16 +143,17 @@
 .footer p {
   font-size: 12px;
   font-weight: 300;
-  text-align: center;
+  /* text-align: center; */
   opacity: 0.5;
 }
 
 .footer__menu {
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
   font-size: 12px;
   font-weight: 300;
-  text-align: center;
+  /* text-align: center; */
   opacity: 0.5;
 }
 
