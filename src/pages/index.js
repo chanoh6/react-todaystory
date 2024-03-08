@@ -7,5 +7,7 @@ export { default as HistoryStories } from 'pages/HistoryStories';
 
 export { default as PrivacyPolicy } from 'pages/PrivacyPolicy';
 export { default as TermsOfService } from 'pages/TermsOfService';
+export { default as CookieList } from 'pages/CookieList';
+export { default as DoNotSellInfo } from 'pages/DoNotSellInfo';
 
 export { default as NotFound } from 'pages/NotFound';
