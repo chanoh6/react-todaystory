@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
+import { useStory } from 'hooks/useStories';
 import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import cn from 'classnames';
@@ -24,17 +26,35 @@ const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
 function Story() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { contentId } = useParams();
+  const { loading, error, contents } = useStory(contentId);
   const {
-    state: { content },
-  } = useLocation();
-  const { idx, thumbnail, channelIdx, channel, title, publishedAt, logo } = content;
-  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
+    categoryIdx,
+    category,
+    cpIdx,
+    cp,
+    logo,
+    thumbnail,
+    url,
+    title,
+    detail,
+    editor,
+    publishDate,
+    tag,
+    btnURL,
+    btnTitle,
+    noindex,
+    externalLink,
+  } = contents;
+  const thumbnailURL = `${process.env.REACT_APP_BASE_IMG_URL}Thumbnail/${thumbnail}`;
+  const logoURL = `${process.env.REACT_APP_BASE_IMG_URL}cp/${logo}`;
 
-  const [info, setInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const renderHtml = (htmlString, index) => {
+    const rHtml = decode(htmlString);
+    return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: rHtml }} />;
+  };
 
-  const { favorite, saveFavorite } = useFavorite(idx);
+  const { favorite, saveFavorite } = useFavorite(contentId);
   const { saveHistory } = useHistory();
 
   const moreMenuRef = useRef();
@@ -43,23 +63,9 @@ function Story() {
   const [isScroll, setIsScroll] = useState(0);
 
   useEffect(() => {
-    saveHistory(idx);
-
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setInfo(null);
-    };
-
-    fetchData().then(() => {
-      setInfo(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 300);
-    });
+    saveHistory(contentId);
 
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -85,9 +91,7 @@ function Story() {
   }, [isScroll]);
 
   const handleScroll = () => setIsScroll(window.scrollY);
-
   const handleMoreMenu = () => setIsOpen(!isOpen);
-
   const handleShareMenu = () => setShareOpen(!shareOpen);
 
   if (loading || error) return <Loading />;
@@ -107,7 +111,7 @@ function Story() {
             )}
           </button>
         </div>
-        <h1 onClick={() => navigate(`/channel/${channelIdx}`, { state: { title: channel } })}>{channel}</h1>
+        <h1 onClick={() => navigate(`/channel/${cpIdx}`, { state: { title: cp } })}>{cp}</h1>
         <div className={style.header__btn}>
           <button className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
@@ -120,53 +124,23 @@ function Story() {
       {isOpen && <MoreMenu />}
       {shareOpen && <ShareModal />}
       <main>
-        {loading || error || !info ? (
+        {loading || error || !contents ? (
           <StorySkeleton />
         ) : (
           <section className={style.content__wrap}>
             <h1 className={style.title}>{title}</h1>
-            <p className={style.editor}>by editor</p>
-            <p className={style.date}>{publishedAt}</p>
+            <p className={style.editor}>by {editor}</p>
+            <p className={style.date}>{publishDate}</p>
             <div className={style.content}>
-              <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
-              <p>
-                <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also
-                the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-              </p>
-              <p>
-                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at
-                Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a
-                Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the
-                undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
-                Malorum" &#40;The Extremes of Good and Evil&#41; by Cicero, written in 45 BC. This book is a treatise on
-                the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
-                dolor sit amet..", comes from a line in section 1.10.32.
-              </p>
-              <img src={`${baseURL}Thumbnail/${thumbnail}`} alt="thumbnail" />
-              <p>
-                It is a long established fact that a reader will be distracted by the readable content of a page when
-                looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                of letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-                desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-                search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
-                evolved over the years, sometimes by accident, sometimes on purpose &#40;injected humour and the
-                like&#41;.
-              </p>
+              <img src={thumbnailURL} alt="thumbnail" />
+              {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
             </div>
             <div className={style.content__more}>
-              <button
-                className={style.more}
-                onClick={() => navigate(`/channel/${channelIdx}`, { state: { title: channel } })}
-              >
+              <button className={style.more} onClick={() => navigate(`/channel/${cpIdx}`, { state: { title: cp } })}>
                 <div className="cp">
-                  <img src={`${baseURL}cp/${logo}`} alt="cp logo" onError={onErrorImg} />
+                  <img src={logoURL} alt="cp logo" onError={onErrorImg} />
                 </div>
-                <span>{t(`detail.more-latest`, { channel })}</span>
+                <span>{t(`detail.more-latest`, { cp })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>
             </div>
@@ -174,7 +148,7 @@ function Story() {
         )}
         <section className={style.category__wrap}>
           {loading ? '' : <p>{t(`detail.more-from`)}</p>}
-          <ChannelStories title={channel} />
+          <ChannelStories title={cp} />
         </section>
         <section className={style.category__wrap}>
           <BestStories start={1} />

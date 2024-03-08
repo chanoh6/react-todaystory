@@ -34,6 +34,10 @@ class API {
   async editorsPick() {
     return this.apiClient.editorsPick().then((res) => res.data.data);
   }
+
+  async story(idx) {
+    return this.apiClient.story(idx).then((res) => res.data.data);
+  }
 }
 
 export default API;

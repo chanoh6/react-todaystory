@@ -42,6 +42,7 @@
 
 .content__wrap {
   padding: 20px 24px 84px 24px;
+  overflow: hidden;
 }
 
 .title {
@@ -70,6 +71,10 @@
   gap: 20px;
   width: 100%;
   margin: 20px 0;
+}
+
+.content iframe {
+  width: 100%;
 }
 
 .content img {

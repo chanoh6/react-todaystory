@@ -3,19 +3,15 @@ import { useAPI } from 'context/APIContext';
 
 const useDataFetching = (apiFunction, ...args) => {
   const { api } = useAPI();
-  const [contents, setContents] = useState(null);
+  const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setContents(null);
-
       try {
-        const result = await apiFunction(api, ...args);
-        setContents(result);
+        const res = await apiFunction(api, ...args);
+        return res;
       } catch (e) {
         setError(e);
       } finally {
@@ -25,7 +21,7 @@ const useDataFetching = (apiFunction, ...args) => {
       }
     };
 
-    fetchData();
+    fetchData().then((res) => setContents(res));
   }, []);
 
   return { loading, error, contents };
@@ -65,3 +61,11 @@ export const useChannelStories = (index) => {};
 export const useLikeStories = () => {};
 
 export const useHistoryStories = () => {};
+
+export const useFavoriteStories = () => {};
+
+export const useSearchStories = () => {};
+
+export const useStory = (idx) => {
+  return useDataFetching((api) => api.story(idx), idx);
+};

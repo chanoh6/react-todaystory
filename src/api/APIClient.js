@@ -9,36 +9,40 @@ import axios from 'axios';
 class APIClient {
   constructor() {
     this.httpClient = axios.create({
-      baseURL: `/json/${process.env.REACT_APP_LOCALE}`,
+      baseURL: '',
     });
   }
 
   async category() {
-    return this.httpClient.get(`/category.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/category.json`);
   }
 
   async categoryStories(idx) {
-    return this.httpClient.get(`/categoryStories${idx}.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/categoryStories${idx}.json`);
   }
 
   async channel() {
-    return this.httpClient.get(`/channel.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/channel.json`);
   }
 
   async channelStories(idx) {
-    return this.httpClient.get(`/channelStories${idx}.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/channelStories${idx}.json`);
   }
 
   async topStories() {
-    return this.httpClient.get(`/topStories.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/topStories.json`);
   }
 
   async bestStories(index) {
-    return this.httpClient.get(`/bestStories${index}.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/bestStories${index}.json`);
   }
 
   async editorsPick() {
-    return this.httpClient.get(`/editorsPick.json`);
+    return this.httpClient.get(`/json/${process.env.REACT_APP_LOCALE}/editorsPick.json`);
+  }
+
+  async story(idx) {
+    return this.httpClient.get(`${process.env.REACT_APP_API_STORY_URL}?idx=${idx}`);
   }
 }
 

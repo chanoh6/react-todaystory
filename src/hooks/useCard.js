@@ -8,7 +8,7 @@ export const useCard = (content) => {
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
 
   const handleClick = () => {
-    navigate(`/view/${idx}`, { state: { content } });
+    navigate(`/view/${idx}`);
   };
 
   const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
