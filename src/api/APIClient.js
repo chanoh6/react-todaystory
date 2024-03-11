@@ -48,6 +48,10 @@ class APIClient {
   async story(idx) {
     return this.httpClient.get(process.env.REACT_APP_API_STORY_URL, { params: { idx } });
   }
+
+  // async storiesByIndex(idxList) {
+  //   return this.httpClient.post(process.env.REACT_APP_API_STORY_BY_INDEX_URL, { 'idx-list': idxList });
+  // }
 }
 
 export default APIClient;
