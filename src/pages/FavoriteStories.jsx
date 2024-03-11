@@ -8,7 +8,8 @@ import style from 'styles/FavoriteStories.module.css';
 function FavoriteStories() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { loading, error, contents } = useCategoryStories(6);
+  const { loading, error, data } = useCategoryStories(6, 1, 10);
+  const { contents } = data;
 
   if (loading || error) return <Loading />;
 
@@ -29,12 +30,12 @@ function FavoriteStories() {
       </header>
 
       <main>
-        {!contents.contents ? (
+        {!contents ? (
           <CardListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-              {contents.contents.map((content, i) => (
+              {contents.map((content, i) => (
                 <TypeC key={i} content={content} />
               ))}
             </ul>

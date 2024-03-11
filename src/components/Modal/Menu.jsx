@@ -32,11 +32,17 @@ function Menu({ onClose }) {
 
         <div className={style.menu}>
           <ul>
-            <li className={style.menu__item} onClick={() => navigate(process.env.REACT_APP_WEB_FAVORITE_URL)}>
+            <li className={style.menu__item} onClick={() => {
+              navigate(process.env.REACT_APP_WEB_FAVORITE_URL);
+              handleClose();
+            }}>
               <LikeFilledIcon width={20} height={18} fill={'var(--color-blue)'} />
               <p>{t(`menu.favorites`)}</p>
             </li>
-            <li className={style.menu__item} onClick={() => navigate(process.env.REACT_APP_WEB_HISTORY_URL)}>
+            <li className={style.menu__item} onClick={() => {
+              navigate(process.env.REACT_APP_WEB_HISTORY_URL);
+              handleClose();
+            }}>
               <HistoryIcon width={20} height={18} fill={'var(--color-purple)'} />
               <p>{t(`menu.history`)}</p>
             </li>
@@ -49,7 +55,10 @@ function Menu({ onClose }) {
             </button>
 
             <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
-              <li className={style.drop__item}>
+              <li className={style.drop__item} onClick={() => {
+                    navigate(process.env.REACT_APP_WEB_HOME_URL);
+                    handleClose();
+                  }}>
                 <figure>
                   <img src={`${process.env.REACT_APP_CATEGORY_ICON}all.svg`} alt="category icon" />
                 </figure>
@@ -57,7 +66,10 @@ function Menu({ onClose }) {
               </li>
 
               {categoryList.map((cate) => (
-                <li className={style.drop__item} key={cate.idx} onClick={() => navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`)}>
+                <li className={style.drop__item} key={cate.idx} onClick={() => {
+                    navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`);
+                    handleClose();
+                  }}>
                   <figure>
                     <img src={`${process.env.REACT_APP_CATEGORY_ICON}${cate.icon}`} alt="category icon" />
                   </figure>
@@ -74,8 +86,11 @@ function Menu({ onClose }) {
             </button>
 
             <ul className={cn(style.drop__list, { [style.active]: showChannel })}>
-              {channelList.map((ch, i) => (
-                <li className={cn(style.drop__item, style.channel)} key={ch.idx} onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`)}>
+              {channelList.map((ch) => (
+                <li className={cn(style.drop__item, style.channel)} key={ch.idx} onClick={() => {
+                  navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`);
+                  handleClose();
+                }}>
                   <figure>
                     <img src={`${process.env.REACT_APP_BASE_IMG_URL}cp/${ch.logo}`} alt="channel icon" />
                   </figure>
