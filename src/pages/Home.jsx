@@ -31,7 +31,7 @@ function Home() {
   const handleClickLogo = () => navigate('/');
   const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <>

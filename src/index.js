@@ -22,11 +22,13 @@ import 'locales/i18n';
  * @TODOS
  * 1. router 경로 재설정
  * 2. .env 파일 활용하여 param 설정
+ * 3. 최상단 경로에 lang 설정
  * */
 
 const router = createBrowserRouter([
   {
-    path: `/${process.env.REACT_APP_LOCALE}/`,
+    // path: `/${process.env.REACT_APP_LOCALE}/`,
+    path: `/`,
     element: <App />,
     errorElement: <NotFound />,
     children: [

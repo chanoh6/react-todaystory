@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useCategory, useChannel } from 'hooks/useStories';
 import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
@@ -11,6 +12,8 @@ function Menu({ onClose }) {
   const { t } = useTranslation();
   const [showCategory, setShowCategory] = useState(false);
   const [showChannel, setShowChannel] = useState(false);
+  const { data: categoryList } = useCategory();
+  const { data: channelList } = useChannel();
   const year = new Date().getFullYear();
 
   const handleClose = () => {
@@ -26,6 +29,7 @@ function Menu({ onClose }) {
             <CloseIcon width={16} height={16} fill={'var(--color-black)'} />
           </button>
         </div>
+
         <div className={style.menu}>
           <ul>
             <li className={style.menu__item} onClick={() => navigate(process.env.REACT_APP_WEB_FAVORITE_URL)}>
@@ -37,11 +41,13 @@ function Menu({ onClose }) {
               <p>{t(`menu.history`)}</p>
             </li>
           </ul>
+          
           <div className={style.menu__drop}>
             <button onClick={() => setShowCategory(!showCategory)}>
               <p>{t(`menu.category`)}</p>
               <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showCategory })} />
             </button>
+
             <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
               <li className={style.drop__item}>
                 <figure>
@@ -49,15 +55,36 @@ function Menu({ onClose }) {
                 </figure>
                 <p>{t(`nav.all`)}</p>
               </li>
+
+              {categoryList.map((cate) => (
+                <li className={style.drop__item} key={cate.idx} onClick={() => navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`)}>
+                  <figure>
+                    <img src={`${process.env.REACT_APP_CATEGORY_ICON}${cate.icon}`} alt="category icon" />
+                  </figure>
+                  <p>{cate.name}</p>
+                </li>
+              ))}
             </ul>
           </div>
+
           <div className={style.menu__drop}>
             <button onClick={() => setShowChannel(!showChannel)}>
               <p>{t(`menu.channel`)}</p>
               <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showChannel })} />
             </button>
-            <ul className={cn(style.drop__list, { [style.active]: showChannel })}></ul>
+
+            <ul className={cn(style.drop__list, { [style.active]: showChannel })}>
+              {channelList.map((ch, i) => (
+                <li className={cn(style.drop__item, style.channel)} key={ch.idx} onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`)}>
+                  <figure>
+                    <img src={`${process.env.REACT_APP_BASE_IMG_URL}cp/${ch.logo}`} alt="channel icon" />
+                  </figure>
+                  <p>{ch.name}</p>
+                </li>
+              ))}
+            </ul>
           </div>
+
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
