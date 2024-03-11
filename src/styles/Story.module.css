@@ -63,6 +63,7 @@
   color: rgba(0, 0, 0, 0.68);
   font-size: 14px;
   line-height: 0.8;
+  margin-bottom: 20px;
 }
 
 .content {
@@ -70,11 +71,7 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  margin: 20px 0;
-}
-
-.content iframe {
-  width: 100%;
+  margin-bottom: 20px;
 }
 
 .content img {
@@ -86,6 +83,24 @@
 .content p {
   font-size: 16px;
   line-height: 1.5;
+  word-break: break-all;
+}
+
+.content a {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.content p span {
+  line-height: inherit;
+}
+
+.content p span + br {
+  display: none;
+}
+
+.content p span * {
+  font-size: inherit;
 }
 
 .content__more {

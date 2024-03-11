@@ -4,7 +4,7 @@ import 'styles/Card.css';
 import style from 'styles/TypeB.module.css';
 
 const TypeB = ({ content }) => {
-  const { idx, channel, title, thumbnail, logo, publishedAt, handleClick, onErrorImg } = useCard(content);
+  const { idx, channel, title, thumbnail, logo, publishDate, handleClick, onErrorImg } = useCard(content);
 
   return (
     <li className={style.card} onClick={handleClick}>
@@ -19,7 +19,7 @@ const TypeB = ({ content }) => {
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
-        <span id="publishedAt">{publishedAt}</span>
+        <span id="publishedAt">{publishDate}</span>
         <LikeButton idx={idx} />
       </div>
     </li>

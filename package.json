@@ -24,6 +24,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build_ko": "set \"BUILD_PATH=.\\build\\ko\" && react-scripts build",
+    "build_en": "set \"BUILD_PATH=.\\build\\en\" && react-scripts build",
+    "build_ja": "set \"BUILD_PATH=.\\build\\ja\" && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

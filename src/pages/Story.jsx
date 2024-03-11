@@ -7,6 +7,7 @@ import { useStory } from 'hooks/useStories';
 import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import cn from 'classnames';
+import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import ShareModal from 'components/Modal/ShareModal';
 
@@ -27,7 +28,7 @@ function Story() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { contentId } = useParams();
-  const { loading, error, contents } = useStory(contentId);
+  const { loading, error, data } = useStory(contentId);
   const {
     categoryIdx,
     category,
@@ -45,7 +46,7 @@ function Story() {
     btnTitle,
     noindex,
     externalLink,
-  } = contents;
+  } = data;
   const thumbnailURL = `${process.env.REACT_APP_BASE_IMG_URL}Thumbnail/${thumbnail}`;
   const logoURL = `${process.env.REACT_APP_BASE_IMG_URL}cp/${logo}`;
 
@@ -111,7 +112,11 @@ function Story() {
             )}
           </button>
         </div>
-        <h1 onClick={() => navigate(`/channel/${cpIdx}`, { state: { title: cp } })}>{cp}</h1>
+
+        <h1 onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}>
+          {cp}
+        </h1>
+
         <div className={style.header__btn}>
           <button className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
@@ -121,42 +126,54 @@ function Story() {
           </button>
         </div>
       </header>
+
       {isOpen && <MoreMenu />}
       {shareOpen && <ShareModal />}
-      <main>
-        {loading || error || !contents ? (
-          <StorySkeleton />
-        ) : (
+
+      {loading || error || !data ? (
+        <StorySkeleton />
+      ) : (
+        <main>
           <section className={style.content__wrap}>
             <h1 className={style.title}>{title}</h1>
             <p className={style.editor}>by {editor}</p>
             <p className={style.date}>{publishDate}</p>
+
             <div className={style.content}>
               <img src={thumbnailURL} alt="thumbnail" />
-              {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
             </div>
+
+            {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
+
             <div className={style.content__more}>
-              <button className={style.more} onClick={() => navigate(`/channel/${cpIdx}`, { state: { title: cp } })}>
+              <button
+                className={style.more}
+                onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}
+              >
                 <div className="cp">
                   <img src={logoURL} alt="cp logo" onError={onErrorImg} />
                 </div>
-                <span>{t(`detail.more-latest`, { cp })}</span>
+                <span>{t(`detail.more-latest`, { channel: cp })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>
             </div>
           </section>
-        )}
-        <section className={style.category__wrap}>
-          {loading ? '' : <p>{t(`detail.more-from`)}</p>}
-          <ChannelStories title={cp} />
-        </section>
-        <section className={style.category__wrap}>
-          <BestStories start={1} />
-        </section>
-        <section className={style.category__wrap}>
-          <CategoryStories list={3} index={12} />
-        </section>
-      </main>
+
+          <section className={style.category__wrap}>
+            {loading ? '' : <p>{t(`detail.more-from`)}</p>}
+            <ChannelStories idx={cpIdx} page={1} size={4} />
+          </section>
+
+          <section className={style.category__wrap}>
+            <BestStories page={1} size={4} />
+          </section>
+
+          <section className={style.category__wrap}>
+            <CategoryStories list={3} idx={categoryIdx} page={1} size={4} />
+          </section>
+        </main>
+      )}
+
       <footer></footer>
     </>
   );

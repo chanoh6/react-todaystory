@@ -3,9 +3,10 @@ import { useTopStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
-function TopStories() {
+function TopStories({ size }) {
   const { t } = useTranslation();
-  const { loading, error, contents } = useTopStories();
+  const { loading, error, data } = useTopStories(size);
+  const { contents } = data;
 
   if (loading || error || !contents) return <StoriesSkeleton />;
 

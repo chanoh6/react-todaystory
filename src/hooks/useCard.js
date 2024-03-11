@@ -3,12 +3,12 @@ import { formatAgo } from 'utils/date';
 
 export const useCard = (content) => {
   const navigate = useNavigate();
-  const { idx, category, channel, title, thumbnail, logo, publishedAt, viewCount } = content;
+  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount } = content;
   const locale = process.env.REACT_APP_LOCALE;
   const baseURL = process.env.REACT_APP_BASE_IMG_URL;
 
   const handleClick = () => {
-    navigate(`/view/${idx}`);
+    navigate(`${process.env.REACT_APP_WEB_STORY_URL}${idx}`);
   };
 
   const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
@@ -16,12 +16,12 @@ export const useCard = (content) => {
   return {
     idx,
     category,
-    channel,
+    cp,
     title,
     thumbnail: `${baseURL}Thumbnail/${thumbnail}`,
     logo: `${baseURL}cp/${logo}`,
-    publishedAt: formatAgo(publishedAt, locale),
-    viewCount: viewCount.toLocaleString('ko-KR'),
+    publishDate: formatAgo(publishDate, locale),
+    viewCount: Number(viewCount).toLocaleString('ko-KR'),
     handleClick,
     onErrorImg,
   };

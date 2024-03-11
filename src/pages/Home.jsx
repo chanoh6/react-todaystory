@@ -40,6 +40,7 @@ function Home() {
           <h1 onClick={handleClickLogo}>{t(`header.logo`)}</h1>
           <h2>{date}</h2>
         </hgroup>
+
         <div className={style.menu}>
           <button className={style.icon}>
             <SearchIcon width={20} height={20} fill={'var(--color-black)'} />
@@ -63,23 +64,29 @@ function Home() {
 
       <main>
         <section className={cn(style.content__wrap, style.top)}>
-          <TopStories />
+          <TopStories size={6} />
         </section>
+
         <section className={style.content__wrap}>
-          <BestStories start={1} />
+          <BestStories page={1} size={4} />
         </section>
+
         <EditorsPick />
+
         <section className={style.content__wrap}>
-          <BestStories start={2} />
+          <BestStories page={2} size={4} />
         </section>
+
         <section className={style.content__wrap}>
-          <CategoryStories list={2} index={6} />
+          <CategoryStories list={3} idx={1} page={1} size={4} />
         </section>
+
         <section className={style.content__wrap}>
-          <CategoryStories list={1} index={12} />
+          <CategoryStories list={3} idx={2} page={1} size={4} />
         </section>
+
         <section className={style.content__wrap}>
-          <CategoryStories list={3} index={16} />
+          <CategoryStories list={3} idx={3} page={1} size={4} />
         </section>
       </main>
 
