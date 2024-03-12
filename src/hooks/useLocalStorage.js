@@ -27,7 +27,9 @@ export const useFavorite = (idx) => {
     setFavorite((prev) => !prev);
   };
 
-  return { favorite, saveFavorite };
+  const getFavorite = () => getLocalStorage('favorites');
+
+  return { favorite, saveFavorite, getFavorite };
 };
 
 export const useHistory = (idx = null) => {
