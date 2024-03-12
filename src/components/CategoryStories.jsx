@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategoryStories } from 'hooks/useStories';
@@ -40,37 +39,38 @@ const getList = (list, contents) => {
   }
 };
 
-function CategoryStories({ list, index }) {
+function CategoryStories({ list, idx, page, size }) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { loading, error, category, contents } = useCategoryStories(index);
+  const { loading, error, data } = useCategoryStories(idx, page, size);
+  const { categoryIdx, category, color, contents } = data;
 
-  // for test
-  const [color, setColor] = useState(null);
-  const colors = ['#FEBD1A', '#4ACAA8', '#F05650'];
-  const getRandom = (min, max) => Math.floor(Math.random() * (max - min) + min);
-
-  useEffect(() => {
-    setColor(getRandom(0, colors.length));
-  }, [color]);
-
-  if (loading || error || !contents.contents) return <StoriesSkeleton />;
+  if (loading || error || !contents) return <StoriesSkeleton />;
 
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title} style={{ color: colors[color] }}>
-          {category.current}
+        <h1 className={style.title} style={{ color: color }}>
+          {category}
         </h1>
         <button
           className={style.btn__more}
-          onClick={() => navigate(`/category/${index}`, { state: { title: category.current } })}
+          onClick={() =>
+            navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${categoryIdx}`, {
+              state: { title: category.current },
+            })
+          }
         >
           <p>{t(`main.more`)}</p>
           <ArrowRightIcon width={6} height={10} />
         </button>
       </div>
-      <ul className={style.list}>{getList(list, contents.contents)}</ul>
+      <ul className={style.list}>
+        {/* {getList(list, contents.contents)} */}
+        {contents.map((content, i) => (
+          <TypeC key={i} content={content} />
+        ))}
+      </ul>
     </>
   );
 }

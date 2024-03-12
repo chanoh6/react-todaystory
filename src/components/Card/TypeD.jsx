@@ -5,7 +5,7 @@ import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
 const TypeD = ({ content }) => {
-  const { idx, category, channel, title, thumbnail, logo, publishedAt, viewCount, handleClick, onErrorImg } =
+  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg } =
     useCard(content);
 
   return (
@@ -21,13 +21,13 @@ const TypeD = ({ content }) => {
       <div className="card__title">
         <div className="cp">
           <img src={logo} alt="cp logo" onError={onErrorImg} />
-          <p>{channel}</p>
+          <p>{cp}</p>
         </div>
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedAt">{publishedAt}</span>
+          <span id="publishedAt">{publishDate}</span>
           <span>|</span>
           <span id="category">{category}</span>
         </div>

@@ -11,24 +11,24 @@ class API {
     return this.apiClient.category().then((res) => res.data.data);
   }
 
-  async categoryStories(idx) {
-    return this.apiClient.categoryStories(idx).then((res) => res.data.data);
+  async categoryStories(cate, page, size) {
+    return this.apiClient.categoryStories(cate, page, size).then((res) => res.data.data);
   }
 
   async channel() {
     return this.apiClient.channel().then((res) => res.data.data);
   }
 
-  async channelStories(idx) {
-    return this.apiClient.channelStories(idx).then((res) => res.data.data);
+  async channelStories(cp, page, size) {
+    return this.apiClient.channelStories(cp, page, size).then((res) => res.data.data);
   }
 
-  async topStories() {
-    return this.apiClient.topStories().then((res) => res.data.data);
+  async topStories(size) {
+    return this.apiClient.topStories(size).then((res) => res.data.data);
   }
 
-  async bestStories(index) {
-    return this.apiClient.bestStories(index).then((res) => res.data.data);
+  async bestStories(page, size) {
+    return this.apiClient.bestStories(page, size).then((res) => res.data.data);
   }
 
   async editorsPick() {

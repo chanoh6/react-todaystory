@@ -6,7 +6,8 @@ import style from 'styles/EditorsPick.module.css';
 
 function EditorsPick() {
   const { t } = useTranslation();
-  const { loading, error, contents } = useEditorsPick();
+  const { loading, error, data } = useEditorsPick();
+  const { contents } = data;
 
   if (loading || error || !contents) return null;
 
@@ -16,7 +17,9 @@ function EditorsPick() {
         <h1>{t(`editor.title`)}</h1>
         <h2>{contents.subtitle}</h2>
       </hgroup>
-      <TypeD content={contents} />
+      {contents.map((content, i) => (
+        <TypeD key={i} content={content} />
+      ))}
     </section>
   );
 }

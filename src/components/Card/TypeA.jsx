@@ -4,7 +4,7 @@ import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 
 const TypeA = ({ content }) => {
-  const { idx, category, channel, title, thumbnail, logo, publishedAt, viewCount, handleClick, onErrorImg } =
+  const { idx, category, channel, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg } =
     useCard(content);
 
   return (
@@ -21,7 +21,7 @@ const TypeA = ({ content }) => {
       </div>
       <div className="card__more">
         <div className="date">
-          <span id="publishedAt">{publishedAt}</span>
+          <span id="publishedAt">{publishDate}</span>
           <span>|</span>
           <span id="category">{category}</span>
         </div>

@@ -28,11 +28,11 @@ function Menu({ onClose }) {
         </div>
         <div className={style.menu}>
           <ul>
-            <li className={style.menu__item} onClick={() => navigate('/favorite')}>
+            <li className={style.menu__item} onClick={() => navigate(process.env.REACT_APP_WEB_FAVORITE_URL)}>
               <LikeFilledIcon width={20} height={18} fill={'var(--color-blue)'} />
               <p>{t(`menu.favorites`)}</p>
             </li>
-            <li className={style.menu__item} onClick={() => navigate('/history')}>
+            <li className={style.menu__item} onClick={() => navigate(process.env.REACT_APP_WEB_HISTORY_URL)}>
               <HistoryIcon width={20} height={18} fill={'var(--color-purple)'} />
               <p>{t(`menu.history`)}</p>
             </li>
@@ -61,12 +61,14 @@ function Menu({ onClose }) {
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
-            <span onClick={() => navigate('/policy/privacy')}>{t(`menu.privacy`)}</span>
-            <span onClick={() => navigate('/policy/service')}>{t(`menu.service`)}</span>
+            <span onClick={() => navigate(process.env.REACT_APP_WEB_PRIVACY_URL)}>{t(`menu.privacy`)}</span>
+            <span onClick={() => navigate(process.env.REACT_APP_WEB_SERVICE_URL)}>{t(`menu.service`)}</span>
             {process.env.REACT_APP_LOCALE === 'en' ? (
               <>
-                <span onClick={() => navigate('/policy/privacy')}>CookieList</span>
-                <span onClick={() => navigate('/policy/service')}>Do not sell my personal information</span>
+                <span onClick={() => navigate(process.env.REACT_APP_WEB_PRIVACY_URL)}>CookieList</span>
+                <span onClick={() => navigate(process.env.REACT_APP_WEB_SERVICE_URL)}>
+                  Do not sell my personal information
+                </span>
               </>
             ) : (
               <></>

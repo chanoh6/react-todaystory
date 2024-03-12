@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAPI } from 'context/APIContext';
 
 const useDataFetching = (apiFunction, ...args) => {
   const { api } = useAPI();
-  const [contents, setContents] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,42 +21,35 @@ const useDataFetching = (apiFunction, ...args) => {
       }
     };
 
-    fetchData().then((res) => setContents(res));
+    fetchData().then((res) => setData(res));
   }, []);
 
-  return { loading, error, contents };
+  return { loading, error, data };
 };
 
 export const useCategory = () => {
   return useDataFetching((api) => api.category());
 };
 
-export const useTopStories = () => {
-  return useDataFetching((api) => api.topStories());
+export const useTopStories = (size) => {
+  return useDataFetching((api) => api.topStories(size));
 };
 
-export const useBestStories = (start) => {
-  return useDataFetching((api) => api.bestStories(start), start);
+export const useBestStories = (page, size) => {
+  return useDataFetching((api) => api.bestStories(page, size), page, size);
 };
 
 export const useEditorsPick = () => {
   return useDataFetching((api) => api.editorsPick());
 };
 
-export const useCategoryStories = (index) => {
-  const category = useRef(null);
-  const { loading, error, contents } = useDataFetching((api) => api.categoryStories(index), index);
-
-  useEffect(() => {
-    if (contents) {
-      category.current = contents.category;
-    }
-  }, [contents]);
-
-  return { loading, error, category, contents };
+export const useCategoryStories = (cate, page, size) => {
+  return useDataFetching((api) => api.categoryStories(cate, page, size), cate, page, size);
 };
 
-export const useChannelStories = (index) => {};
+export const useChannelStories = (cp, page, size) => {
+  return useDataFetching((api) => api.channelStories(cp, page, size), cp, page, size);
+};
 
 export const useLikeStories = () => {};
 
