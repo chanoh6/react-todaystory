@@ -38,6 +38,10 @@ class API {
   async story(idx) {
     return this.apiClient.story(idx).then((res) => res.data.data);
   }
+
+  async storiesByIndex(idxList) {
+    return this.apiClient.storiesByIndex(idxList).then((res) => res.data.data);
+  }
 }
 
 export default API;

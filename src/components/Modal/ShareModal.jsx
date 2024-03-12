@@ -7,9 +7,9 @@ import Facebook from '../../assets/icon/Facebook.png';
 import Twitter from '../../assets/icon/Twitter.png';
 import Link from '../../assets/icon/Link.png';
 
-function ShareModal({ contents, props }) {
+function ShareModal({ contents, onClose }) {
   const [shareOpen, setShareOpen] = useState(false);
-
+  console.log(contents);
   const url = `https://local.todaystory.me/view/${contents.idx}`;
 
   useEffect(() => {
@@ -19,8 +19,9 @@ function ShareModal({ contents, props }) {
 
     document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script); // return으로 제거해주기
+    script.onload = () => {
+      // 카카오 SDK 초기화
+      window.Kakao.init('c6c00201cb6e95082b0ec1a6c4a531c6');
     };
   }, []);
 
@@ -40,14 +41,26 @@ function ShareModal({ contents, props }) {
     });
   };
 
-  const closeBtn = () => {
-    setShareOpen(!shareOpen);
+  const shareToKakao = () => {
+    // 카카오 링크 공유하기
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `${contents.title}`,
+        description: '카카오 링크로 공유합니다.',
+        imageUrl: `https://local.todaystory.me/ko/s/Thumbnail/${contents.thumbnail}`, // 공유할 이미지 URL
+        link: {
+          mobileWebUrl: window.location.href, // 모바일 웹 URL
+          webUrl: window.location.href, // PC 웹 URL
+        },
+      },
+    });
   };
 
   return (
     <Modal>
-      <div className={style.dimm}>
-        <button className={style.icon} onClick={closeBtn}>
+      <div className={style.dim}>
+        <button className={style.icon} onClick={onClose}>
           <CloseIcon width={15} height={15} fill={'#fff'} />
         </button>
         <div className={style.sns__wrap}>
@@ -56,7 +69,7 @@ function ShareModal({ contents, props }) {
             <br /> SNS에 공유해보세요.
           </p>
           <ul>
-            <li>
+            <li onClick={shareToKakao}>
               <img src={kakao} alt="카카오" />
             </li>
             <li onClick={shareToFacebook}>

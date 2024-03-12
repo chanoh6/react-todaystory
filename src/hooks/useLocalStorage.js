@@ -5,6 +5,7 @@ import {
   saveLocalStorage,
   deleteLocalStorage,
   clearLocalStorage,
+  getLocalStorage,
 } from 'utils/localStorage';
 
 export const useFavorite = (idx) => {
@@ -38,5 +39,7 @@ export const useHistory = (idx = null) => {
     clearLocalStorage('history');
   };
 
-  return { saveHistory, clearHistory };
+  const getHistory = () => getLocalStorage('history');
+
+  return { saveHistory, clearHistory, getHistory };
 };

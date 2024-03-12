@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategoryStories } from 'hooks/useStories';
+import { useHistoryStories } from 'hooks/useStories';
 import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, TypeC } from 'components';
 import style from 'styles/HistoryStories.module.css';
@@ -9,8 +9,11 @@ import { ArrowLeftIcon } from 'assets';
 function HistoryStories() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { clearHistory } = useHistory();
-  const { loading, error, data } = useCategoryStories(6, 1, 10);
+  const { clearHistory, getHistory } = useHistory();
+  const idxList = getHistory();
+  console.log(idxList);
+  // const { loading, error, data } = useCategoryStories(6, 1, 10);
+  const { loading, error, data } = useHistoryStories(idxList);
   const { contents } = data;
 
   if (loading || error) return <Loading />;
