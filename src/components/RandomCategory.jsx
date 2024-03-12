@@ -53,7 +53,7 @@ const getRandomComponents = (contents) => {
     } else if (i < contents.length - 1 && Math.random() < 0.5 && !typeCStarted) {
       components.push(<TypeB key={i} content={content} />);
       components.push(<TypeB key={i + 1} content={contents[i + 1]} />);
-      i++;
+      i += 1;
     } else {
       typeCStarted = true;
       components.push(<TypeC key={i} content={content} />);

@@ -4,7 +4,8 @@ import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
-const TypeC = ({ content }) => {
+const TypeC = (props) => {
+  const { content } = props; 
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg } =
     useCard(content);
 

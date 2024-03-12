@@ -4,6 +4,8 @@ import axios from 'axios';
  * @TODOS
  * 1. .env 파일 활용하여 param 설정
  * 2. api url 변경
+ * 3. 예외 처리
+ * 4. http client header
  * */
 
 class APIClient {
@@ -12,6 +14,46 @@ class APIClient {
       baseURL: process.env.REACT_APP_API_BASE_URL,
     });
   }
+
+  /*
+  constructor(data) {
+    this = ax
+    this.setBody
+    ....
+    ...
+    ...
+    ...
+
+  }
+  .setHeader(....)
+  .setBody(.....)
+  .setXXXXX....
+  .call(
+    try {
+        const aaa = axions.get()
+    return aaaa
+    } catch (e) {
+      e.//////
+    }
+  )
+
+
+  apiclient = new APIClient("post", "", "body");
+  apiClient.setHeader("Content-Type", "application/json");
+  apiClient.setB
+  ....
+  ....
+  ....
+  apiclient.call();
+---------------------------------
+  const param = {
+    url : "http://localhost:8080",
+    method : "post",
+
+  }
+  const apiClient = new APIClient(param);
+  apiClient.call();
+  */
 
   async category() {
     return this.httpClient.get(process.env.REACT_APP_API_CATEGORY_URL);

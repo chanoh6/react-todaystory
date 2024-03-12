@@ -16,6 +16,13 @@ function Menu({ onClose }) {
   const { data: channelList } = useChannel();
   const year = new Date().getFullYear();
 
+  /*
+  const { isMenuOpen } = props;
+  useEffect(() => {
+    // 다닫히는 액션
+  }, [isMenuOpen]); 
+  */
+
   const handleClose = () => {
     onClose?.();
   };

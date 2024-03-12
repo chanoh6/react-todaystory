@@ -65,25 +65,26 @@ function Story() {
 
   useEffect(() => {
     saveHistory(contentId);
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, []);
 
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
-    const clickOutside = (e) => {
+    const handleTouchMove = (e) => {
       if (isOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', clickOutside);
+    document.addEventListener('touchmove', handleTouchMove);
+    // document.addEventListener('mousedown', handleTouchMove);
+    // document.addEventListener('scroll', handleTouchMove);
+    // document.addEventListener('keydown', handleTouchMove);
 
     return () => {
-      document.removeEventListener('mousedown', clickOutside);
+      document.removeEventListener('touchmove', handleTouchMove);
+      // document.removeEventListener('mousedown', handleTouchMove);
+      // document.removeEventListener('scroll', handleTouchMove);
+      // document.removeEventListener('keydown', handleTouchMove);
     };
   }, [isOpen]);
 
@@ -91,7 +92,6 @@ function Story() {
     setIsOpen(false);
   }, [isScroll]);
 
-  const handleScroll = () => setIsScroll(window.scrollY);
   const handleMoreMenu = () => setIsOpen(!isOpen);
   const handleShareMenu = () => setShareOpen(!shareOpen);
 
@@ -126,7 +126,7 @@ function Story() {
           </button>
         </div>
       </header>
-
+      
       {isOpen && <MoreMenu />}
       {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
 
