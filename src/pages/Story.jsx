@@ -95,6 +95,11 @@ function Story() {
   const handleMoreMenu = () => setIsOpen(!isOpen);
   const handleShareMenu = () => setShareOpen(!shareOpen);
 
+  const toChild = ({ changeFunc }) => {
+    console.log(changeFunc);
+    handleShareMenu();
+  };
+
   if (loading || error) return <Loading />;
 
   return (
@@ -128,7 +133,7 @@ function Story() {
       </header>
 
       {isOpen && <MoreMenu />}
-      {shareOpen && <ShareModal />}
+      {shareOpen && <ShareModal contents={data} toChild={toChild} />}
 
       {!data ? (
         <StorySkeleton />
