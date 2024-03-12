@@ -43,7 +43,4 @@ export const getLocalStorage = (key) => {
   data = data ? JSON.parse(data) : [];
   data = [...data];
   return data;
-  // if (array !== null) {
-  //   return array;
-  // }
 };

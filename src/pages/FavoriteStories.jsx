@@ -1,14 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategoryStories } from 'hooks/useStories';
+import { useFavoriteStories } from 'hooks/useStories';
 import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
-import { ArrowRightIcon, ArrowLeftIcon } from 'assets';
+import { ArrowLeftIcon } from 'assets';
 import style from 'styles/FavoriteStories.module.css';
+import { useState } from 'react';
+import { useFavorite } from 'hooks/useLocalStorage';
 
 function FavoriteStories() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { loading, error, data } = useCategoryStories(6, 1, 10);
+  const { getFavorite } = useFavorite();
+  const [idxList, setIdxList] = useState(getFavorite());
+  const { loading, error, data } = useFavoriteStories(idxList);
   const { contents } = data;
 
   if (loading || error) return <Loading />;

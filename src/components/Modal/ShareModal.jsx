@@ -8,8 +8,6 @@ import Twitter from '../../assets/icon/Twitter.png';
 import Link from '../../assets/icon/Link.png';
 
 function ShareModal({ contents, onClose }) {
-  const [shareOpen, setShareOpen] = useState(false);
-  console.log(contents);
   const url = `https://local.todaystory.me/view/${contents.idx}`;
 
   useEffect(() => {
@@ -47,7 +45,6 @@ function ShareModal({ contents, onClose }) {
       objectType: 'feed',
       content: {
         title: `${contents.title}`,
-        description: '카카오 링크로 공유합니다.',
         imageUrl: `https://local.todaystory.me/ko/s/Thumbnail/${contents.thumbnail}`, // 공유할 이미지 URL
         link: {
           mobileWebUrl: window.location.href, // 모바일 웹 URL

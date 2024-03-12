@@ -63,7 +63,9 @@ export const useHistoryStories = (idxList) => {
   return useDataFetching((api) => api.storiesByIndex(idxList), idxList);
 };
 
-export const useFavoriteStories = () => {};
+export const useFavoriteStories = (idxList) => {
+  return useDataFetching((api) => api.storiesByIndex(idxList), idxList);
+};
 
 export const useSearchStories = () => {};
 
