@@ -50,9 +50,7 @@ function CategoryStories({ list, idx, page, size }) {
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title} style={{ color: color }}>
-          {category}
-        </h1>
+        <h1 className={style.title}>{category}</h1>
         <button
           className={style.btn__more}
           onClick={() =>

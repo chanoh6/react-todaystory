@@ -5,14 +5,13 @@ import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, TypeC } from 'components';
 import style from 'styles/HistoryStories.module.css';
 import { ArrowLeftIcon } from 'assets';
+import { useState } from 'react';
 
 function HistoryStories() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { clearHistory, getHistory } = useHistory();
-  const idxList = getHistory();
-  console.log(idxList);
-  // const { loading, error, data } = useCategoryStories(6, 1, 10);
+  const [idxList, setIdxList] = useState(getHistory());
   const { loading, error, data } = useHistoryStories(idxList);
   const { contents } = data;
 

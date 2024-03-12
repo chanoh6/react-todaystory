@@ -4,7 +4,7 @@ import 'styles/Card.css';
 import style from 'styles/TypeB.module.css';
 
 const TypeB = ({ content }) => {
-  const { idx, channel, title, thumbnail, logo, publishDate, handleClick, onErrorImg } = useCard(content);
+  const { idx, cp, title, thumbnail, logo, publishDate, handleClick, onErrorImg } = useCard(content);
 
   return (
     <li className={style.card} onClick={handleClick}>
@@ -14,7 +14,7 @@ const TypeB = ({ content }) => {
       <div className={style.card__title}>
         <div className="cp">
           <img src={logo} alt="cp logo" onError={onErrorImg} />
-          <p>{channel}</p>
+          <p>{cp}</p>
         </div>
         <p className="title">{title}</p>
       </div>

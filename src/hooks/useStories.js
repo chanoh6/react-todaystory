@@ -7,24 +7,24 @@ const useDataFetching = (apiFunction, ...args) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    setData([]);
+
+    try {
+      const res = await apiFunction(api, ...args);
+      return res;
+    } catch (e) {
+      setError(e);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      setData([]);
-
-      try {
-        const res = await apiFunction(api, ...args);
-        return res;
-      } catch (e) {
-        setError(e);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 300);
-      }
-    };
-
     fetchData().then((res) => setData(res));
   }, [...args]);
 

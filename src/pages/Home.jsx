@@ -2,7 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from 'hooks/useLoading';
 import { useMenu } from 'hooks/useMenu';
-import { Menu, Category, TopStories, BestStories, EditorsPick, CategoryStories, Loading } from 'components';
+import {
+  Menu,
+  Category,
+  TopStories,
+  BestStories,
+  EditorsPick,
+  CategoryStories,
+  Loading,
+  RandomCategory,
+} from 'components';
 import { SearchIcon, MenuIcon, LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
@@ -78,15 +87,15 @@ function Home() {
         </section>
 
         <section className={style.content__wrap}>
-          <CategoryStories list={3} idx={1} page={1} size={4} />
+          <RandomCategory idx={1} />
         </section>
 
         <section className={style.content__wrap}>
-          <CategoryStories list={3} idx={2} page={1} size={4} />
+          <RandomCategory idx={2} />
         </section>
 
         <section className={style.content__wrap}>
-          <CategoryStories list={3} idx={3} page={1} size={4} />
+          <RandomCategory idx={3} />
         </section>
       </main>
 

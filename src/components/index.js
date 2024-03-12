@@ -17,6 +17,7 @@ export { default as Category } from 'components/Category';
 export { default as TopStories } from 'components/TopStories';
 export { default as BestStories } from 'components/BestStories';
 export { default as EditorsPick } from 'components/EditorsPick';
+export { default as RandomCategory } from 'components/RandomCategory';
 export { default as CategoryStories } from 'components/CategoryStories';
 export { default as ChannelStories } from 'components/ChannelStories';
 export { default as Policy } from 'components/Policy';
