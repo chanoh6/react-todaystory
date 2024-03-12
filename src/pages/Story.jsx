@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
-import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading } from 'components';
+import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading, MoreButton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import cn from 'classnames';
+import 'styles/Story.css';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import ShareModal from 'components/Modal/ShareModal';
@@ -28,6 +29,8 @@ function Story() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { contentId } = useParams();
+  const { favorite, saveFavorite } = useFavorite(contentId);
+  const { saveHistory } = useHistory();
   const { loading, error, data } = useStory(contentId);
   const {
     categoryIdx,
@@ -50,18 +53,15 @@ function Story() {
   const thumbnailURL = `${process.env.REACT_APP_BASE_IMG_URL}Thumbnail/${thumbnail}`;
   const logoURL = `${process.env.REACT_APP_BASE_IMG_URL}cp/${logo}`;
 
-  const renderHtml = (htmlString, index) => {
-    const rHtml = decode(htmlString);
-    return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: rHtml }} />;
-  };
-
-  const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory();
-
   const moreMenuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(0);
+  
+  const renderHtml = (htmlString, index) => {
+    const html = decode(htmlString);
+    return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
+  };
 
   useEffect(() => {
     saveHistory(contentId);
@@ -135,7 +135,7 @@ function Story() {
       {isOpen && <MoreMenu />}
       {shareOpen && <ShareModal contents={data} toChild={toChild} />}
 
-      {loading || error || !data ? (
+      {!data ? (
         <StorySkeleton />
       ) : (
         <main>

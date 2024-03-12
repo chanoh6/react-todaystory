@@ -9,6 +9,10 @@ const useDataFetching = (apiFunction, ...args) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      setData([]);
+
       try {
         const res = await apiFunction(api, ...args);
         return res;
@@ -22,7 +26,7 @@ const useDataFetching = (apiFunction, ...args) => {
     };
 
     fetchData().then((res) => setData(res));
-  }, []);
+  }, [...args]);
 
   return { loading, error, data };
 };
@@ -30,6 +34,10 @@ const useDataFetching = (apiFunction, ...args) => {
 export const useCategory = () => {
   return useDataFetching((api) => api.category());
 };
+
+export const useChannel = () => {
+  return useDataFetching((api) => api.channel());
+}
 
 export const useTopStories = (size) => {
   return useDataFetching((api) => api.topStories(size));
@@ -50,8 +58,6 @@ export const useCategoryStories = (cate, page, size) => {
 export const useChannelStories = (cp, page, size) => {
   return useDataFetching((api) => api.channelStories(cp, page, size), cp, page, size);
 };
-
-export const useLikeStories = () => {};
 
 export const useHistoryStories = () => {};
 

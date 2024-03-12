@@ -69,8 +69,10 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
+  gap: 1rem;
   width: 100%;
+  /* margin: 20px 0; */
   margin-bottom: 20px;
 }
 
@@ -89,6 +91,23 @@
 .content a {
   font-weight: 700;
   text-decoration: underline;
+}
+
+.content p span {
+  line-height: inherit;
+}
+
+.content p span + br {
+  display: none;
+}
+
+.content p span * {
+  font-size: inherit;
+}
+
+.content a {
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 .content p span {
