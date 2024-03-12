@@ -87,15 +87,15 @@ function Home() {
         </section>
 
         <section className={style.content__wrap}>
-          <RandomCategory idx={1} />
+          <RandomCategory idx={6} />
         </section>
 
         <section className={style.content__wrap}>
-          <RandomCategory idx={2} />
+          <RandomCategory idx={12} />
         </section>
 
         <section className={style.content__wrap}>
-          <RandomCategory idx={3} />
+          <RandomCategory idx={16} />
         </section>
       </main>
 

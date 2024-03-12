@@ -15,6 +15,11 @@ function HistoryStories() {
   const { loading, error, data } = useHistoryStories(idxList);
   const { contents } = data;
 
+  const handleClearHistory = () => {
+    clearHistory();
+    setIdxList([]);
+  };
+
   if (loading || error) return <Loading />;
 
   return (
@@ -32,7 +37,7 @@ function HistoryStories() {
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{t(`menu.history`)}</h1>
-        <p onClick={clearHistory}>{t(`history.clear`)}</p>
+        <p onClick={handleClearHistory}>{t(`history.clear`)}</p>
       </header>
 
       <main>

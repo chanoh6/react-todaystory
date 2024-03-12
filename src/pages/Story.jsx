@@ -135,8 +135,8 @@ function Story() {
       ) : (
         <main>
           <section className={style.content__wrap}>
-            <h1 className={style.title}>{title}</h1>
-            <p className={style.editor}>by {editor}</p>
+            <h1 className={style.title}>{decode(title)}</h1>
+            <p className={style.editor}>by {editor || cp}</p>
             <p className={style.date}>{publishDate}</p>
 
             <div className={style.content}>

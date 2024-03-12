@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { formatAgo } from 'utils/date';
+import { decode } from 'html-entities';
 
 export const useCard = (content) => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const useCard = (content) => {
     idx,
     category,
     cp,
-    title,
+    title: decode(title),
     thumbnail: `${baseURL}Thumbnail/${thumbnail}`,
     logo: `${baseURL}cp/${logo}`,
     publishDate: formatAgo(publishDate, locale),
