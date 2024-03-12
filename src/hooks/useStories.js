@@ -37,7 +37,7 @@ export const useCategory = () => {
 
 export const useChannel = () => {
   return useDataFetching((api) => api.channel());
-}
+};
 
 export const useTopStories = (size) => {
   return useDataFetching((api) => api.topStories(size));
@@ -59,7 +59,9 @@ export const useChannelStories = (cp, page, size) => {
   return useDataFetching((api) => api.channelStories(cp, page, size), cp, page, size);
 };
 
-export const useHistoryStories = () => {};
+export const useHistoryStories = (idxList) => {
+  return useDataFetching((api) => api.storiesByIndex(idxList), idxList);
+};
 
 export const useFavoriteStories = () => {};
 

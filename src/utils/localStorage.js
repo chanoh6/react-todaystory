@@ -37,3 +37,13 @@ export const deleteLocalStorage = (key, value) => {
 export const clearLocalStorage = (key) => {
   localStorage.removeItem(key);
 };
+
+export const getLocalStorage = (key) => {
+  let data = localStorage.getItem(key);
+  data = data ? JSON.parse(data) : [];
+  data = [...data];
+  return data;
+  // if (array !== null) {
+  //   return array;
+  // }
+};

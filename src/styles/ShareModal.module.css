@@ -1,6 +1,6 @@
-.dimm {
+.dim {
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 50%;
   bottom: 0;
@@ -11,13 +11,13 @@
 
 .icon {
   position: absolute;
-  right: 15px;
-  top: 15px;
+  right: 20px;
+  top: 20px;
 }
 .sns__wrap {
   position: absolute;
   left: 50%;
-  top: 11%;
+  top: 50%;
   color: #fff;
   transform: translate(-50%, -50%);
 }

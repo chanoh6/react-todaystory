@@ -57,7 +57,7 @@ function Story() {
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(0);
-  
+
   const renderHtml = (htmlString, index) => {
     const html = decode(htmlString);
     return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -95,11 +95,6 @@ function Story() {
   const handleMoreMenu = () => setIsOpen(!isOpen);
   const handleShareMenu = () => setShareOpen(!shareOpen);
 
-  const toChild = ({ changeFunc }) => {
-    console.log(changeFunc);
-    handleShareMenu();
-  };
-
   if (loading || error) return <Loading />;
 
   return (
@@ -133,7 +128,7 @@ function Story() {
       </header>
 
       {isOpen && <MoreMenu />}
-      {shareOpen && <ShareModal contents={data} toChild={toChild} />}
+      {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
 
       {!data ? (
         <StorySkeleton />
