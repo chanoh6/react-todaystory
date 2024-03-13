@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import {
   Home,
   Story,
@@ -20,9 +21,8 @@ import 'locales/i18n';
 
 /**
  * @TODOS
- * 1. router 경로 재설정
- * 2. .env 파일 활용하여 param 설정
- * 3. 최상단 경로에 lang 설정
+ * -- 1. router 경로 재설정
+ * 2. 최상단 경로에 lang 설정
  * */
 
 const router = createBrowserRouter([
@@ -49,6 +49,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </React.StrictMode>,
 );

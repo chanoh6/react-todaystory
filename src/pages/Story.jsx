@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
@@ -22,6 +23,7 @@ import style from 'styles/Story.module.css';
  */
 
 const Story = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { contentId } = useParams();
@@ -48,6 +50,10 @@ const Story = () => {
   } = data;
   const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${thumbnail}`;
   const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL}${logo}`;
+  const keyword = tag && tag.split('#').filter(Boolean).join(', ');
+  const _title = decode(title);
+  const _cp = decode(cp);
+  const _category = decode(category);
 
   const moreMenuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -69,18 +75,26 @@ const Story = () => {
 
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
+    const handleClick = (e) => {
+      if (isOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
     const handleTouchMove = (e) => {
       if (isOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
 
+    document.addEventListener('click', handleClick);
     document.addEventListener('touchmove', handleTouchMove);
     // document.addEventListener('mousedown', handleTouchMove);
     // document.addEventListener('scroll', handleTouchMove);
     // document.addEventListener('keydown', handleTouchMove);
 
     return () => {
+      document.removeEventListener('click', handleClick);
       document.removeEventListener('touchmove', handleTouchMove);
       // document.removeEventListener('mousedown', handleTouchMove);
       // document.removeEventListener('scroll', handleTouchMove);
@@ -88,9 +102,9 @@ const Story = () => {
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    setIsOpen(false);
-  }, [isScroll]);
+  // useEffect(() => {
+  //   setIsOpen(false);
+  // }, [isScroll]);
 
   const handleMoreMenu = () => setIsOpen(!isOpen);
   const handleShareMenu = () => setShareOpen(!shareOpen);
@@ -99,6 +113,17 @@ const Story = () => {
 
   return (
     <>
+      <Helmet>
+        <meta name="keywords" content={keyword} />
+
+        <meta property="og:title" content={`${t(`meta.title`)} - ${_title}`} />
+        <meta property="og:image" content={thumbnailURL} />
+        <meta property="og:url" content={`${process.env.REACT_APP_WEB_BASE_URL}${location.pathname}`} />
+
+        <meta name="twitter:title" content={`${t(`meta.title`)} - ${_title}`} />
+        <meta name="twitter:image" content={thumbnailURL} />
+      </Helmet>
+
       <header className={style.header}>
         <div className={style.header__btn}>
           <button className={style.icon} onClick={() => navigate(-1)}>
@@ -114,7 +139,7 @@ const Story = () => {
         </div>
 
         <h1 onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}>
-          {cp}
+          {_cp}
         </h1>
 
         <div className={style.header__btn}>
@@ -135,7 +160,7 @@ const Story = () => {
       ) : (
         <main>
           <section className={style.content__wrap}>
-            <h1 className={style.title}>{decode(title)}</h1>
+            <h1 className={style.title}>{_title}</h1>
             <p className={style.editor}>by {editor || cp}</p>
             <p className={style.date}>{publishDate}</p>
 

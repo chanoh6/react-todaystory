@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "noscript": "You need to enable JavaScript to run this app.",
+    "title": "Todaystory",
+    "description": "Check out today's story."
+  },
   "header": {
     "logo": "Todaystory",
     "date": "{{val, datetime}}"
