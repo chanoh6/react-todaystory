@@ -1,19 +1,19 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useHistoryStories } from 'hooks/useStories';
 import { useHistory } from 'hooks/useLocalStorage';
+import { useHistoryStories } from 'hooks/useStories';
 import { CardListSkeleton, Loading, TypeC } from 'components';
-import style from 'styles/HistoryStories.module.css';
 import { ArrowLeftIcon } from 'assets';
-import { useState } from 'react';
+import style from 'styles/HistoryStories.module.css';
 
-function HistoryStories() {
+const HistoryStories = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { clearHistory, getHistory } = useHistory();
   const [idxList, setIdxList] = useState(getHistory());
   const { loading, error, data } = useHistoryStories(idxList);
-  const { contents } = data;
+  const { contents } = data || {};
 
   const handleClearHistory = () => {
     clearHistory();
@@ -24,14 +24,6 @@ function HistoryStories() {
 
   return (
     <>
-      {/* <header className={style.header}>
-        <button className={style.icon} onClick={() => navigate(-1)}>
-          <ArrowLeftIcon width={10} height={18} style={{ marginRight: '2px' }} />
-        </button>
-        <h1>{t(`menu.history`)}</h1>
-        <p onClick={clearHistory}>{t(`history.clear`)}</p>
-      </header> */}
-
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
@@ -55,6 +47,6 @@ function HistoryStories() {
       </main>
     </>
   );
-}
+};
 
 export default HistoryStories;

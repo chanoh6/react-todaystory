@@ -4,7 +4,7 @@ import style from 'styles/Stories.module.css';
 import 'styles/Card.css';
 import card from 'styles/TypeC.module.css';
 
-export default function Stories() {
+const Stories = () => {
   return (
     <>
       <Skeleton className={style.title} width={'150px'}></Skeleton>
@@ -29,4 +29,6 @@ export default function Stories() {
       </ul>
     </>
   );
-}
+};
+
+export default Stories;

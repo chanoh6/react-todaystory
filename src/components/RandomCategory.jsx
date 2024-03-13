@@ -6,7 +6,8 @@ import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
-function RandomCategory({ idx }) {
+const RandomCategory = (props) => {
+  const { idx } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [randomCount, setRandomCount] = useState(getRandomCount());
@@ -36,7 +37,7 @@ function RandomCategory({ idx }) {
       <ul className={style.list}>{getRandomComponents(contents)}</ul>
     </>
   );
-}
+};
 
 const getRandomCount = () => Math.floor(Math.random() * (5 - 3 + 1)) + 3;
 

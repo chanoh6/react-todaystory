@@ -1,18 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLoading } from 'hooks/useLoading';
-import { useMenu } from 'hooks/useMenu';
-import {
-  Menu,
-  Category,
-  TopStories,
-  BestStories,
-  EditorsPick,
-  CategoryStories,
-  Loading,
-  RandomCategory,
-} from 'components';
-import { SearchIcon, MenuIcon, LuckIcon } from 'assets';
+// import { useLoading } from 'hooks/useLoading';
+import { Category, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
+import { SearchIcon, LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
 
@@ -26,11 +16,10 @@ import style from 'styles/Home.module.css';
  * -- 6. 로딩 화면 확인
  */
 
-function Home() {
+const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { showMenu, handleClickMenu, handleCloseMenu } = useMenu();
-  const { loading } = useLoading();
+  // const { loading } = useLoading();
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
@@ -54,10 +43,7 @@ function Home() {
           <button className={style.icon}>
             <SearchIcon width={20} height={20} fill={'var(--color-black)'} />
           </button>
-          <button className={style.icon} onClick={handleClickMenu}>
-            <MenuIcon width={20} height={20} fill={'var(--color-black)'} />
-          </button>
-          {showMenu && <Menu onClose={handleCloseMenu} />}
+          <MenuButton />
         </div>
       </header>
 
@@ -102,6 +88,6 @@ function Home() {
       <footer></footer>
     </>
   );
-}
+};
 
 export default Home;

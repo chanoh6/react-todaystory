@@ -3,7 +3,8 @@ import { useBestStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
-function BestStories({ page, size }) {
+const BestStories = (props) => {
+  const { page, size } = props;
   const { t } = useTranslation();
   const { loading, error, data } = useBestStories(page, size);
   const { contents } = data;
@@ -22,6 +23,6 @@ function BestStories({ page, size }) {
       </ul>
     </>
   );
-}
+};
 
 export default BestStories;

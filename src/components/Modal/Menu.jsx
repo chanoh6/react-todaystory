@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory, useChannel } from 'hooks/useStories';
 import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
+import { decode } from 'html-entities';
 import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
 
-function Menu({ onClose }) {
+const Menu = (props) => {
+  const { onClose } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [showCategory, setShowCategory] = useState(false);
@@ -15,6 +17,7 @@ function Menu({ onClose }) {
   const { data: categoryList } = useCategory();
   const { data: channelList } = useChannel();
   const year = new Date().getFullYear();
+  const categoryAllIcon = `${process.env.REACT_APP_CATEGORY_ICON}all.svg`;
 
   /*
   const { isMenuOpen } = props;
@@ -22,6 +25,9 @@ function Menu({ onClose }) {
     // 다닫히는 액션
   }, [isMenuOpen]); 
   */
+
+  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   const handleClose = () => {
     onClose?.();
@@ -32,7 +38,7 @@ function Menu({ onClose }) {
     setTimeout(() => {
       handleClose();
     }, 100);
-  }
+  };
 
   return (
     <Modal>
@@ -55,7 +61,7 @@ function Menu({ onClose }) {
               <p>{t(`menu.history`)}</p>
             </li>
           </ul>
-          
+
           <div className={style.menu__drop}>
             <button onClick={() => setShowCategory(!showCategory)}>
               <p>{t(`menu.category`)}</p>
@@ -65,17 +71,30 @@ function Menu({ onClose }) {
             <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
               <li className={style.drop__item} onClick={() => handleNavigate(process.env.REACT_APP_WEB_HOME_URL)}>
                 <figure>
-                  <img src={`${process.env.REACT_APP_CATEGORY_ICON}all.svg`} alt="category icon" />
+                  <img
+                    loading="lazy"
+                    src={`${process.env.REACT_APP_CATEGORY_ICON}all.svg`}
+                    alt="category icon"
+                    onError={onErrorIcon}
+                  />
                 </figure>
                 <p>{t(`nav.all`)}</p>
               </li>
 
               {categoryList.map((cate) => (
-                <li className={style.drop__item} key={cate.idx} onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`)}>
+                <li
+                  className={style.drop__item}
+                  key={cate.idx}
+                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`)}
+                >
                   <figure>
-                    <img src={`${process.env.REACT_APP_CATEGORY_ICON}${cate.icon}`} alt="category icon" />
+                    <img
+                      loading="lazy"
+                      src={`${process.env.REACT_APP_CATEGORY_ICON}${cate.icon}`}
+                      alt="category icon"
+                    />
                   </figure>
-                  <p>{cate.name}</p>
+                  <p>{decode(cate.name)}</p>
                 </li>
               ))}
             </ul>
@@ -89,16 +108,24 @@ function Menu({ onClose }) {
 
             <ul className={cn(style.drop__list, { [style.active]: showChannel })}>
               {channelList.map((ch) => (
-                <li className={cn(style.drop__item, style.channel)} key={ch.idx} onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`)}>
+                <li
+                  className={cn(style.drop__item, style.channel)}
+                  key={ch.idx}
+                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`)}
+                >
                   <figure>
-                    <img src={`${process.env.REACT_APP_BASE_IMG_URL}cp/${ch.logo}`} alt="channel icon" />
+                    <img
+                      loading="lazy"
+                      src={`${process.env.REACT_APP_LOGO_IMG_URL}${ch.logo}`}
+                      alt="channel icon"
+                      onError={onErrorLogo}
+                    />
                   </figure>
-                  <p>{ch.name}</p>
+                  <p>{decode(ch.name)}</p>
                 </li>
               ))}
             </ul>
           </div>
-
         </div>
         <div className={style.footer}>
           <div className={style.footer__menu}>
@@ -120,6 +147,6 @@ function Menu({ onClose }) {
       </div>
     </Modal>
   );
-}
+};
 
 export default Menu;

@@ -4,10 +4,10 @@ import { TypeD } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
-function EditorsPick() {
+const EditorsPick = () => {
   const { t } = useTranslation();
   const { loading, error, data } = useEditorsPick();
-  const { contents } = data;
+  const { contents } = data || {};
 
   if (loading || error || !contents) return null;
 
@@ -22,6 +22,6 @@ function EditorsPick() {
       ))}
     </section>
   );
-}
+};
 
 export default EditorsPick;

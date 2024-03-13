@@ -1,7 +1,8 @@
 import { useFavorite } from 'hooks/useLocalStorage';
 import { LikeFilledIcon, LikeUnfilledIcon } from 'assets';
 
-const LikeButton = ({ idx }) => {
+const LikeButton = (props) => {
+  const { idx } = props;
   const { favorite, saveFavorite } = useFavorite(idx);
 
   return (

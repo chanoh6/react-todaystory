@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useFavorite } from 'hooks/useLocalStorage';
 import { useFavoriteStories } from 'hooks/useStories';
-import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
+import { CardListSkeleton, Loading, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/FavoriteStories.module.css';
-import { useState } from 'react';
-import { useFavorite } from 'hooks/useLocalStorage';
 
-function FavoriteStories() {
+const FavoriteStories = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { getFavorite } = useFavorite();
@@ -19,13 +19,6 @@ function FavoriteStories() {
 
   return (
     <>
-      {/* <header className={style.header}>
-        <button className={style.icon} onClick={() => navigate(-1)}>
-          <ArrowLeftIcon width={10} height={18} style={{ marginRight: '2px' }} />
-        </button>
-        <h1>{t(`menu.favorites`)}</h1>
-      </header> */}
-
       <header className={style.header}>
         <button onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
@@ -48,6 +41,6 @@ function FavoriteStories() {
       </main>
     </>
   );
-}
+};
 
 export default FavoriteStories;

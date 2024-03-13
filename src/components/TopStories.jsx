@@ -3,10 +3,11 @@ import { useTopStories } from 'hooks/useStories';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
-function TopStories({ size }) {
+const TopStories = (props) => {
+  const { size } = props;
   const { t } = useTranslation();
   const { loading, error, data } = useTopStories(size);
-  const { contents } = data;
+  const { contents } = data || {};
 
   if (loading || error || !contents) return <StoriesSkeleton />;
 
@@ -18,15 +19,18 @@ function TopStories({ size }) {
         </h1>
       </div>
       <ul className={style.list}>
-        <TypeA key={0} content={contents[0]} />
-        <TypeB key={1} content={contents[1]} />
-        <TypeB key={2} content={contents[2]} />
-        <TypeC key={3} content={contents[3]} />
-        <TypeC key={4} content={contents[4]} />
-        <TypeC key={5} content={contents[5]} />
+        {contents.map((content, i) => {
+          if (i === 0) {
+            return <TypeA key={i} content={content} />;
+          } else if (i === 1 || i === 2) {
+            return <TypeB key={i} content={content} />;
+          } else {
+            return <TypeC key={i} content={content} />;
+          }
+        })}
       </ul>
     </>
   );
-}
+};
 
 export default TopStories;

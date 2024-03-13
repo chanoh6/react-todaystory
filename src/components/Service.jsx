@@ -1,7 +1,7 @@
-import React from 'react';
-import style from 'styles/PolicyPrivacy.module.css';
 import { useTranslation } from 'react-i18next';
-function Service() {
+import style from 'styles/PolicyPrivacy.module.css';
+
+const Service = () => {
   const { t } = useTranslation();
   return (
     <div className={style.contents__wrap}>
@@ -22,6 +22,6 @@ function Service() {
       <p>{t(`service.contents7-1`)}</p>
     </div>
   );
-}
+};
 
 export default Service;

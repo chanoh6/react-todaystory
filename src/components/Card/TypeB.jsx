@@ -3,17 +3,18 @@ import { LikeButton } from 'components';
 import 'styles/Card.css';
 import style from 'styles/TypeB.module.css';
 
-const TypeB = ({ content }) => {
-  const { idx, cp, title, thumbnail, logo, publishDate, handleClick, onErrorImg } = useCard(content);
+const TypeB = (props) => {
+  const { content } = props;
+  const { idx, cp, title, thumbnail, logo, publishDate, handleClick, onErrorImg, onErrorLogo } = useCard(content);
 
   return (
     <li className={style.card} onClick={handleClick}>
       <figure className="thumbnail">
-        <img src={thumbnail} alt="thumbnail" onError={onErrorImg} />
+        <img loading="lazy" src={thumbnail} alt="thumbnail" onError={onErrorImg} />
       </figure>
       <div className={style.card__title}>
         <div className="cp">
-          <img src={logo} alt="cp logo" onError={onErrorImg} />
+          <img loading="lazy" src={logo} alt="cp logo" onError={onErrorLogo} />
           <p>{cp}</p>
         </div>
         <p className="title">{title}</p>

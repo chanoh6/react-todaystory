@@ -6,7 +6,8 @@ const FontWrapper = styled.div`
   font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
 `;
 
-function Modal({ children }) {
+const Modal = (props) => {
+  const { children } = props;
   useEffect(() => {
     const $body = document.querySelector('body');
     const overflow = $body.style.overflow;
@@ -21,6 +22,6 @@ function Modal({ children }) {
       <FontWrapper>{children}</FontWrapper>
     </ModalContainer>
   );
-}
+};
 
 export default Modal;

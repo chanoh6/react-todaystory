@@ -1,4 +1,5 @@
 export { default as LikeButton } from 'components/Button/LikeButton';
+export { default as MenuButton } from 'components/Button/MenuButton';
 
 export { default as TypeA } from 'components/Card/TypeA';
 export { default as TypeB } from 'components/Card/TypeB';
@@ -8,6 +9,7 @@ export { default as TypeD } from 'components/Card/TypeD';
 export { default as Loading } from 'components/Modal/Loading';
 export { default as Menu } from 'components/Modal/Menu';
 export { default as MoreMenu } from 'components/Modal/MoreMenu';
+export { default as ShareModal } from 'components/Modal/ShareModal';
 
 export { default as StorySkeleton } from 'components/Skeleton/Story';
 export { default as CardListSkeleton } from 'components/Skeleton/CardList';

@@ -1,16 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMenu } from 'hooks/useMenu';
 import { useChannelStories } from 'hooks/useStories';
-import { CardListSkeleton, Loading, Menu, TypeC } from 'components';
-import { ArrowLeftIcon, MenuIcon } from 'assets';
+import { CardListSkeleton, Loading, Menu, MenuButton, TypeC } from 'components';
+import { ArrowLeftIcon } from 'assets';
 import style from 'styles/CategoryStories.module.css';
 
-function ChannelStories() {
+const ChannelStories = () => {
   const { pageId } = useParams();
   const navigate = useNavigate();
-  const { showMenu, handleClickMenu, handleCloseMenu } = useMenu();
   const { loading, error, data } = useChannelStories(pageId, 1, 10);
-  const { cp, cpIdx, contents } = data;
+  const { cp, cpIdx, contents } = data || {};
 
   if (loading || error) return <Loading />;
 
@@ -21,10 +19,7 @@ function ChannelStories() {
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{cp}</h1>
-        <button onClick={handleClickMenu}>
-          <MenuIcon width={20} height={20} fill={'var(--color-black)'} />
-        </button>
-        {showMenu && <Menu onClose={handleCloseMenu} />}
+        <MenuButton />
       </header>
 
       <main>
@@ -42,6 +37,6 @@ function ChannelStories() {
       </main>
     </>
   );
-}
+};
 
 export default ChannelStories;

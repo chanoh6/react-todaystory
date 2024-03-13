@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import style from 'styles/PolicyPrivacy.module.css';
 
-export default function Policy() {
+const Policy = () => {
   const { t } = useTranslation();
 
   return (
@@ -134,4 +134,6 @@ export default function Policy() {
       </section>
     </div>
   );
-}
+};
+
+export default Policy;

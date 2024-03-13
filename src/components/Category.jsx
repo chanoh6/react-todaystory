@@ -4,16 +4,13 @@ import { useCategory } from 'hooks/useStories';
 import style from 'styles/Category.module.css';
 import Skeleton from 'react-loading-skeleton';
 
-/**
- * @TODOS
- * 카테고리 아이콘 s3 업로드
- */
-
-function Category() {
+const Category = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { loading, error, data } = useCategory();
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
+
+  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_ICON);
 
   if (loading || error || !data) {
     return (
@@ -32,7 +29,7 @@ function Category() {
         className={`${style.item} ${style.active}`}
         onClick={() => navigate(process.env.REACT_APP_WEB_HOME_URL)}
       >
-        <img src={`${baseImgURL}all.svg`} alt="category icon" />
+        <img loading="lazy" src={`${baseImgURL}all.svg`} alt="category icon" onError={onErrorIcon} />
         <p>{t(`nav.all`)}</p>
       </li>
       {data.map((cat, i) => (
@@ -44,13 +41,13 @@ function Category() {
           }
         >
           <figure className={style.icon}>
-            <img src={`${baseImgURL}${cat.icon}`} alt="category icon" />
+            <img loading="lazy" src={`${baseImgURL}${cat.icon}`} alt="category icon" onError={onErrorIcon} />
           </figure>
           <p>{cat.name}</p>
         </li>
       ))}
     </ul>
   );
-}
+};
 
 export default Category;

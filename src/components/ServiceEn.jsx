@@ -1,6 +1,6 @@
-import React from 'react';
 import style from 'styles/PolicyPrivacy.module.css';
-function ServiceEn() {
+
+const ServiceEn = () => {
   return (
     <div className={style.contents__wrap}>
       <h2>TERMS OF USE</h2>
@@ -276,6 +276,6 @@ function ServiceEn() {
       </section>
     </div>
   );
-}
+};
 
 export default ServiceEn;

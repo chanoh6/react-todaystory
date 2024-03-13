@@ -4,28 +4,24 @@ import { useTranslation } from 'react-i18next';
 import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
-import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, Loading, MoreButton } from 'components';
+import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, ShareModal, Loading } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import cn from 'classnames';
 import 'styles/Story.css';
-import 'styles/Story.css';
 import style from 'styles/Story.module.css';
-import ShareModal from 'components/Modal/ShareModal';
 
 /**
  * @TODOS
- * 1. 콘텐츠 상세 api 연결
+ * -- 1. 콘텐츠 상세 api 연결
  * 2. 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
  * -- 3. 좋아요 기능 추가
- * 4. 공유 기능 추가
- * 5. 더보기 메뉴 추가
+ * -- 4. 공유 기능 추가
+ * -- 5. 더보기 메뉴 추가
  * 6. 에디터 스타일
  * 7. 아이콘 통합 정리
  */
 
-const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
-
-function Story() {
+const Story = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { contentId } = useParams();
@@ -50,13 +46,17 @@ function Story() {
     noindex,
     externalLink,
   } = data;
-  const thumbnailURL = `${process.env.REACT_APP_BASE_IMG_URL}Thumbnail/${thumbnail}`;
-  const logoURL = `${process.env.REACT_APP_BASE_IMG_URL}cp/${logo}`;
+  const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${thumbnail}`;
+  const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL}${logo}`;
 
   const moreMenuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isScroll, setIsScroll] = useState(0);
+
+  // useRef?
+  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   const renderHtml = (htmlString, index) => {
     const html = decode(htmlString);
@@ -65,7 +65,7 @@ function Story() {
 
   useEffect(() => {
     saveHistory(contentId);
-  }, []);
+  }, [contentId]);
 
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
@@ -126,7 +126,7 @@ function Story() {
           </button>
         </div>
       </header>
-      
+
       {isOpen && <MoreMenu />}
       {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
 
@@ -140,7 +140,7 @@ function Story() {
             <p className={style.date}>{publishDate}</p>
 
             <div className={style.content}>
-              <img src={thumbnailURL} alt="thumbnail" />
+              <img loading="lazy" src={thumbnailURL} alt="thumbnail" onError={onErrorImg} />
             </div>
 
             {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
@@ -151,7 +151,7 @@ function Story() {
                 onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}
               >
                 <div className="cp">
-                  <img src={logoURL} alt="cp logo" onError={onErrorImg} />
+                  <img loading="lazy" src={logoURL} alt="cp logo" onError={onErrorLogo} />
                 </div>
                 <span>{t(`detail.more-latest`, { channel: cp })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
@@ -160,7 +160,7 @@ function Story() {
           </section>
 
           <section className={style.category__wrap}>
-            {loading ? '' : <p>{t(`detail.more-from`)}</p>}
+            <p>{t(`detail.more-from`)}</p>
             <ChannelStories idx={cpIdx} page={1} size={4} />
           </section>
 
@@ -177,5 +177,5 @@ function Story() {
       <footer></footer>
     </>
   );
-}
+};
 export default Story;

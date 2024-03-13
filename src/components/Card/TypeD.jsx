@@ -4,23 +4,24 @@ import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
-const TypeD = ({ content }) => {
-  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg } =
+const TypeD = (props) => {
+  const { content } = props;
+  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
 
   return (
     <article className={style.card} onClick={handleClick}>
       <div className={style.card__img}>
         <figure className={style.thumbnail}>
-          <img src={thumbnail} alt="thumbnail" onError={onErrorImg} />
+          <img loading="lazy" src={thumbnail} alt="thumbnail" onError={onErrorImg} />
         </figure>
         <figure className={style.background}>
-          <img src={thumbnail} alt="background" onError={onErrorImg} />
+          <img loading="lazy" src={thumbnail} alt="background" onError={onErrorImg} />
         </figure>
       </div>
       <div className="card__title">
         <div className="cp">
-          <img src={logo} alt="cp logo" onError={onErrorImg} />
+          <img loading="lazy" src={logo} alt="cp logo" onError={onErrorLogo} />
           <p>{cp}</p>
         </div>
         <p className="title">{title}</p>

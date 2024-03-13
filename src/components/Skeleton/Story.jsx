@@ -1,7 +1,7 @@
 import style from 'styles/Story.module.css';
 import Skeleton from 'react-loading-skeleton';
 
-export default function Story() {
+const Story = () => {
   return (
     <section className={style.content__wrap}>
       <Skeleton width={'100%'} height={'24px'} style={{ marginBottom: '4px' }} />
@@ -14,4 +14,6 @@ export default function Story() {
       <Skeleton width={'60%'} />
     </section>
   );
-}
+};
+
+export default Story;

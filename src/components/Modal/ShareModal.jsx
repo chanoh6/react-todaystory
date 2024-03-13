@@ -7,7 +7,8 @@ import Facebook from '../../assets/icon/Facebook.png';
 import Twitter from '../../assets/icon/Twitter.png';
 import Link from '../../assets/icon/Link.png';
 
-function ShareModal({ contents, onClose }) {
+const ShareModal = (props) => {
+  const { contents, onClose } = props;
   const url = `https://local.todaystory.me/view/${contents.idx}`;
 
   useEffect(() => {
@@ -67,22 +68,22 @@ function ShareModal({ contents, onClose }) {
           </p>
           <ul>
             <li onClick={shareToKakao}>
-              <img src={kakao} alt="카카오" />
+              <img loading="lazy" src={kakao} alt="카카오" />
             </li>
             <li onClick={shareToFacebook}>
-              <img src={Facebook} alt="페이스북" />
+              <img loading="lazy" src={Facebook} alt="페이스북" />
             </li>
             <li onClick={shareToTwitter}>
-              <img src={Twitter} alt="트위터" />
+              <img loading="lazy" src={Twitter} alt="트위터" />
             </li>
             <li onClick={shareToURL}>
-              <img src={Link} alt="URL" />
+              <img loading="lazy" src={Link} alt="URL" />
             </li>
           </ul>
         </div>
       </div>
     </Modal>
   );
-}
+};
 
 export default ShareModal;

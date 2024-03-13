@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/MoreMenu.module.css';
 
-function MoreMenu() {
+const MoreMenu = () => {
   const menuTitle = ['링크 복사', '채널 보러가기'];
 
   return (
@@ -18,6 +18,6 @@ function MoreMenu() {
       </ul>
     </div>
   );
-}
+};
 
 export default MoreMenu;

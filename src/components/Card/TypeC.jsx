@@ -5,8 +5,8 @@ import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
 const TypeC = (props) => {
-  const { content } = props; 
-  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg } =
+  const { content } = props;
+  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
 
   return (
@@ -14,13 +14,13 @@ const TypeC = (props) => {
       <div className={style.card__info}>
         <div className={style.card__title}>
           <div className="cp">
-            <img src={logo} alt="cp logo" onError={onErrorImg} />
+            <img loading="lazy" src={logo} alt="cp logo" onError={onErrorLogo} />
             <p>{cp}</p>
           </div>
           <p className="title">{title}</p>
         </div>
         <figure className={style.thumbnail}>
-          <img src={thumbnail} alt="thumbnail" onError={onErrorImg} />
+          <img loading="lazy" src={thumbnail} alt="thumbnail" onError={onErrorImg} />
         </figure>
       </div>
       <div className="card__more">

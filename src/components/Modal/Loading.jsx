@@ -1,7 +1,7 @@
 import { PulseLoader } from 'react-spinners';
 import Modal from 'components/Modal/Modal';
 
-function Loading() {
+const Loading = () => {
   const override = {
     position: 'absolute',
     left: '50%',
@@ -16,6 +16,6 @@ function Loading() {
       </div>
     </Modal>
   );
-}
+};
 
 export default Loading;

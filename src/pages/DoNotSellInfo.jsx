@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function Donot() {
+const Donot = () => {
   return <div>Do not sell my personal information</div>;
-}
+};
+
+export default Donot;

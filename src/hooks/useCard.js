@@ -6,24 +6,25 @@ export const useCard = (content) => {
   const navigate = useNavigate();
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount } = content;
   const locale = process.env.REACT_APP_LOCALE;
-  const baseURL = process.env.REACT_APP_BASE_IMG_URL;
 
   const handleClick = () => {
     navigate(`${process.env.REACT_APP_WEB_STORY_URL}${idx}`);
   };
 
-  const onErrorImg = (e) => (e.target.src = '/assets/no_image.png');
+  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   return {
     idx,
-    category,
-    cp,
+    category: decode(category),
+    cp: decode(cp),
     title: decode(title),
-    thumbnail: `${baseURL}Thumbnail/${thumbnail}`,
-    logo: `${baseURL}cp/${logo}`,
+    thumbnail: `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${thumbnail}`,
+    logo: `${process.env.REACT_APP_LOGO_IMG_URL}${logo}`,
     publishDate: formatAgo(publishDate, locale),
     viewCount: Number(viewCount).toLocaleString('ko-KR'),
     handleClick,
     onErrorImg,
+    onErrorLogo,
   };
 };

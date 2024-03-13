@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function CookieList() {
+const CookieList = () => {
   return <div>CookieList</div>;
-}
+};
+
+export default CookieList;

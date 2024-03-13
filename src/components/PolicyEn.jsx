@@ -1,6 +1,6 @@
-import React from 'react';
 import style from 'styles/PolicyPrivacy.module.css';
-export default function PolicyEn() {
+
+const PolicyEn = () => {
   return (
     <div className={style.contents__wrap}>
       <h2>Picks Privacy Policy</h2>
@@ -403,4 +403,6 @@ export default function PolicyEn() {
       </article>
     </div>
   );
-}
+};
+
+export default PolicyEn;

@@ -2,7 +2,8 @@ import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 import { useChannelStories } from 'hooks/useStories';
 
-function ChannelStories({ idx, page, size }) {
+const ChannelStories = (props) => {
+  const { idx, page, size } = props;
   const { loading, error, data } = useChannelStories(idx, page, size);
   const { cp, contents } = data;
 
@@ -20,6 +21,6 @@ function ChannelStories({ idx, page, size }) {
       </ul>
     </>
   );
-}
+};
 
 export default ChannelStories;
