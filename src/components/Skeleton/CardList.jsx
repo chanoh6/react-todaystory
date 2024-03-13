@@ -1,5 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
-import style from 'styles/FavoriteStories.module.css';
+import style from 'styles/Favorite.module.css';
 import card from 'styles/TypeC.module.css';
 
 const CardList = () => {

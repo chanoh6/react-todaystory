@@ -186,7 +186,7 @@ const Story = () => {
 
           <section className={style.category__wrap}>
             <p>{t(`detail.more-from`)}</p>
-            <ChannelStories idx={cpIdx} page={1} size={4} />
+            <ChannelStories idx={cpIdx} page={0} size={4} />
           </section>
 
           <section className={style.category__wrap}>
@@ -194,7 +194,7 @@ const Story = () => {
           </section>
 
           <section className={style.category__wrap}>
-            <CategoryStories list={3} idx={categoryIdx} page={1} size={4} />
+            <CategoryStories list={3} idx={categoryIdx} page={0} size={4} />
           </section>
         </main>
       )}

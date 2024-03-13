@@ -15,7 +15,7 @@ export { default as StorySkeleton } from 'components/Skeleton/Story';
 export { default as CardListSkeleton } from 'components/Skeleton/CardList';
 export { default as StoriesSkeleton } from 'components/Skeleton/Stories';
 
-export { default as Category } from 'components/Category';
+export { default as CategoryNav } from 'components/CategoryNav';
 export { default as TopStories } from 'components/TopStories';
 export { default as BestStories } from 'components/BestStories';
 export { default as EditorsPick } from 'components/EditorsPick';
@@ -26,5 +26,6 @@ export { default as Policy } from 'components/Policy';
 export { default as PolicyEn } from 'components/PolicyEn';
 export { default as Service } from 'components/Service';
 export { default as ServiceEn } from 'components/ServiceEn';
+export { default as NoStories } from 'components/NoStories';
 
 export { default as ScrollToTop } from 'components/ScrollToTop';

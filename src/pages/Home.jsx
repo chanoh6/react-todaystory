@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // import { useLoading } from 'hooks/useLoading';
-import { Category, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
+import { CategoryNav, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
 import { SearchIcon, LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
@@ -48,7 +48,7 @@ const Home = () => {
       </header>
 
       <nav className={style.nav}>
-        <Category />
+        <CategoryNav />
         <div className={style.nav__ad}>
           <button className={style.ad__item} onClick={handleClickFortune}>
             <LuckIcon width={18} height={20} fill="var(--color-black)" />

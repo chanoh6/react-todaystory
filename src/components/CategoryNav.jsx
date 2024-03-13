@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory } from 'hooks/useStories';
-import style from 'styles/Category.module.css';
+import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
-const Category = () => {
+const CategoryNav = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { loading, error, data } = useCategory();
@@ -50,4 +50,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default CategoryNav;

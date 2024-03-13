@@ -11,7 +11,7 @@ const RandomCategory = (props) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [randomCount, setRandomCount] = useState(getRandomCount());
-  const { loading, error, data } = useCategoryStories(idx, 1, randomCount);
+  const { loading, error, data } = useCategoryStories(idx, 0, randomCount);
   const { categoryIdx, category, color, contents } = data;
 
   if (loading || error || !contents) return <StoriesSkeleton />;

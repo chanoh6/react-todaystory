@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategoryStories } from 'hooks/useStories';
-import { StoriesSkeleton, TypeC } from 'components';
+import { NoStories, StoriesSkeleton, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
@@ -31,9 +31,9 @@ const CategoryStories = (props) => {
         </button>
       </div>
       <ul className={style.list}>
-        {contents.map((content, i) => (
-          <TypeC key={i} content={content} />
-        ))}
+      {contents.map((content, i) => (
+        <TypeC key={i} content={content} />
+      ))}
       </ul>
     </>
   );
