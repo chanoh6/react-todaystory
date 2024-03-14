@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +44,7 @@ const Category = () => {
           if (!prev) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
-        res.data.contents.length > size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });
   }, [pageId, page]);
@@ -91,8 +90,8 @@ const Category = () => {
                 <NoStories text={t(`noStories.stories`)} />
                 ) : (
                 data.contents.map((content, i) => {
-                  if (data.contents.length === i + 1) {
-                    return <li key={i} ref={lastItemRef}>{i}</li>;
+                  if (data.contents.length !== 1 && data.contents.length === i + 1) {
+                    return <li key={i} ref={lastItemRef}></li>;
                   } else {
                     return <TypeC key={i} content={content} />;
                   }

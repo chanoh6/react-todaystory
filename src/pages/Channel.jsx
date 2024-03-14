@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CardListSkeleton, Loading, Menu, MenuButton, NoStories, TypeC } from 'components';
+import { useTranslation } from 'react-i18next';
+import { useAPI } from 'context/APIContext';
+import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
-import { useAPI } from 'context/APIContext';
-import { useTranslation } from 'react-i18next';
 
 const Channel = () => {
   const { state } = useLocation();
@@ -44,7 +44,7 @@ const Channel = () => {
           if (!prev) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
-        res.data.contents.length > size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });
   }, [pageId, page]);
@@ -90,8 +90,8 @@ const Channel = () => {
                 <NoStories text={t(`noStories.stories`)} />
                 ) : (
                 data.contents.map((content, i) => {
-                  if (data.contents.length === i + 1) {
-                    return <TypeC key={i} content={content} ref={lastItemRef} />
+                  if (data.contents.length !== 1 && data.contents.length === i + 1) {
+                    return <li key={i} ref={lastItemRef}></li>;
                   } else {
                     return <TypeC key={i} content={content} />;
                   }
