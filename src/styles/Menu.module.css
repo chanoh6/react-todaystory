@@ -7,8 +7,9 @@
   width: 100%;
   min-width: 280px;
   max-width: 540px;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  /* min-height: 100vh;
+  min-height: -webkit-fill-available; */
+  min-height: calc(var(--vh, 1vh) * 100);
   background-color: var(--color-white);
   padding: 0 15px;
   margin: auto;

@@ -32,6 +32,21 @@ const Menu = (props) => {
     }, 100);
   };
 
+  const setScreenSize = () => {
+    let vh = 0;
+    vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+
+  useEffect(() => {
+    setScreenSize();
+    
+    window.addEventListener('resize', setScreenSize);
+    return () => {
+      window.removeEventListener('resize', setScreenSize);
+    }
+  }, []);
+
   useEffect(() => {
     const menuHeight = menuRef.current.offsetHeight;
     menuRef.current.style.setProperty('height', `${menuHeight}px`);
