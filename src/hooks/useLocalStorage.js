@@ -14,7 +14,7 @@ export const useFavorite = (idx) => {
   useEffect(() => {
     const isFavorite = checkLocalStorage('favorites', idx);
     setFavorite(isFavorite);
-  }, []);
+  }, [idx]);
 
   const saveFavorite = (e) => {
     e.stopPropagation();

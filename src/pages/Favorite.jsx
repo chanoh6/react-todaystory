@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useFavorite } from 'hooks/useLocalStorage';
 import { useFavoriteStories } from 'hooks/useStories';
-import { CardListSkeleton, Loading, TypeC } from 'components';
+import { CardListSkeleton, Loading, TypeC, TypeE } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Favorite.module.css';
 
@@ -14,6 +14,11 @@ const Favorite = () => {
   const [idxList, setIdxList] = useState(getFavorite());
   const { loading, error, data } = useFavoriteStories(idxList);
   const { contents } = data;
+  const cardRef = useRef({});
+
+  const handleCardClick = (cardId) => {
+    cardRef.current[cardId].remove();
+  };
 
   if (loading || error) return <Loading />;
 
@@ -33,7 +38,13 @@ const Favorite = () => {
           <section className={style.content__wrap}>
             <ul className={style.list}>
               {contents.map((content, i) => (
-                <TypeC key={i} content={content} />
+                <TypeE
+                  key={i}
+                  cardId={i}
+                  content={content}
+                  ref={(el) => (cardRef.current[i] = el)}
+                  onClick={handleCardClick}
+                />
               ))}
             </ul>
           </section>

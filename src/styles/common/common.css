@@ -29,7 +29,8 @@ figure {
   margin: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
   text-decoration: none;
   padding: 0;

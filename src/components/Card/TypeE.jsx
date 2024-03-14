@@ -1,17 +1,23 @@
 import { forwardRef } from 'react';
 import { useCard } from 'hooks/useCard';
-import { LikeButton } from 'components';
-import { ViewIcon } from 'assets';
+import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
+import { useFavorite } from 'hooks/useLocalStorage';
 
-const TypeC = (props) => {
-  const { content } = props;
+const TypeE = forwardRef((props, ref) => {
+  const { content, cardId, onClick } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
+  const { favorite, saveFavorite } = useFavorite(idx);
+
+  const handleButtonClick = (e) => {
+    saveFavorite(e);
+    onClick(cardId);
+  };
 
   return (
-    <li className="card" onClick={handleClick}>
+    <li className="card" onClick={handleClick} ref={ref}>
       <div className={style.card__info}>
         <div className={style.card__title}>
           <div className="cp">
@@ -33,11 +39,17 @@ const TypeC = (props) => {
         <div className="like">
           <ViewIcon width={16} height={16} />
           <p id="viewCount">{viewCount}</p>
-          <LikeButton idx={idx} />
+          <button onClick={handleButtonClick}>
+            {favorite ? (
+              <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
+            ) : (
+              <LikeUnfilledIcon width={18} height={16} fill={'var(--color-blue)'} />
+            )}
+          </button>
         </div>
       </div>
     </li>
   );
-};
+});
 
-export default TypeC;
+export default TypeE;

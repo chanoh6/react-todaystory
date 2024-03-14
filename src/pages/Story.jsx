@@ -174,11 +174,9 @@ const Story = () => {
               <button
                 className={style.more}
                 onClick={() => {
-                  if (btnURL) {
-                    window.open(btnURL);
-                  } else {
-                    navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } });
-                  }
+                  btnURL
+                    ? window.open(btnURL, '_blank')
+                    : navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } });
                 }}
               >
                 <div className="cp">

@@ -1,8 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // import { useLoading } from 'hooks/useLoading';
-import { CategoryNav, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
-import { SearchIcon, LuckIcon } from 'assets';
+import {
+  CategoryNav,
+  TopStories,
+  BestStories,
+  EditorsPick,
+  RandomCategory,
+  Loading,
+  MenuButton,
+  SearchButton,
+} from 'components';
+import { LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
 
@@ -40,9 +49,7 @@ const Home = () => {
         </hgroup>
 
         <div className={style.menu}>
-          <button className={style.icon}>
-            <SearchIcon width={20} height={20} fill={'var(--color-black)'} />
-          </button>
+          {/* <SearchButton /> */}
           <MenuButton />
         </div>
       </header>

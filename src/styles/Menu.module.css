@@ -1,13 +1,17 @@
 .wrap {
   position: fixed;
   top: 0;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   min-width: 280px;
   max-width: 540px;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   background-color: var(--color-white);
   padding: 0 15px;
+  margin: auto;
   overflow-y: auto;
   z-index: 10;
 }
@@ -38,8 +42,8 @@
 .menu {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 14px;
-  min-height: calc(100vh - 188px);
   padding: 20px 0;
 }
 

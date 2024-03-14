@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCategory, useChannel } from 'hooks/useStories';
@@ -17,17 +17,7 @@ const Menu = (props) => {
   const { data: categoryList } = useCategory();
   const { data: channelList } = useChannel();
   const year = new Date().getFullYear();
-  const categoryAllIcon = `${process.env.REACT_APP_CATEGORY_ICON}all.svg`;
-
-  /*
-  const { isMenuOpen } = props;
-  useEffect(() => {
-    // 다닫히는 액션
-  }, [isMenuOpen]); 
-  */
-
-  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+  const menuRef = useRef();
 
   const handleClose = () => {
     onClose?.();
@@ -40,9 +30,24 @@ const Menu = (props) => {
     }, 100);
   };
 
+  useEffect(() => {
+    const menuHeight = menuRef.current.offsetHeight;
+    menuRef.current.style.setProperty('height', `${menuHeight}px`);
+  }, [showCategory, showChannel]);
+
+  /*
+  const { isMenuOpen } = props;
+  useEffect(() => {
+    // 다닫히는 액션
+  }, [isMenuOpen]); 
+  */
+
+  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+
   return (
     <Modal>
-      <div className={style.wrap}>
+      <div className={style.wrap} ref={menuRef}>
         <div className={style.header}>
           <h1>{t(`menu.title`)}</h1>
           <button onClick={handleClose}>
