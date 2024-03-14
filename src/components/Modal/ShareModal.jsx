@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from './Modal';
 import style from 'styles/ShareModal.module.css';
 import { CloseIcon } from 'assets';
@@ -10,6 +10,13 @@ import Link from '../../assets/icon/Link.png';
 const ShareModal = (props) => {
   const { contents, onClose } = props;
   const url = `https://local.todaystory.me/view/${contents.idx}`;
+  const shareRef = useRef();
+
+  const handleCloseModal = (e) => {
+    if (e.target === shareRef.current) {
+      onClose();
+    }
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -57,7 +64,7 @@ const ShareModal = (props) => {
 
   return (
     <Modal>
-      <div className={style.dim}>
+      <div className={style.dim} ref={shareRef} onClick={handleCloseModal}>
         <button className={style.icon} onClick={onClose}>
           <CloseIcon width={15} height={15} fill={'#fff'} />
         </button>
@@ -76,9 +83,9 @@ const ShareModal = (props) => {
             <li onClick={shareToTwitter}>
               <img loading="lazy" src={Twitter} alt="트위터" />
             </li>
-            <li onClick={shareToURL}>
+            {/* <li onClick={shareToURL}>
               <img loading="lazy" src={Link} alt="URL" />
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

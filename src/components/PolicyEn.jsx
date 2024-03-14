@@ -1,8 +1,14 @@
 import style from 'styles/PolicyPrivacy.module.css';
-
+import { CloseIcon } from 'assets';
+import { useNavigate } from 'react-router';
 const PolicyEn = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={style.contents__wrap}>
+      <button className={style.icon} onClick={() => navigate(-1)}>
+        <CloseIcon width={15} height={15} fill={'#000'} />
+      </button>
       <h2>Picks Privacy Policy</h2>
       <p>
         <b>Effective Date:</b> November 8, 2021
