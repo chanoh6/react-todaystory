@@ -53,7 +53,7 @@ const RandomCategory = (props) => {
           className={style.btn__more}
           onClick={() =>
             navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${data.categoryIdx}`, {
-              state: { title: data.category.current },
+              state: { title: data.category },
             })
           }
         >

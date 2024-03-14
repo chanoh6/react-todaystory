@@ -1,18 +1,21 @@
-import { useNavigate, useParams } from 'react-router-dom';
+
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
-import { CardListSkeleton, Loading, MenuButton, TypeC } from 'components';
+import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 const Category = () => {
+  const { state } = useLocation();
   const { pageId } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { api } = useAPI();
-  const [contents, setContents] = useState([]);
-  const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const [page, setPage] = useState(1); // 현재 페이지
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
   const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
@@ -33,9 +36,13 @@ const Category = () => {
 
   useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
-      if (page === 1) setCategory(res.data.category);
-      setContents((prev) => [...prev, ...res.data.contents]);
-      setHasMore(res.data.contents.length > 0); // 받아온 데이터가 더 있는지 확인
+      if (res.code === '0') {
+        setData((prev) => {
+          if (!prev) return res.data;
+          return { ...prev, contents: [...prev.contents, ...res.data.contents] };
+        });
+        res.data.contents.length > size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+      }
     });
   }, [pageId, page]);
 
@@ -65,23 +72,28 @@ const Category = () => {
         <button onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
-        <h1>{category}</h1>
+        {/* <h1>{data.category}</h1> */}
+        <h1>{state.title}</h1>
         <MenuButton />
       </header>
 
       <main>
-        {!contents ? (
+        {!data ? (
           <CardListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-              {contents.map((content, i) => {
-                if (contents.length === i + 1) {
-                  return <div key={i} ref={lastItemRef}></div>;
-                } else {
-                  return <TypeC key={i} content={content} />;
-                }
-              })}
+              { data.contents.length === 0 ? (
+                <NoStories text={t(`noStories.stories`)} />
+                ) : (
+                data.contents.map((content, i) => {
+                  if (data.contents.length === i + 1) {
+                    return <li key={i} ref={lastItemRef}>{i}</li>;
+                  } else {
+                    return <TypeC key={i} content={content} />;
+                  }
+                })
+              )}
             </ul>
           </section>
         )}

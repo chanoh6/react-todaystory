@@ -23,8 +23,10 @@ const Menu = (props) => {
     onClose?.();
   };
 
-  const handleNavigate = (url) => {
-    navigate(url);
+  const handleNavigate = (url, title = '') => {
+    navigate(url, {
+      state: { title },
+    });
     setTimeout(() => {
       handleClose();
     }, 100);
@@ -90,7 +92,7 @@ const Menu = (props) => {
                 <li
                   className={style.drop__item}
                   key={cate.idx}
-                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`)}
+                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`, decode(cate.name))}
                 >
                   <figure>
                     <img
@@ -116,7 +118,7 @@ const Menu = (props) => {
                 <li
                   className={cn(style.drop__item, style.channel)}
                   key={ch.idx}
-                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`)}
+                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`, decode(ch.name))}
                 >
                   <figure>
                     <img

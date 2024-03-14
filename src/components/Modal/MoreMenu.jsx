@@ -16,6 +16,7 @@ const MoreMenu = ({ contents }) => {
   const handleToChannel = () => {
     navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${contents.cpIdx}`, { state: { title: contents.cp } });
   };
+  
   return (
     <div className={style.modal__wrap}>
       <ul>

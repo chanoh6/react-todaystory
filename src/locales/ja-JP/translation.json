@@ -41,6 +41,7 @@
     "clear": "消すんです"
   },
   "noStories": {
+    "stories": "記事がありません",
     "favorite": "共感した記事がありません",
     "history": "最近見た記事はありません"
   },
