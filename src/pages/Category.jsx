@@ -34,16 +34,14 @@ const Category = () => {
   };
 
   useEffect(() => {
-    setData(null);
-  }, [pageId]);
-
-  useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
           if (!prev) return res.data;
+          if (prev.categoryIdx !== pageId) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
+        
         res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });
