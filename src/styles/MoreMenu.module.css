@@ -20,6 +20,7 @@
   align-items: center;
   border-bottom: 1px solid var(--border-color);
   padding: 8px 15px 8px 30px;
+  cursor: pointer;
 }
 
 .modal__wrap ul li:last-child {

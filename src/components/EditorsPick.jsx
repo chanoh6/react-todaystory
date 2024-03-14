@@ -1,15 +1,42 @@
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useEditorsPick } from 'hooks/useStories';
+import { useAPI } from 'context/APIContext';
 import { TypeD } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
-import { useState, useEffect } from 'react';
 
 const EditorsPick = () => {
   const { t } = useTranslation();
-  const { loading, error, data } = useEditorsPick();
-  const { contents } = data || {};
+  const { api } = useAPI();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const [colors, setColors] = useState([]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    try {
+      const res = await api.editorsPick();
+      return res;
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData().then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+      } else {
+        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
+      }
+    });
+  }, []);
 
   // useEffect(() => {
   //   const image = new Image();
@@ -37,15 +64,16 @@ const EditorsPick = () => {
   //     setColors(pixelColors);
   //   };
   // }, [imageUrl]);
-  if (loading || error || !contents) return null;
+
+  if (loading || error || !data) return null;
 
   return (
     <section className={style.content__wrap}>
       <hgroup className={style.content__title}>
         <h1>{t(`editor.title`)}</h1>
-        <h2>{contents.subtitle}</h2>
+        <h2>{data.subTopic}</h2>
       </hgroup>
-      {contents.map((content, i) => (
+      {data.contents.map((content, i) => (
         <TypeD key={i} content={content} />
       ))}
     </section>

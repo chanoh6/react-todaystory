@@ -92,7 +92,11 @@ class APIClient {
   }
 
   async storiesByIndex(idxList) {
-    return this.httpClient.post(process.env.REACT_APP_API_STORIES_BY_INDEX_URL, { 'idx-list': idxList });
+    return this.httpClient.post(process.env.REACT_APP_API_STORIES_BY_INDEX_URL, { idxList });
+  }
+
+  async updateViewCount(idx) {
+    return this.httpClient.post(process.env.REACT_APP_API_VIEW_COUNT_URL, { idx });
   }
 }
 

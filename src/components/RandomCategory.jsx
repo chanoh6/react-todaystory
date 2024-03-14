@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useCategoryStories } from 'hooks/useStories';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
@@ -10,23 +10,50 @@ const RandomCategory = (props) => {
   const { idx } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { api } = useAPI();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const [randomCount, setRandomCount] = useState(getRandomCount());
-  const { loading, error, data } = useCategoryStories(idx, 0, randomCount);
-  const { categoryIdx, category, color, contents } = data;
 
-  if (loading || error || !contents) return <StoriesSkeleton />;
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    try {
+      const res = await api.categoryStories(idx, 1, randomCount);
+      return res;
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData().then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+      } else {
+        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
+      }
+    });
+  }, []);
+
+  if (loading || error || !data) return <StoriesSkeleton />;
 
   return (
     <>
       <div className={style.content__title}>
-        <h1 className={style.title} style={{ color: color }}>
-          {category}
+        <h1 className={style.title} style={{ color: data.color }}>
+          {data.category}
         </h1>
         <button
           className={style.btn__more}
           onClick={() =>
-            navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${categoryIdx}`, {
-              state: { title: category.current },
+            navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${data.categoryIdx}`, {
+              state: { title: data.category.current },
             })
           }
         >
@@ -34,7 +61,7 @@ const RandomCategory = (props) => {
           <ArrowRightIcon width={6} height={10} />
         </button>
       </div>
-      <ul className={style.list}>{getRandomComponents(contents)}</ul>
+      <ul className={style.list}>{getRandomComponents(data.contents)}</ul>
     </>
   );
 };

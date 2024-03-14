@@ -39,5 +39,9 @@
   },
   "history": {
     "clear": "clear"
+  },
+  "noStories": {
+    "favorite": "No Favorites",
+    "history": "No History"
   }
 }

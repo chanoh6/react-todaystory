@@ -18,14 +18,21 @@ const useDataFetching = (apiFunction, ...args) => {
     } catch (e) {
       setError(e);
     } finally {
-      setTimeout(() => {
-        setLoading(false);
-      }, 300);
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 300);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData().then((res) => setData(res));
+    fetchData().then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+      } else {
+        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
+      }
+    });
   }, [...args]);
 
   return { loading, error, data };
@@ -39,6 +46,7 @@ export const useChannel = () => {
   return useDataFetching((api) => api.channel());
 };
 
+/*
 export const useTopStories = (size) => {
   return useDataFetching((api) => api.topStories(size));
 };
@@ -58,6 +66,7 @@ export const useCategoryStories = (cate, page, size) => {
 export const useChannelStories = (cp, page, size) => {
   return useDataFetching((api) => api.channelStories(cp, page, size), cp, page, size);
 };
+*/
 
 export const useHistoryStories = (idxList) => {
   return useDataFetching((api) => api.storiesByIndex(idxList), idxList);

@@ -1,16 +1,45 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useCategory } from 'hooks/useStories';
+import { useAPI } from 'context/APIContext';
 import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 const CategoryNav = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const { loading, error, data } = useCategory();
+  const { api } = useAPI();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
 
   const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_ICON);
+
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    try {
+      const res = await api.category();
+      return res;
+    } catch (e) {
+      setError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData().then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+      } else {
+        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
+      }
+    });
+  }, []);
 
   if (loading || error || !data) {
     return (

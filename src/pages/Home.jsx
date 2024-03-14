@@ -1,19 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 // import { useLoading } from 'hooks/useLoading';
-import {
-  CategoryNav,
-  TopStories,
-  BestStories,
-  EditorsPick,
-  RandomCategory,
-  Loading,
-  MenuButton,
-  SearchButton,
-} from 'components';
+import { CategoryNav, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
 import { LuckIcon } from 'assets';
 import cn from 'classnames';
 import style from 'styles/Home.module.css';
+// import { useLoading } from 'hooks/useLoading';
 
 /**
  * @TODOS
@@ -66,17 +58,17 @@ const Home = () => {
 
       <main>
         <section className={cn(style.content__wrap, style.top)}>
-          <TopStories size={6} />
+          <TopStories />
         </section>
 
         <section className={style.content__wrap}>
-          <BestStories page={1} size={4} />
+          <BestStories page={1} />
         </section>
 
         <EditorsPick />
 
         <section className={style.content__wrap}>
-          <BestStories page={2} size={4} />
+          <BestStories page={2} />
         </section>
 
         <section className={style.content__wrap}>

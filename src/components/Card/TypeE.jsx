@@ -1,23 +1,22 @@
-import { forwardRef } from 'react';
 import { useCard } from 'hooks/useCard';
+import { useFavorite } from 'hooks/useLocalStorage';
 import { LikeFilledIcon, LikeUnfilledIcon, ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
-import { useFavorite } from 'hooks/useLocalStorage';
 
-const TypeE = forwardRef((props, ref) => {
-  const { content, cardId, onClick } = props;
+const TypeE = (props) => {
+  const { content, onClick } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
   const { favorite, saveFavorite } = useFavorite(idx);
 
   const handleButtonClick = (e) => {
     saveFavorite(e);
-    onClick(cardId);
+    onClick(idx);
   };
 
   return (
-    <li className="card" onClick={handleClick} ref={ref}>
+    <li className="card" onClick={handleClick}>
       <div className={style.card__info}>
         <div className={style.card__title}>
           <div className="cp">
@@ -50,6 +49,6 @@ const TypeE = forwardRef((props, ref) => {
       </div>
     </li>
   );
-});
+};
 
 export default TypeE;

@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { decode } from 'html-entities';
+import { useAPI } from 'context/APIContext';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
 import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, ShareModal, Loading } from 'components';
@@ -25,6 +26,7 @@ import style from 'styles/Story.module.css';
 const Story = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { api } = useAPI();
   const { t } = useTranslation();
   const { contentId } = useParams();
   const { favorite, saveFavorite } = useFavorite(contentId);
@@ -69,8 +71,19 @@ const Story = () => {
     return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
+  const updateViewCount = async (idx) => {
+    // api 호출
+    try {
+      const res = await api.updateViewCount(idx);
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     saveHistory(contentId);
+    updateViewCount(contentId);
   }, [contentId]);
 
   //모달창 바깥 영역 클릭시 닫힘
@@ -190,15 +203,15 @@ const Story = () => {
 
           <section className={style.category__wrap}>
             <p>{t(`detail.more-from`)}</p>
-            <ChannelStories idx={cpIdx} page={0} size={4} />
+            <ChannelStories idx={cpIdx} page={1} />
           </section>
 
           <section className={style.category__wrap}>
-            <BestStories page={1} size={4} />
+            <BestStories page={1} />
           </section>
 
           <section className={style.category__wrap}>
-            <CategoryStories list={3} idx={categoryIdx} page={0} size={4} />
+            <CategoryStories idx={categoryIdx} page={1} />
           </section>
         </main>
       )}
