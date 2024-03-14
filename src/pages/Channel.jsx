@@ -7,7 +7,7 @@ import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
 
 const Channel = () => {
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
   const { pageId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -34,6 +34,13 @@ const Channel = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+    setPage(1);
+  }, [pathname]);
+
+  useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
@@ -41,7 +48,7 @@ const Channel = () => {
           if (prev.cpIdx !== pageId) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
-        
+
         res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });

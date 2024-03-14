@@ -7,7 +7,7 @@ import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
 
 const Category = () => {
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
   const { pageId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -32,6 +32,13 @@ const Category = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+    setPage(1);
+  }, [pathname]);
 
   useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
