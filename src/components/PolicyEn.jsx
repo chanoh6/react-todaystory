@@ -91,7 +91,7 @@ const PolicyEn = () => {
           <br />
           Except for “strictly necessary cookies”, which are necessary for our Website to function and cannot be
           switched off in our system, you can accept or reject cookies for our Website through its{' '}
-          <button id="ot-sdk-btn" class="ot-sdk-show-settings">
+          <button id="ot-sdk-btn" className="ot-sdk-show-settings">
             Cookies Settings
           </button>{' '}
           You can also do so by adjusting your web browser controls.
@@ -142,7 +142,7 @@ const PolicyEn = () => {
           <br />
           You have the right to withdraw your consent regarding our processing of your Personal Information at any time.
           To do so, you can manage your cookie preference at the{' '}
-          <button id="ot-sdk-btn" class="ot-sdk-show-settings">
+          <button id="ot-sdk-btn" className="ot-sdk-show-settings">
             Cookies Settings
           </button>
           <br />
