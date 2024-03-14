@@ -1,10 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import style from 'styles/PolicyPrivacy.module.css';
+import { CloseIcon } from 'assets';
+import { useNavigate } from 'react-router';
 
 const Service = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <div className={style.contents__wrap}>
+      <button className={style.icon} onClick={() => navigate(-1)}>
+        <CloseIcon width={15} height={15} fill={'#000'} />
+      </button>
       <h2>{t(`service.title1`)}</h2>
       <p>{t(`service.contents1`)}</p>
       <h2>{t(`service.title2`)}</h2>

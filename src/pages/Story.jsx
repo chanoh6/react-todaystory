@@ -152,7 +152,7 @@ const Story = () => {
         </div>
       </header>
 
-      {isOpen && <MoreMenu />}
+      {isOpen && <MoreMenu contents={data} />}
       {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
 
       {!data ? (
@@ -173,12 +173,18 @@ const Story = () => {
             <div className={style.content__more}>
               <button
                 className={style.more}
-                onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}
+                onClick={() => {
+                  if (btnURL) {
+                    window.open(btnURL);
+                  } else {
+                    navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } });
+                  }
+                }}
               >
                 <div className="cp">
                   <img loading="lazy" src={logoURL} alt="cp logo" onError={onErrorLogo} />
                 </div>
-                <span>{t(`detail.more-latest`, { channel: cp })}</span>
+                <span>{btnTitle ? decode(btnTitle) : t(`detail.more-latest`, { channel: cp })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>
             </div>
