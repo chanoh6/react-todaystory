@@ -34,6 +34,10 @@ const Channel = () => {
   };
 
   useEffect(() => {
+    setData(null);
+  }, [pageId]);
+
+  useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
@@ -87,7 +91,7 @@ const Channel = () => {
                 ) : (
                 data.contents.map((content, i) => {
                   if (data.contents.length === i + 1) {
-                    return <li key={i} ref={lastItemRef}></li>;
+                    return <TypeC key={i} content={content} ref={lastItemRef} />
                   } else {
                     return <TypeC key={i} content={content} />;
                   }

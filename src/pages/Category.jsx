@@ -35,6 +35,10 @@ const Category = () => {
   };
 
   useEffect(() => {
+    setData(null);
+  }, [pageId]);
+
+  useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
