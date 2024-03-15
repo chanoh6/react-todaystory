@@ -46,20 +46,35 @@ const ShareModal = (props) => {
       alert('url을 복사했습니다.', url);
     });
   };
+  const isIOS = () => {
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
 
   const shareToKakao = () => {
-    // 카카오 링크 공유하기
-    window.Kakao.Link.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: `${contents.title}`,
-        imageUrl: `https://local.todaystory.me/ko/s/Thumbnail/${contents.thumbnail}`, // 공유할 이미지 URL
-        link: {
-          mobileWebUrl: window.location.href, // 모바일 웹 URL
-          webUrl: window.location.href, // PC 웹 URL
+    if (isKakaoAppInstalled()) {
+      // 카카오톡 앱이 설치되어 있으면 공유 기능 실행
+      window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: `${contents.title}`,
+          imageUrl: `https://local.todaystory.me/ko/s/Thumbnail/${contents.thumbnail}`, // 공유할 이미지 URL
+          link: {
+            mobileWebUrl: window.location.href, // 모바일 웹 URL
+            webUrl: window.location.href, // PC 웹 URL
+          },
         },
-      },
-    });
+      });
+    } else {
+      if (isIOS()) {
+        window.location.href = 'https://apps.apple.com/kr/app/kakaotalk/id362057947';
+      } else {
+        window.location.href = 'https://play.google.com/store/apps/details?id=com.kakao.talk&hl=ko&gl=US';
+      }
+    }
+  };
+
+  const isKakaoAppInstalled = () => {
+    return /KAKAOTALK/i.test(navigator.userAgent);
   };
 
   return (
