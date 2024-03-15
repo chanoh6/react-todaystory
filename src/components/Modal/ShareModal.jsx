@@ -5,7 +5,7 @@ import { CloseIcon } from 'assets';
 import kakao from '../../assets/icon/Kakao.png';
 import Facebook from '../../assets/icon/Facebook.png';
 import Twitter from '../../assets/icon/Twitter.png';
-import Link from '../../assets/icon/Link.png';
+import { decode } from 'html-entities';
 
 const ShareModal = (props) => {
   const { contents, onClose } = props;
@@ -32,7 +32,7 @@ const ShareModal = (props) => {
   }, []);
 
   const shareToTwitter = () => {
-    const sharedLink = 'text=' + encodeURIComponent(contents.title + ' \n ') + encodeURIComponent(url);
+    const sharedLink = 'text=' + encodeURIComponent(decode(contents.title) + ' \n ') + encodeURIComponent(url);
     window.open(`https://twitter.com/intent/tweet?${sharedLink}`);
   };
 
@@ -56,7 +56,7 @@ const ShareModal = (props) => {
       window.Kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: `${contents.title}`,
+          title: `${decode(contents.title)}`,
           imageUrl: `https://local.todaystory.me/ko/s/Thumbnail/${contents.thumbnail}`, // 공유할 이미지 URL
           link: {
             mobileWebUrl: window.location.href, // 모바일 웹 URL
