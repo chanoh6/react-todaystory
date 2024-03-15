@@ -27,8 +27,8 @@ import 'locales/i18n';
 
 const router = createBrowserRouter([
   {
-    // path: `/${process.env.REACT_APP_LOCALE}/`,
-    path: `/`,
+    // basename: `/${process.env.REACT_APP_LOCALE}`,
+    path: '/',
     element: <App />,
     errorElement: <NotFound />,
     children: [

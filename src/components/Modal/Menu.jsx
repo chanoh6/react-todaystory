@@ -35,16 +35,16 @@ const Menu = (props) => {
   const setScreenSize = () => {
     let vh = 0;
     vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  };
 
   useEffect(() => {
     setScreenSize();
-    
+
     window.addEventListener('resize', setScreenSize);
     return () => {
       window.removeEventListener('resize', setScreenSize);
-    }
+    };
   }, []);
 
   useEffect(() => {
@@ -107,7 +107,9 @@ const Menu = (props) => {
                 <li
                   className={style.drop__item}
                   key={cate.idx}
-                  onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`, decode(cate.name))}
+                  onClick={() =>
+                    handleNavigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${cate.idx}`, decode(cate.name))
+                  }
                 >
                   <figure>
                     <img
