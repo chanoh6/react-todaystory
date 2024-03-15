@@ -19,12 +19,7 @@ import 'styles/index.css';
 import App from 'App';
 import 'locales/i18n';
 
-/**
- * @TODOS
- * -- 1. router 경로 재설정
- * 2. 최상단 경로에 lang 설정
- * */
-
+// react-router-dom의 createBrowserRouter를 사용하여 라우터를 생성합니다.
 const router = createBrowserRouter([
   {
     // basename: `/${process.env.REACT_APP_LOCALE}`,

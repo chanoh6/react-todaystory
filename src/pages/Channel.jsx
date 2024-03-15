@@ -71,7 +71,7 @@ const Channel = () => {
     [loading, hasMore],
   );
 
-  if (loading && page === 0) return <Loading />;
+  if (loading && page === 1) return <Loading />;
   if (error) return <Loading />;
 
   return (
@@ -91,9 +91,9 @@ const Channel = () => {
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-            { data.contents.length === 0 ? (
+              {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.stories`)} />
-                ) : (
+              ) : (
                 data.contents.map((content, i) => {
                   if (data.contents.length !== 1 && data.contents.length === i + 1) {
                     return <li key={i} ref={lastItemRef}></li>;

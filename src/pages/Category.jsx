@@ -48,7 +48,7 @@ const Category = () => {
           if (prev.categoryIdx !== pageId) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
-        
+
         res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });
@@ -71,7 +71,7 @@ const Category = () => {
     [loading, hasMore],
   );
 
-  if (loading && page === 0) return <Loading />;
+  if (loading && page === 1) return <Loading />;
   if (error) return <Loading />;
 
   return (
@@ -91,9 +91,9 @@ const Category = () => {
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
-              { data.contents.length === 0 ? (
+              {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.stories`)} />
-                ) : (
+              ) : (
                 data.contents.map((content, i) => {
                   if (data.contents.length !== 1 && data.contents.length === i + 1) {
                     return <li key={i} ref={lastItemRef}></li>;
