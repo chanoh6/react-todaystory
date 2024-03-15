@@ -27,7 +27,7 @@ const Home = () => {
       val: { month: 'long', day: 'numeric' },
     },
   });
-  const handleClickLogo = () => navigate('/');
+  const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
   const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
   // if (loading) return <Loading />;

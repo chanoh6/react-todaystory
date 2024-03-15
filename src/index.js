@@ -22,10 +22,9 @@ import 'locales/i18n';
 // react-router-dom의 createBrowserRouter를 사용하여 라우터를 생성합니다.
 const router = createBrowserRouter([
   {
-    // basename: `/${process.env.REACT_APP_LOCALE}`,
-    path: '/',
     element: <App />,
     errorElement: <NotFound />,
+    path: `/${process.env.PUBLIC_URL}`,
     children: [
       { index: true, element: <Home /> },
       { path: 'view/:contentId', element: <Story /> },
