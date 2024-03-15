@@ -8,19 +8,12 @@ import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
 import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, ShareModal, Loading } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
-import cn from 'classnames';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 
 /**
  * @TODOS
- * -- 1. 콘텐츠 상세 api 연결
- * 2. 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
- * -- 3. 좋아요 기능 추가
- * -- 4. 공유 기능 추가
- * -- 5. 더보기 메뉴 추가
- * 6. 에디터 스타일
- * 7. 아이콘 통합 정리
+ * 1. ? 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
  */
 
 const Story = () => {
@@ -60,7 +53,6 @@ const Story = () => {
   const moreMenuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
-  const [isScroll, setIsScroll] = useState(0);
 
   // useRef?
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
@@ -71,8 +63,8 @@ const Story = () => {
     return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
+  // 조회수 업데이트
   const updateViewCount = async (idx) => {
-    // api 호출
     try {
       const res = await api.updateViewCount(idx);
       return res;
@@ -102,22 +94,12 @@ const Story = () => {
 
     document.addEventListener('click', handleClick);
     document.addEventListener('touchmove', handleTouchMove);
-    // document.addEventListener('mousedown', handleTouchMove);
-    // document.addEventListener('scroll', handleTouchMove);
-    // document.addEventListener('keydown', handleTouchMove);
 
     return () => {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('touchmove', handleTouchMove);
-      // document.removeEventListener('mousedown', handleTouchMove);
-      // document.removeEventListener('scroll', handleTouchMove);
-      // document.removeEventListener('keydown', handleTouchMove);
     };
   }, [isOpen]);
-
-  // useEffect(() => {
-  //   setIsOpen(false);
-  // }, [isScroll]);
 
   const handleMoreMenu = () => setIsOpen(!isOpen);
   const handleShareMenu = () => setShareOpen(!shareOpen);
@@ -159,7 +141,7 @@ const Story = () => {
           <button className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
-          <button className={cn(style.icon, isOpen && style.active)} ref={moreMenuRef} onClick={handleMoreMenu}>
+          <button className={`${style.icon} ${isOpen ? style.active : ''}`} ref={moreMenuRef} onClick={handleMoreMenu}>
             <MoreIcon />
           </button>
         </div>

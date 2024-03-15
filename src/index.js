@@ -19,7 +19,7 @@ import 'styles/index.css';
 import App from 'App';
 import 'locales/i18n';
 
-// react-router-dom의 createBrowserRouter를 사용하여 라우터를 생성
+// createBrowserRouter: 라우터 생성
 const router = createBrowserRouter([
   {
     element: <App />,

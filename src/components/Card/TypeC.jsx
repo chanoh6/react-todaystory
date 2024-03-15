@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { useCard } from 'hooks/useCard';
 import { LikeButton } from 'components';
 import { ViewIcon } from 'assets';
@@ -6,7 +5,7 @@ import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
 const TypeC = (props) => {
-  const { content } = props;
+  const { content, onClick = null } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
 

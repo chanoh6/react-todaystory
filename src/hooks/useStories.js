@@ -18,9 +18,6 @@ const useDataFetching = (apiFunction, ...args) => {
     } catch (e) {
       setError(e);
     } finally {
-      // setTimeout(() => {
-      //   setLoading(false);
-      // }, 300);
       setLoading(false);
     }
   };
@@ -45,38 +42,6 @@ export const useCategory = () => {
 export const useChannel = () => {
   return useDataFetching((api) => api.channel());
 };
-
-/*
-export const useTopStories = (size) => {
-  return useDataFetching((api) => api.topStories(size));
-};
-
-export const useBestStories = (page, size) => {
-  return useDataFetching((api) => api.bestStories(page, size), page, size);
-};
-
-export const useEditorsPick = () => {
-  return useDataFetching((api) => api.editorsPick());
-};
-
-export const useCategoryStories = (cate, page, size) => {
-  return useDataFetching((api) => api.categoryStories(cate, page, size), cate, page, size);
-};
-
-export const useChannelStories = (cp, page, size) => {
-  return useDataFetching((api) => api.channelStories(cp, page, size), cp, page, size);
-};
-*/
-
-export const useHistoryStories = (idxList) => {
-  return useDataFetching((api) => api.storiesByIndex(idxList), idxList);
-};
-
-export const useFavoriteStories = (idxList) => {
-  return useDataFetching((api) => api.storiesByIndex(idxList), idxList);
-};
-
-export const useSearchStories = () => {};
 
 export const useStory = (idx) => {
   return useDataFetching((api) => api.story(idx), idx);

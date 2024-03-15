@@ -1,36 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-// import { useLoading } from 'hooks/useLoading';
 import { CategoryNav, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
 import { LuckIcon } from 'assets';
-import cn from 'classnames';
 import style from 'styles/Home.module.css';
-// import { useLoading } from 'hooks/useLoading';
 
 /**
  * @TODOS
- * -- 1. 좋아요 기능 추가
- * 2. 상단 카테고리 swiper 적용
- * 3. 무한 스크롤 구현
- * -- 4. 아이콘 함수 사용? 나중에
- * -- 5. formatAgo 다국어 설정 어떻게 할건지
- * -- 6. 로딩 화면 확인
+ * 1. 상단 카테고리 swiper 적용
+ * 2. 홈 화면 무한 스크롤 구현
+ * 3. footer 추가
+ * 4. 아이콘 통합 정리
+ * 5. 에디터 픽 스타일
  */
 
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  // const { loading } = useLoading();
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
       val: { month: 'long', day: 'numeric' },
     },
   });
-  const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
-  const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
-  // if (loading) return <Loading />;
+  // logo 클릭시 홈으로 이동
+  const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
+
+  // 운세 클릭시 새창으로 이동
+  const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
   return (
     <>
@@ -57,7 +54,7 @@ const Home = () => {
       </nav>
 
       <main>
-        <section className={cn(style.content__wrap, style.top)}>
+        <section className={`${style.content__wrap} ${style.top}`}>
           <TopStories />
         </section>
 

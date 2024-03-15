@@ -1,32 +1,32 @@
 import { Outlet } from 'react-router-dom';
-import { APIProvider } from 'context/APIContext';
-import { ScrollToTop } from 'components';
-import { styled } from 'styled-components';
-import 'styles/App.css';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { APIProvider } from 'context/APIContext';
+import { styled } from 'styled-components';
+import { ScrollToTop } from 'components';
+import 'styles/App.css';
 
 /**
  * @TODOS
- * 1. 라우터 설정
- * 2. APIProvider 설정
- * 3. ScrollToTop 설정
- * 4. Helmet 설정
- * 5. FontWrapper 설정
- * 6. context 설정 (메뉴 데이터)
+ * 1. 전역 상태 관리 추가 (메뉴, 테마)
  */
 
-// FontWrapper를 사용하여 한국/글로벌/일본 별도 폰트를 적용
+// FontWrapper: 언어별 폰트 설정
 const FontWrapper = styled.div`
-  font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
+  font-family: ${(props) => (props.lang === 'ko' || props.lang === 'en' ? 'Pretendard' : 'Pretendard JP')}, sans-serif;
 `;
 
 function App() {
+  // useTranslation: 다국어 설정
   const { t } = useTranslation();
+  const lang = process.env.REACT_APP_LOCALE;
 
+  // Helmet: 메타태그 설정
+  // APIProvider: APIContext 제공
+  // ScrollToTop: 페이지 이동시 최상단으로 이동
+  // Outlet: 라우터 설정
   return (
     <>
-      {/*  Helmet을 사용하여 메타태그를 동적으로 생성 */}
       <Helmet>
         <noscript>{t(`meta.noscript`)}</noscript>
 
@@ -45,9 +45,8 @@ function App() {
         <meta name="twitter:image" content="/assets/todaystory.png" />
         <meta name="twitter:card" content={t(`meta.description`)} />
       </Helmet>
-      {/* APIProvider를 사용하여 APIContext를 제공 */}
       <APIProvider>
-        <FontWrapper>
+        <FontWrapper lang={lang}>
           <ScrollToTop />
           <Outlet />
         </FontWrapper>

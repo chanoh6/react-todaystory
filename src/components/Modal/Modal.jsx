@@ -3,11 +3,13 @@ import ModalContainer from 'components/Modal/ModalContainer';
 import { styled } from 'styled-components';
 
 const FontWrapper = styled.div`
-  font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
+  font-family: ${(props) => (props.lang === 'ko' || props.lang === 'en' ? 'Pretendard' : 'Pretendard JP')}, sans-serif;
 `;
 
 const Modal = (props) => {
   const { children } = props;
+  const lang = process.env.REACT_APP_LOCALE;
+
   useEffect(() => {
     const $body = document.querySelector('body');
     const overflow = $body.style.overflow;
@@ -19,7 +21,7 @@ const Modal = (props) => {
 
   return (
     <ModalContainer>
-      <FontWrapper>{children}</FontWrapper>
+      <FontWrapper lang={lang}>{children}</FontWrapper>
     </ModalContainer>
   );
 };

@@ -7,8 +7,6 @@
   width: 100%;
   min-width: 280px;
   max-width: 540px;
-  /* min-height: 100vh;
-  min-height: -webkit-fill-available; */
   min-height: calc(var(--vh, 1vh) * 100);
   background-color: var(--color-white);
   padding: 0 15px;
@@ -140,10 +138,6 @@
   width: 100%;
   height: 100%;
   filter: invert(94%) sepia(100%) saturate(0%) hue-rotate(166deg) brightness(102%) contrast(102%);
-}
-
-.drop__item.channel img {
-  filter: none;
 }
 
 .drop__item.channel img {

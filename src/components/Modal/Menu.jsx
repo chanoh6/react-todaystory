@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useCategory, useChannel } from 'hooks/useStories';
 import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
 import { decode } from 'html-entities';
-import cn from 'classnames';
 import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
 
@@ -87,10 +86,10 @@ const Menu = (props) => {
           <div className={style.menu__drop}>
             <button onClick={() => setShowCategory(!showCategory)}>
               <p>{t(`menu.category`)}</p>
-              <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showCategory })} />
+              <ArrowRightIcon width={7} height={12} className={showCategory ? style.active : ''} />
             </button>
 
-            <ul className={cn(style.drop__list, { [style.active]: showCategory })}>
+            <ul className={`${style.drop__list} ${showCategory ? style.active : ''}`}>
               <li className={style.drop__item} onClick={() => handleNavigate(process.env.REACT_APP_WEB_HOME_URL)}>
                 <figure>
                   <img
@@ -127,13 +126,13 @@ const Menu = (props) => {
           <div className={style.menu__drop}>
             <button onClick={() => setShowChannel(!showChannel)}>
               <p>{t(`menu.channel`)}</p>
-              <ArrowRightIcon width={7} height={12} className={cn({ [style.active]: showChannel })} />
+              <ArrowRightIcon width={7} height={12} className={showChannel ? style.active : ''} />
             </button>
 
-            <ul className={cn(style.drop__list, { [style.active]: showChannel })}>
+            <ul className={`${style.drop__list} ${showChannel ? style.active : ''}`}>
               {channelList.map((ch) => (
                 <li
-                  className={cn(style.drop__item, style.channel)}
+                  className={`${style.drop__item} ${style.channel}`}
                   key={ch.idx}
                   onClick={() => handleNavigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${ch.idx}`, decode(ch.name))}
                 >
