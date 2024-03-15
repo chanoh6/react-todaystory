@@ -11,10 +11,13 @@
 
 .icon {
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 15px;
+  top: 15px;
+  display: flex;
+  padding: 4px;
   cursor: pointer;
 }
+
 .sns__wrap {
   position: absolute;
   left: 50%;
@@ -22,10 +25,12 @@
   color: #fff;
   transform: translate(-50%, -50%);
 }
+
 .sns__wrap .title {
   font-size: 19px;
   text-align: center;
 }
+
 .sns__wrap ul {
   display: flex;
   flex-direction: column;

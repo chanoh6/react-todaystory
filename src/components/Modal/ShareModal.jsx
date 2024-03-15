@@ -66,7 +66,7 @@ const ShareModal = (props) => {
     <Modal>
       <div className={style.dim} ref={shareRef} onClick={handleCloseModal}>
         <button className={style.icon} onClick={onClose}>
-          <CloseIcon width={15} height={15} fill={'#fff'} />
+          <CloseIcon width={16} height={16} fill={'var(--color-white)'} />
         </button>
         <div className={style.sns__wrap}>
           <p className={style.title}>

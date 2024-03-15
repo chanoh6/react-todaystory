@@ -7,7 +7,7 @@ const PolicyEn = () => {
   return (
     <div className={style.contents__wrap}>
       <button className={style.icon} onClick={() => navigate(-1)}>
-        <CloseIcon width={15} height={15} fill={'#000'} />
+        <CloseIcon width={16} height={16} fill={'var(--color-black)'} />
       </button>
       <h2>Picks Privacy Policy</h2>
       <p>
