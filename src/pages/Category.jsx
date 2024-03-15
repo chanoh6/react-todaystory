@@ -38,7 +38,7 @@ const Category = () => {
     setError(null);
     setData(null);
     setPage(1);
-  }, [pathname]);
+  }, [pathname, pageId]);
 
   useEffect(() => {
     fetchData(pageId, page, size).then((res) => {
@@ -51,7 +51,7 @@ const Category = () => {
         res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
       }
     });
-  }, [pageId, page]);
+  }, [page]);
 
   const observer = useRef();
   const lastItemRef = useCallback(

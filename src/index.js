@@ -19,7 +19,7 @@ import 'styles/index.css';
 import App from 'App';
 import 'locales/i18n';
 
-// react-router-dom의 createBrowserRouter를 사용하여 라우터를 생성합니다.
+// react-router-dom의 createBrowserRouter를 사용하여 라우터를 생성
 const router = createBrowserRouter([
   {
     element: <App />,
@@ -40,6 +40,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+// RouterProvider: 라우터 제공을 위한 Provider
+// HelmetProvider: Helmet(메타태그)를 사용하기 위한 Provider
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
