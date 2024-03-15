@@ -45,7 +45,6 @@ const Channel = () => {
       if (res.code === '0') {
         setData((prev) => {
           if (!prev) return res.data;
-          if (prev.cpIdx !== pageId) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
 

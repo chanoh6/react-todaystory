@@ -6,7 +6,17 @@ import 'styles/App.css';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
-// 한국/글로벌/일본 별도 폰트 적용
+/**
+ * @TODOS
+ * 1. 라우터 설정
+ * 2. APIProvider 설정
+ * 3. ScrollToTop 설정
+ * 4. Helmet 설정
+ * 5. FontWrapper 설정
+ * 6. context 설정 (메뉴 데이터)
+ */
+
+// FontWrapper를 사용하여 한국/글로벌/일본 별도 폰트를 적용
 const FontWrapper = styled.div`
   font-family: ${process.env.REACT_APP_LOCALE_FONT}, sans-serif;
 `;
@@ -16,7 +26,7 @@ function App() {
 
   return (
     <>
-      {/* meta 태그 클라이언트 사이드에서 동적 생성 */}
+      {/*  Helmet을 사용하여 메타태그를 동적으로 생성 */}
       <Helmet>
         <noscript>{t(`meta.noscript`)}</noscript>
 
@@ -35,6 +45,7 @@ function App() {
         <meta name="twitter:image" content="/assets/todaystory.png" />
         <meta name="twitter:card" content={t(`meta.description`)} />
       </Helmet>
+      {/* APIProvider를 사용하여 APIContext를 제공 */}
       <APIProvider>
         <FontWrapper>
           <ScrollToTop />
