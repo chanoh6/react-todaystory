@@ -50,6 +50,31 @@ class AxiosWrapper {
     this.params = params;
     this.data = data;
   }
+  
+  setHeaders(headers) {
+    // 헤더를 설정합니다.
+    this.headers = headers;
+  }
+
+  setBody(data) {
+    // 요청 본문을 설정합니다.
+    this.data = data;
+  }
+
+  setMethod(method) {
+    // HTTP 메소드를 설정합니다.
+    this.method = method;
+  }
+
+  setParams(params) {
+    // 쿼리 매개변수를 설정합니다.
+    this.params = params;
+  }
+
+  setData(data) {
+    // 데이터를 설정합니다.
+    this.data = data;
+  }
 
   async call() {
     try {

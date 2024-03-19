@@ -1,67 +1,74 @@
-import AxiosWrapper from 'api/APIClient2';
+import APIClient2 from 'api/APIClient2';
 
-class APIService {
-  constructor() {}
+class APIService2 {
+  constructor() {
+    this.baseURL = process.env.REACT_APP_API_BASE_URL;
+  }
 
-  async callAPI({ url, method, params = {}, data = {} }) {
-    const axiosWrapper = new AxiosWrapper({
-      baseURL: process.env.REACT_APP_API_BASE_URL,
-      url,
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      params,
-      data,
-    });
-    return axiosWrapper.call();
+  async fetchData(url, method = 'get', params = {}, data = {}) {
+    const param = { baseURL: this.baseURL, url, method, params, data };
+    const apiClient = new APIClient2(param);
+
+    apiClient.setHeaders({ 'Content-Type': 'application/json' });
+
+    try {
+      const response = await apiClient.call();
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async category() {
-    return this.callAPI({ url: process.env.REACT_APP_API_CATEGORY_URL, method: 'get' });
+    // no params
+    return this.fetchData(process.env.REACT_APP_API_CATEGORY_URL);
   }
 
-  async categoryStories({ cate, page, size }) {
-    return this.callAPI({
-      url: process.env.REACT_APP_API_CATEGORY_STORIES_URL,
-      method: 'get',
-      params: { cate, page, size },
-    });
+  async categoryStories(params) {
+    // params: cate, page, size
+    return this.fetchData(process.env.REACT_APP_API_CATEGORY_STORIES_URL, 'get', params);
   }
 
   async channel() {
-    return this.callAPI({ url: process.env.REACT_APP_API_CHANNEL_URL, method: 'get' });
+    // no params
+    return this.fetchData(process.env.REACT_APP_API_CHANNEL_URL);
   }
 
-  async channelStories({ cp, page, size }) {
-    return this.callAPI({
-      url: process.env.REACT_APP_API_CHANNEL_STORIES_URL,
-      method: 'get',
-      params: { cp, page, size },
-    });
+  async channelStories(params) {
+    // params: cp, page, size
+    return this.fetchData(process.env.REACT_APP_API_CHANNEL_STORIES_URL, 'get', params);
   }
 
-  async topStories({ size }) {
-    return this.callAPI({ url: process.env.REACT_APP_API_TOP_STORIES_URL, method: 'get', params: { size } });
+  async topStories(params) {
+    // params: size
+    return this.fetchData(process.env.REACT_APP_API_TOP_STORIES_URL, 'get', params);
   }
 
-  async bestStories({ page, size }) {
-    return this.callAPI({ url: process.env.REACT_APP_API_BEST_STORIES_URL, method: 'get', params: { page, size } });
+  async bestStories(params) {
+    // params: page, size
+    return this.fetchData(process.env.REACT_APP_API_BEST_STORIES_URL, 'get', params);
   }
 
   async editorsPick() {
-    return this.callAPI({ url: process.env.REACT_APP_API_EDITORS_PICK_URL, method: 'get' });
+    // no params
+    return this.fetchData(process.env.REACT_APP_API_EDITORS_PICK_URL);
   }
 
-  async story({ idx }) {
-    return this.callAPI({ url: process.env.REACT_APP_API_STORY_URL, method: 'get', params: { idx } });
+  async story(params) {
+    // params: idx
+    return this.fetchData(process.env.REACT_APP_API_STORY_URL, 'get', params);
   }
 
-  async storiesByIndex({ idxList }) {
-    return this.callAPI({ url: process.env.REACT_APP_API_STORIES_BY_INDEX_URL, method: 'post', data: { idxList } });
+  async storiesByIndex(data) {
+    // data: idxList
+    return this.fetchData(process.env.REACT_APP_API_STORIES_BY_INDEX_URL, 'post', {}, data);
   }
 
-  async updateViewCount({ idx }) {
-    return this.callAPI({ url: process.env.REACT_APP_API_VIEW_COUNT_URL, method: 'post', data: { idx } });
+  async updateViewCount(data) {
+    // data: idx
+    return this.fetchData(process.env.REACT_APP_API_VIEW_COUNT_URL, 'post', {}, data);
   }
 }
 
-export default APIService;
+export default APIService2;
