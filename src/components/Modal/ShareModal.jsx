@@ -80,7 +80,7 @@ const ShareModal = (props) => {
   return (
     <Modal>
       <div className={style.dim} ref={shareRef} onClick={handleCloseModal}>
-        <button className={style.icon} onClick={onClose}>
+        <button type="button" aria-label="close_button" className={style.icon} onClick={onClose}>
           <CloseIcon width={16} height={16} fill={'var(--color-white)'} />
         </button>
         <div className={style.sns__wrap}>

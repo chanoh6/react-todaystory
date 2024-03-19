@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
 import APIClient from 'api/APIClient';
-import API from 'api/API';
+import APIService from 'api/APIService';
 
 const client = new APIClient();
-const api = new API(client);
+const api = new APIService(client);
 
 export const APIContext = createContext();
 

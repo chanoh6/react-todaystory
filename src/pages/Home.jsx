@@ -1,6 +1,7 @@
+import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { CategoryNav, TopStories, BestStories, EditorsPick, RandomCategory, Loading, MenuButton } from 'components';
+import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
 import style from 'styles/Home.module.css';
 
@@ -12,6 +13,12 @@ import style from 'styles/Home.module.css';
  * 4. 아이콘 통합 정리
  * 5. 에디터 픽 스타일
  */
+
+// React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
+const TopStories = React.lazy(() => import('components/TopStories'));
+const BestStories = React.lazy(() => import('components/BestStories'));
+const EditorsPick = React.lazy(() => import('components/EditorsPick'));
+const RandomCategory = React.lazy(() => import('components/RandomCategory'));
 
 const Home = () => {
   const navigate = useNavigate();
@@ -46,7 +53,7 @@ const Home = () => {
       <nav className={style.nav}>
         <CategoryNav />
         <div className={style.nav__ad}>
-          <button className={style.ad__item} onClick={handleClickFortune}>
+          <button type="button" aria-label="ad_button" className={style.ad__item} onClick={handleClickFortune}>
             <LuckIcon width={18} height={20} fill="var(--color-black)" />
             <p>{t(`nav.fortune`)}</p>
           </button>
@@ -54,31 +61,33 @@ const Home = () => {
       </nav>
 
       <main>
-        <section className={`${style.content__wrap} ${style.top}`}>
-          <TopStories />
-        </section>
+        <Suspense fallback={<StoriesSkeleton />}>
+          <section className={`${style.content__wrap} ${style.top}`}>
+            <TopStories />
+          </section>
 
-        <section className={style.content__wrap}>
-          <BestStories page={1} />
-        </section>
+          <section className={style.content__wrap}>
+            <BestStories page={1} />
+          </section>
 
-        <EditorsPick />
+          <EditorsPick />
 
-        <section className={style.content__wrap}>
-          <BestStories page={2} />
-        </section>
+          <section className={style.content__wrap}>
+            <BestStories page={2} />
+          </section>
 
-        <section className={style.content__wrap}>
-          <RandomCategory idx={6} />
-        </section>
+          <section className={style.content__wrap}>
+            <RandomCategory idx={6} />
+          </section>
 
-        <section className={style.content__wrap}>
-          <RandomCategory idx={12} />
-        </section>
+          <section className={style.content__wrap}>
+            <RandomCategory idx={12} />
+          </section>
 
-        <section className={style.content__wrap}>
-          <RandomCategory idx={16} />
-        </section>
+          <section className={style.content__wrap}>
+            <RandomCategory idx={16} />
+          </section>
+        </Suspense>
       </main>
 
       <footer></footer>

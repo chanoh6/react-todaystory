@@ -5,7 +5,7 @@ const ServiceEn = () => {
   const navigate = useNavigate();
   return (
     <div className={style.contents__wrap}>
-      <button className={style.icon} onClick={() => navigate(-1)}>
+      <button type="button" aria-label="close_button" className={style.icon} onClick={() => navigate(-1)}>
         <CloseIcon width={16} height={16} fill={'var(--color-black)'} />
       </button>
       <h2>TERMS OF USE</h2>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -6,10 +6,14 @@ import { decode } from 'html-entities';
 import { useAPI } from 'context/APIContext';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
-import { StorySkeleton, BestStories, CategoryStories, ChannelStories, MoreMenu, ShareModal, Loading } from 'components';
+import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
+
+const ChannelStories = React.lazy(() => import('components/ChannelStories'));
+const BestStories = React.lazy(() => import('components/BestStories'));
+const CategoryStories = React.lazy(() => import('components/CategoryStories'));
 
 /**
  * @TODOS
@@ -58,6 +62,7 @@ const Story = () => {
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
+  // 본문 내용 렌더링
   const renderHtml = (htmlString, index) => {
     const html = decode(htmlString);
     return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -121,10 +126,10 @@ const Story = () => {
 
       <header className={style.header}>
         <div className={style.header__btn}>
-          <button className={style.icon} onClick={() => navigate(-1)}>
+          <button type="button" aria-label="back_button" className={style.icon} onClick={() => navigate(-1)}>
             <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
           </button>
-          <button className={style.icon} onClick={saveFavorite}>
+          <button type="button" aria-label="like_button" className={style.icon} onClick={saveFavorite}>
             {favorite ? (
               <LikeFilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
             ) : (
@@ -138,10 +143,16 @@ const Story = () => {
         </h1>
 
         <div className={style.header__btn}>
-          <button className={style.icon} onClick={handleShareMenu}>
+          <button type="button" aria-label="share_button" className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
-          <button className={`${style.icon} ${isOpen ? style.active : ''}`} ref={moreMenuRef} onClick={handleMoreMenu}>
+          <button
+            type="button"
+            aria-label="more_button"
+            className={`${style.icon} ${isOpen ? style.active : ''}`}
+            ref={moreMenuRef}
+            onClick={handleMoreMenu}
+          >
             <MoreIcon />
           </button>
         </div>
@@ -160,13 +171,15 @@ const Story = () => {
             <p className={style.date}>{publishDate}</p>
 
             <div className={style.content}>
-              <img loading="lazy" src={thumbnailURL} alt="thumbnail" onError={onErrorImg} />
+              <img src={thumbnailURL} alt="thumbnail" onError={onErrorImg} />
             </div>
 
             {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
 
             <div className={style.content__more}>
               <button
+                type="button"
+                aria-label="more_button"
                 className={style.more}
                 onClick={() => {
                   btnURL
@@ -183,18 +196,20 @@ const Story = () => {
             </div>
           </section>
 
-          <section className={style.category__wrap}>
-            <p>{t(`detail.more-from`)}</p>
-            <ChannelStories idx={cpIdx} page={1} />
-          </section>
+          <Suspense fallback={<StoriesSkeleton />}>
+            <section className={style.category__wrap}>
+              <p>{t(`detail.more-from`)}</p>
+              <ChannelStories idx={cpIdx} page={1} />
+            </section>
 
-          <section className={style.category__wrap}>
-            <BestStories page={1} />
-          </section>
+            <section className={style.category__wrap}>
+              <BestStories page={1} />
+            </section>
 
-          <section className={style.category__wrap}>
-            <CategoryStories idx={categoryIdx} page={1} />
-          </section>
+            <section className={style.category__wrap}>
+              <CategoryStories idx={categoryIdx} page={1} />
+            </section>
+          </Suspense>
         </main>
       )}
 
@@ -202,4 +217,5 @@ const Story = () => {
     </>
   );
 };
+
 export default Story;

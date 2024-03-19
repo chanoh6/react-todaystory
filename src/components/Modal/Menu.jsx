@@ -66,7 +66,7 @@ const Menu = (props) => {
       <div className={style.wrap} ref={menuRef}>
         <div className={style.header}>
           <h1>{t(`menu.title`)}</h1>
-          <button onClick={handleClose}>
+          <button type="button" aria-label="close_button" onClick={handleClose}>
             <CloseIcon width={16} height={16} fill={'var(--color-black)'} />
           </button>
         </div>
@@ -84,7 +84,7 @@ const Menu = (props) => {
           </ul>
 
           <div className={style.menu__drop}>
-            <button onClick={() => setShowCategory(!showCategory)}>
+            <button type="button" aria-label="more_button" onClick={() => setShowCategory(!showCategory)}>
               <p>{t(`menu.category`)}</p>
               <ArrowRightIcon width={7} height={12} className={showCategory ? style.active : ''} />
             </button>
@@ -124,7 +124,7 @@ const Menu = (props) => {
           </div>
 
           <div className={style.menu__drop}>
-            <button onClick={() => setShowChannel(!showChannel)}>
+            <button type="button" aria-label="more_button" onClick={() => setShowChannel(!showChannel)}>
               <p>{t(`menu.channel`)}</p>
               <ArrowRightIcon width={7} height={12} className={showChannel ? style.active : ''} />
             </button>

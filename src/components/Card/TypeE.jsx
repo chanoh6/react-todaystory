@@ -38,7 +38,7 @@ const TypeE = (props) => {
         <div className="like">
           <ViewIcon width={16} height={16} />
           <p id="viewCount">{viewCount}</p>
-          <button onClick={handleButtonClick}>
+          <button type="button" aria-label="like_button" onClick={handleButtonClick}>
             {favorite ? (
               <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
             ) : (

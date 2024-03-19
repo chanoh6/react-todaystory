@@ -50,6 +50,8 @@ const RandomCategory = (props) => {
           {data.category}
         </h1>
         <button
+          type="button"
+          aria-label="more_button"
           className={style.btn__more}
           onClick={() =>
             navigate(`${process.env.REACT_APP_WEB_CATEGORY_URL}${data.categoryIdx}`, {

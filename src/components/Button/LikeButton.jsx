@@ -24,7 +24,7 @@ const LikeButton = (props) => {
   };
 
   return (
-    <button onClick={saveFavorite}>
+    <button type="button" aria-label="like_button" onClick={saveFavorite}>
       {favorite ? (
         <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
       ) : (

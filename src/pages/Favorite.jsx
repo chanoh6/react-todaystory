@@ -52,7 +52,7 @@ const Favorite = () => {
   return (
     <>
       <header className={style.header}>
-        <button onClick={() => navigate(-1)}>
+        <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{t(`menu.favorites`)}</h1>

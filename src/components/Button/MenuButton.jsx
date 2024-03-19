@@ -16,7 +16,7 @@ const MenuButton = () => {
 
   return (
     <>
-      <button className={style.icon} onClick={handleClickMenu}>
+      <button type="button" aria-label="menu_button" className={style.icon} onClick={handleClickMenu}>
         <MenuIcon width={20} height={20} fill={'var(--color-black)'} />
       </button>
       {showMenu && <Menu onClose={handleCloseMenu} />}

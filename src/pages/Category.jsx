@@ -71,12 +71,12 @@ const Category = () => {
   );
 
   if (loading && page === 1) return <Loading />;
-  if (error) return <Loading />;
+  if (error) return null;
 
   return (
     <>
       <header className={style.header}>
-        <button onClick={() => navigate(-1)}>
+        <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
         {/* <h1>{data.category}</h1> */}

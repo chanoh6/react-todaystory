@@ -15,46 +15,6 @@ class APIClient {
     });
   }
 
-  /*
-  constructor(data) {
-    this = ax
-    this.setBody
-    ....
-    ...
-    ...
-    ...
-
-  }
-  .setHeader(....)
-  .setBody(.....)
-  .setXXXXX....
-  .call(
-    try {
-        const aaa = axions.get()
-    return aaaa
-    } catch (e) {
-      e.//////
-    }
-  )
-
-
-  apiclient = new APIClient("post", "", "body");
-  apiClient.setHeader("Content-Type", "application/json");
-  apiClient.setB
-  ....
-  ....
-  ....
-  apiclient.call();
----------------------------------
-  const param = {
-    url : "http://localhost:8080",
-    method : "post",
-
-  }
-  const apiClient = new APIClient(param);
-  apiClient.call();
-  */
-
   async category() {
     return this.httpClient.get(process.env.REACT_APP_API_CATEGORY_URL);
   }
