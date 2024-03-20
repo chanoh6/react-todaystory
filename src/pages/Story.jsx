@@ -8,8 +8,10 @@ import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
 import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
+import { getInstagramCode } from 'utils/instagram';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
+import InstagramEmbed from 'react-instagram-embed';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -58,16 +60,6 @@ const Story = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
 
-  // useRef?
-  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
-
-  // 본문 내용 렌더링
-  const renderHtml = (htmlString, index) => {
-    const html = decode(htmlString);
-    return <div className={style.content} key={index} dangerouslySetInnerHTML={{ __html: html }} />;
-  };
-
   // 조회수 업데이트
   const updateViewCount = async (idx) => {
     try {
@@ -78,10 +70,55 @@ const Story = () => {
     }
   };
 
+  // useRef?
+  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+
+  // 본문 내용 렌더링
+  const renderHtml = (htmlString, index) => {
+    // HTML 엔티티 디코딩
+    const decodedHtml = decode(htmlString);
+
+    // HTML 문자열을 파싱하여 DOM 요소 생성
+    const parser = new DOMParser();
+    const tempElement = parser.parseFromString(decodedHtml, 'text/html').body;
+
+    // 'fr-embedly' 클래스를 포함하는 모든 요소 찾기
+    const embedlyElements = tempElement.querySelectorAll('.fr-embedly');
+
+    // 각 embedly 요소를 반복
+    embedlyElements.forEach((embedlyElement) => {
+      // href 속성 값 추출
+      const href = embedlyElement.querySelector('a').getAttribute('href');
+
+      // href에 'instagram.com'이 포함되어 있는지 확인
+      if (href.includes('instagram.com')) {
+        // Instagram 임베드 코드 생성
+        const instagramCode = getInstagramCode(href);
+
+        // Instagram 임베드 코드를 DOM 요소로 변환, 원래 요소 대체
+        embedlyElement.replaceWith(parser.parseFromString(instagramCode, 'text/html').body);
+      }
+    });
+
+    // 업데이트된 HTML 문자열 반환
+    return (
+      <article className={style.content} key={index + 1} dangerouslySetInnerHTML={{ __html: tempElement.innerHTML }} />
+    );
+  };
+
   useEffect(() => {
     saveHistory(contentId);
     updateViewCount(contentId);
   }, [contentId]);
+
+  // Instagram 임베드 스크립트 로드
+  useEffect(() => {
+    if (data && window.instgrm) {
+      // instrgrm이 정의되어 있으면 Instagram 임베드 스크립트 실행
+      window.instgrm?.Embeds?.process();
+    }
+  }, [data]);
 
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
@@ -122,10 +159,12 @@ const Story = () => {
 
         <meta name="twitter:title" content={`${t(`meta.title`)} - ${_title}`} />
         <meta name="twitter:image" content={thumbnailURL} />
+
+        <script async src="https://www.instagram.com/embed.js" />
       </Helmet>
 
       <header className={style.header}>
-        <div className={style.header__btn}>
+        <nav className={style.header__btn}>
           <button type="button" aria-label="back_button" className={style.icon} onClick={() => navigate(-1)}>
             <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
           </button>
@@ -136,13 +175,13 @@ const Story = () => {
               <LikeUnfilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
             )}
           </button>
-        </div>
+        </nav>
 
         <h1 onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}>
           {_cp}
         </h1>
 
-        <div className={style.header__btn}>
+        <nav className={style.header__btn}>
           <button type="button" aria-label="share_button" className={style.icon} onClick={handleShareMenu}>
             <ShareIcon style={{ marginBottom: '2px' }} />
           </button>
@@ -155,7 +194,7 @@ const Story = () => {
           >
             <MoreIcon />
           </button>
-        </div>
+        </nav>
       </header>
 
       {isOpen && <MoreMenu contents={data} />}
@@ -170,9 +209,9 @@ const Story = () => {
             <p className={style.editor}>by {editor || cp}</p>
             <p className={style.date}>{publishDate}</p>
 
-            <div className={style.content}>
+            {/* <div className={style.content}>
               <img src={thumbnailURL} alt="thumbnail" onError={onErrorImg} />
-            </div>
+            </div> */}
 
             {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
 

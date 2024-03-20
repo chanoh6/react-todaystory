@@ -1,3 +1,15 @@
+article:first-of-type > p:first-of-type > img,
+article:first-of-type > p:first-of-type > span:first-of-type {
+  margin-top: 0;
+}
+
+/* 인스타그램 */
+.instagram {
+  width: calc(100vw - 48px);
+  max-width: calc(540px - 48px);
+  margin: 0 auto !important;
+}
+
 .iframe-container {
   position: relative;
   width: 100%;
