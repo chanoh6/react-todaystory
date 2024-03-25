@@ -108,3 +108,9 @@
 .like p {
   margin: 0 4px;
 }
+
+@media screen and (max-width: 375px) {
+  .title {
+    -webkit-line-clamp: 2;
+  }
+}

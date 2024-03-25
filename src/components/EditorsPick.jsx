@@ -4,6 +4,8 @@ import { useAPI } from 'context/APIContext';
 import { TypeD } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
+import Vibrant from 'node-vibrant';
+import styled, { css } from 'styled-components';
 
 const EditorsPick = () => {
   const { t } = useTranslation();
@@ -11,7 +13,29 @@ const EditorsPick = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState(null);
+
+  const ContnetWrap = styled.section`
+    ${colors &&
+    css`
+      background: linear-gradient(
+        180deg,
+        rgba(${colors[0].join(', ')}, 0.5) 0%,
+        rgba(${colors[1].join(', ')}, 0.5) 100%
+      );
+    `}
+  `;
+
+  const getGradient = async (image) => {
+    const palatte = await Vibrant.from('/ko_v2/assets/test.jpg').getPalette();
+
+    if (palatte && palatte.Vibrant && palatte.Muted) {
+      let startColor = palatte.LightVibrant ? palatte.LightVibrant.getRgb() : palatte.Vibrant.getRgb();
+      let endColor = palatte.LightMuted ? palatte.DarkVibrant.getRgb() : palatte.Muted.getRgb();
+
+      setColors([startColor, endColor]);
+    }
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -32,43 +56,17 @@ const EditorsPick = () => {
     fetchData().then((res) => {
       if (res.code === '0') {
         setData(res.data);
+        getGradient();
       } else {
         console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
       }
     });
   }, []);
 
-  // useEffect(() => {
-  //   const image = new Image();
-  //   image.crossOrigin = 'Anonymous';
-  //   image.src = imageUrl;
-
-  //   image.onload = () => {
-  //     const canvas = document.createElement('canvas');
-  //     canvas.width = image.width;
-  //     canvas.height = image.height;
-
-  //     const context = canvas.getContext('2d');
-  //     context.drawImage(image, 0, 0);
-
-  //     const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-  //     const pixelColors = [];
-  //     for (let i = 0; i < imageData.length; i += 4) {
-  //       const r = imageData[i];
-  //       const g = imageData[i + 1];
-  //       const b = imageData[i + 2];
-  //       pixelColors.push(`rgb(${r}, ${g}, ${b})`);
-  //     }
-
-  //     setColors(pixelColors);
-  //   };
-  // }, [imageUrl]);
-
   if (loading || error || !data) return null;
 
   return (
-    <section className={style.content__wrap}>
+    <ContnetWrap className={style.content__wrap}>
       <hgroup className={style.content__title}>
         <h1>{t(`editor.title`)}</h1>
         <h2>{data.subTopic}</h2>
@@ -76,7 +74,7 @@ const EditorsPick = () => {
       {data.contents.map((content, i) => (
         <TypeD key={i} content={content} />
       ))}
-    </section>
+    </ContnetWrap>
   );
 };
 

@@ -11,7 +11,6 @@ import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, Lik
 import { getInstagramCode } from 'utils/instagram';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
-import InstagramEmbed from 'react-instagram-embed';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -75,9 +74,9 @@ const Story = () => {
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   // 본문 내용 렌더링
-  const renderHtml = (htmlString, index) => {
+  const renderHtml = (html, index) => {
     // HTML 엔티티 디코딩
-    const decodedHtml = decode(htmlString);
+    const decodedHtml = decode(html);
 
     // HTML 문자열을 파싱하여 DOM 요소 생성
     const parser = new DOMParser();
@@ -107,6 +106,7 @@ const Story = () => {
     );
   };
 
+  // contentId가 변경될 때마다 실행
   useEffect(() => {
     saveHistory(contentId);
     updateViewCount(contentId);

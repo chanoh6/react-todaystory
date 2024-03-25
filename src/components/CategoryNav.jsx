@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode } from 'swiper/modules';
+import 'swiper/css';
 import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
@@ -43,7 +46,7 @@ const CategoryNav = () => {
 
   if (loading || error || !data) {
     return (
-      <ul className={style.list}>
+      <ul className={style.list__skeleton}>
         {new Array(10).fill(1).map((_, i) => (
           <Skeleton key={i} width={'100px'} className={style.item__skeleton} />
         ))}
@@ -52,17 +55,16 @@ const CategoryNav = () => {
   }
 
   return (
-    <ul className={style.list}>
-      <li
-        key={0}
+    <Swiper className={style.list} spaceBetween={8} slidesPerView={'auto'} freeMode={true} modules={[FreeMode]}>
+      <SwiperSlide
         className={`${style.item} ${style.active}`}
         onClick={() => navigate(process.env.REACT_APP_WEB_HOME_URL)}
       >
         <img loading="lazy" src={`${baseImgURL}all.svg`} alt="category icon" onError={onErrorIcon} />
         <p>{t(`nav.all`)}</p>
-      </li>
+      </SwiperSlide>
       {data.map((cat, i) => (
-        <li
+        <SwiperSlide
           key={i}
           className={style.item}
           onClick={() =>
@@ -73,9 +75,9 @@ const CategoryNav = () => {
             <img loading="lazy" src={`${baseImgURL}${cat.icon}`} alt="category icon" onError={onErrorIcon} />
           </figure>
           <p>{cat.name}</p>
-        </li>
+        </SwiperSlide>
       ))}
-    </ul>
+    </Swiper>
   );
 };
 

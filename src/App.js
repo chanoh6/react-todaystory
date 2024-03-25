@@ -45,6 +45,7 @@ function App() {
         <meta name="twitter:image" content="/assets/todaystory.png" />
         <meta name="twitter:card" content={t(`meta.description`)} />
       </Helmet>
+
       <APIProvider>
         <FontWrapper lang={lang}>
           <ScrollToTop />
