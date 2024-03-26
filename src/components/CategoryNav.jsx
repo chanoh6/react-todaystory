@@ -55,7 +55,17 @@ const CategoryNav = () => {
   }
 
   return (
-    <Swiper className={style.list} spaceBetween={8} slidesPerView={'auto'} freeMode={true} modules={[FreeMode]}>
+    <Swiper
+      className={style.list}
+      modules={[FreeMode]}
+      spaceBetween={8}
+      slidesPerView={'auto'}
+      freeMode={true}
+      preventClicks={true}
+      preventClicksPropagation={true}
+      grabCursor={true}
+      roundLengths={true}
+    >
       <SwiperSlide
         className={`${style.item} ${style.active}`}
         onClick={() => navigate(process.env.REACT_APP_WEB_HOME_URL)}

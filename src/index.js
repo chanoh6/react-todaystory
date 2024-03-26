@@ -24,10 +24,10 @@ const NotFound = React.lazy(() => import('pages/NotFound'));
 // createBrowserRouter: 라우터 생성
 const router = createBrowserRouter([
   {
-    // basename: `/${process.env.PUBLIC_URL}`,
+    // basename: process.env.PUBLIC_URL,
     element: <App />,
     errorElement: <NotFound />,
-    path: `/${process.env.PUBLIC_URL}`,
+    path: process.env.PUBLIC_URL,
     children: [
       { index: true, element: <Home /> },
       { path: 'view/:contentId', element: <Story /> },
