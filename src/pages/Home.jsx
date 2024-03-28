@@ -35,6 +35,7 @@ const Home = () => {
   const [renderData, setRenderData] = useState(null); // 렌더링할 data
   const [index, setIndex] = useState(0); // 현재 data index
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  let bestStoriesCount = 0;
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
@@ -68,53 +69,19 @@ const Home = () => {
       if (loading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setIndex((prev) => prev + 1);
-        }
-      });
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMore) {
+            setIndex((prev) => prev + 1);
+          }
+        },
+        { threshold: 0.5 },
+      );
 
       if (node) observer.current.observe(node);
     },
     [loading, hasMore],
   );
-
-  // 홈 화면 콘텐츠 순서대로 렌더링
-  const RenderContent = ({ renderData }) => {
-    // BestStories 카운터 초기화
-    let bestStoriesCount = 0;
-
-    return (
-      <>
-        {renderData.map((item, index) => {
-          // 마지막 항목 여부를 확인
-          const isLastItem = index === renderData.length - 1;
-
-          // item.type이 1003일 경우 section 제외하고 EditorsPick 컴포넌트 렌더링
-          if (item.type === '1003') return <EditorsPick key={index} comment={item.data} />;
-
-          return (
-            <section key={index} className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''}`}>
-              {(() => {
-                switch (item.type) {
-                  case '1001':
-                    return <TopStories />;
-                  case '1002':
-                    bestStoriesCount += 1;
-                    return <BestStories page={bestStoriesCount} />;
-                  case '1004':
-                    return <RandomCategory idx={item.data} name={item.name} />;
-                  default:
-                    return null;
-                }
-              })()}
-              {isLastItem && <div ref={lastItemRef}></div>}
-            </section>
-          );
-        })}
-      </>
-    );
-  };
 
   // API 호출 및 초기 data 세팅
   useEffect(() => {
@@ -167,7 +134,36 @@ const Home = () => {
       </nav>
 
       <main>
-        <Suspense fallback={<StoriesSkeleton />}>{renderData && <RenderContent renderData={renderData} />}</Suspense>
+        <Suspense fallback={<StoriesSkeleton />}>
+          {renderData && (
+            <>
+              {renderData.map((item, index) => {
+                // item.type이 1003일 경우 section 제외하고 EditorsPick 컴포넌트 렌더링
+                if (item.type === '1003') return <EditorsPick key={index} comment={item.data} />;
+
+                return (
+                  <section key={index} className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''}`}>
+                    {(() => {
+                      switch (item.type) {
+                        case '1001':
+                          return <TopStories />;
+                        case '1002':
+                          bestStoriesCount += 1;
+                          return <BestStories page={bestStoriesCount} />;
+                        case '1004':
+                          return <RandomCategory idx={item.data} name={item.name} />;
+                        default:
+                          return null;
+                      }
+                    })()}
+                  </section>
+                );
+              })}
+              <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>
+            </>
+          )}
+        </Suspense>
+        {/* <Suspense fallback={<StoriesSkeleton />}>{data && <RenderContent renderData={data} />}</Suspense> */}
       </main>
 
       <footer></footer>
