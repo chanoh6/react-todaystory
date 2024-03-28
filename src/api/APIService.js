@@ -7,6 +7,10 @@ class API {
    * @TODOS : 정리 필요
    */
 
+  async home() {
+    return this.apiClient.home().then((res) => res.data);
+  }
+
   async category() {
     return this.apiClient.category().then((res) => res.data);
   }
@@ -45,6 +49,10 @@ class API {
 
   async updateViewCount(idx) {
     return this.apiClient.updateViewCount(idx).then((res) => res.data);
+  }
+
+  async imageLoad(url) {
+    return this.apiClient.imageLoad(url).then((res) => res.data);
   }
 }
 

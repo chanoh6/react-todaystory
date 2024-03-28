@@ -6,7 +6,6 @@ export { default as TypeA } from 'components/Card/TypeA';
 export { default as TypeB } from 'components/Card/TypeB';
 export { default as TypeC } from 'components/Card/TypeC';
 export { default as TypeD } from 'components/Card/TypeD';
-export { default as TypeE } from 'components/Card/TypeE';
 
 export { default as Loading } from 'components/Modal/Loading';
 export { default as Menu } from 'components/Modal/Menu';

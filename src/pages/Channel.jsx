@@ -19,6 +19,23 @@ const Channel = () => {
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
   const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
 
+  const observer = useRef();
+  const lastItemRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
+
   const fetchData = async (idx, page, size) => {
     setLoading(true);
     setError(null);
@@ -38,9 +55,17 @@ const Channel = () => {
     setError(null);
     setData(null);
     setPage(1);
-  }, [pathname, pageId]);
+
+    fetchData(pageId, 1, size).then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+      }
+    });
+  }, [pageId, pathname]);
 
   useEffect(() => {
+    if (page === 1) return;
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
@@ -53,23 +78,6 @@ const Channel = () => {
     });
   }, [page]);
 
-  const observer = useRef();
-  const lastItemRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prev) => prev + 1);
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore],
-  );
-
   if (loading && page === 1) return <Loading />;
   if (error) return null;
 
@@ -79,8 +87,7 @@ const Channel = () => {
         <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
-        {/* <h1>{data.cp}</h1> */}
-        <h1>{state.title}</h1>
+        <h1>{state?.title ?? data.cp ?? ''}</h1>
         <MenuButton />
       </header>
 

@@ -15,6 +15,10 @@ class APIClient {
     });
   }
 
+  async home() {
+    return this.httpClient.get(process.env.REACT_APP_API_HOME_URL);
+  }
+
   async category() {
     return this.httpClient.get(process.env.REACT_APP_API_CATEGORY_URL);
   }
@@ -57,6 +61,10 @@ class APIClient {
 
   async updateViewCount(idx) {
     return this.httpClient.post(process.env.REACT_APP_API_VIEW_COUNT_URL, { idx });
+  }
+
+  async imageLoad(url) {
+    return this.httpClient.post(process.env.REACT_APP_API_IMAGE_URL, { url });
   }
 }
 

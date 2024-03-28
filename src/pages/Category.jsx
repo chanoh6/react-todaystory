@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
-import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
+import { CardListSkeleton, CategoryStories, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
 
@@ -18,6 +18,23 @@ const Category = () => {
   const [page, setPage] = useState(1); // 현재 페이지
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
   const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
+
+  const observer = useRef();
+  const lastItemRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prev) => prev + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
 
   const fetchData = async (idx, page, size) => {
     setLoading(true);
@@ -38,9 +55,17 @@ const Category = () => {
     setError(null);
     setData(null);
     setPage(1);
-  }, [pathname, pageId]);
+
+    fetchData(pageId, 1, size).then((res) => {
+      if (res.code === '0') {
+        setData(res.data);
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+      }
+    });
+  }, [pageId, pathname]);
 
   useEffect(() => {
+    if (page === 1) return;
     fetchData(pageId, page, size).then((res) => {
       if (res.code === '0') {
         setData((prev) => {
@@ -53,23 +78,6 @@ const Category = () => {
     });
   }, [page]);
 
-  const observer = useRef();
-  const lastItemRef = useCallback(
-    (node) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prev) => prev + 1);
-        }
-      });
-
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore],
-  );
-
   if (loading && page === 1) return <Loading />;
   if (error) return null;
 
@@ -79,8 +87,7 @@ const Category = () => {
         <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
-        {/* <h1>{data.category}</h1> */}
-        <h1>{state.title}</h1>
+        <h1>{state?.title ?? data.category ?? ''}</h1>
         <MenuButton />
       </header>
 

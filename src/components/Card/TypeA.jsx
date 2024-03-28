@@ -1,6 +1,5 @@
 import { useCard } from 'hooks/useCard';
 import { LikeButton } from 'components';
-import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 
 const TypeA = (props) => {
@@ -21,16 +20,8 @@ const TypeA = (props) => {
         <p className="title">{title}</p>
       </div>
       <div className="card__more">
-        <div className="date">
-          <span id="publishedAt">{publishDate}</span>
-          <span>|</span>
-          <span id="category">{category}</span>
-        </div>
-        <div className="like">
-          <ViewIcon width={16} height={16} />
-          <p id="viewCount">{viewCount}</p>
-          <LikeButton idx={idx} />
-        </div>
+        <span id="publishedAt">{publishDate}</span>
+        <LikeButton idx={idx} />
       </div>
     </li>
   );

@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
 const RandomCategory = (props) => {
-  const { idx } = props;
+  const { idx, name } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [randomCount, setRandomCount] = useState(getRandomCount());
 
+  // fetchData 함수: 랜덤 카테고리 스토리 데이터를 가져오는 함수
   const fetchData = async () => {
+    const randomCount = getRandomCount();
     setLoading(true);
     setError(null);
     setData(null);
@@ -47,7 +48,8 @@ const RandomCategory = (props) => {
     <>
       <div className={style.content__title}>
         <h1 className={style.title} style={{ color: data.color }}>
-          {data.category}
+          {/* {data.category} */}
+          {name}
         </h1>
         <button
           type="button"
@@ -68,8 +70,10 @@ const RandomCategory = (props) => {
   );
 };
 
+// getRandomCount 함수: 3~5 사이의 랜덤한 숫자 반환
 const getRandomCount = () => Math.floor(Math.random() * (5 - 3 + 1)) + 3;
 
+// getRandomComponents 함수: contents 배열을 받아서 랜덤한 컴포넌트 배열을 반환
 const getRandomComponents = (contents) => {
   const components = [];
   let typeCStarted = false;

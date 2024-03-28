@@ -1,11 +1,10 @@
 import { useCard } from 'hooks/useCard';
 import { LikeButton } from 'components';
-import { ViewIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
 const TypeC = (props) => {
-  const { content, onClick = null } = props;
+  const { content } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
 
@@ -24,16 +23,8 @@ const TypeC = (props) => {
         </figure>
       </div>
       <div className="card__more">
-        <div className="date">
-          <span id="publishedAt">{publishDate}</span>
-          <span>|</span>
-          <span id="category">{category}</span>
-        </div>
-        <div className="like">
-          <ViewIcon width={16} height={16} />
-          <p id="viewCount">{viewCount}</p>
-          <LikeButton idx={idx} />
-        </div>
+        <span id="publishedAt">{publishDate}</span>
+        <LikeButton idx={idx} />
       </div>
     </li>
   );

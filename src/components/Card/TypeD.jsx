@@ -1,44 +1,45 @@
 import { useCard } from 'hooks/useCard';
-import { LikeButton } from 'components';
-import { ViewIcon } from 'assets';
+import { useFavorite } from 'hooks/useLocalStorage';
+import { LikeFilledIcon, LikeUnfilledIcon } from 'assets';
 import 'styles/Card.css';
-import style from 'styles/EditorsPick.module.css';
+import style from 'styles/TypeC.module.css';
 
 const TypeD = (props) => {
-  const { content } = props;
+  const { content, onClick } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
+  const { favorite, saveFavorite } = useFavorite(idx);
+
+  const handleButtonClick = (e) => {
+    saveFavorite(e);
+    onClick(idx);
+  };
 
   return (
-    <article className={style.card} onClick={handleClick}>
-      <div className={style.card__img}>
+    <li className="card" onClick={handleClick}>
+      <div className={style.card__info}>
+        <div className={style.card__title}>
+          <div className="cp">
+            <img loading="lazy" src={logo} alt="cp logo" onError={onErrorLogo} />
+            <p>{cp}</p>
+          </div>
+          <p className="title">{title}</p>
+        </div>
         <figure className={style.thumbnail}>
           <img loading="lazy" src={thumbnail} alt="thumbnail" onError={onErrorImg} />
         </figure>
-        <figure className={style.background}>
-          <img loading="lazy" src={thumbnail} alt="background" onError={onErrorImg} />
-        </figure>
-      </div>
-      <div className="card__title">
-        <div className="cp">
-          <img loading="lazy" src={logo} alt="cp logo" onError={onErrorLogo} />
-          <p>{cp}</p>
-        </div>
-        <p className="title">{title}</p>
       </div>
       <div className="card__more">
-        <div className="date">
-          <span id="publishedAt">{publishDate}</span>
-          <span>|</span>
-          <span id="category">{category}</span>
-        </div>
-        <div className="like">
-          <ViewIcon width={16} height={16} />
-          <p id="viewCount">{viewCount}</p>
-          <LikeButton idx={idx} />
-        </div>
+        <span id="publishedAt">{publishDate}</span>
+        <button type="button" aria-label="like_button" onClick={handleButtonClick}>
+          {favorite ? (
+            <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
+          ) : (
+            <LikeUnfilledIcon width={18} height={16} fill={'var(--color-blue)'} />
+          )}
+        </button>
       </div>
-    </article>
+    </li>
   );
 };
 

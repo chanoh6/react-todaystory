@@ -19,7 +19,7 @@
 
 .thumbnail {
   width: 36%;
-  /* aspect-ratio: 1 / 1; */
+  aspect-ratio: 1 / 1;
   margin: 0;
 }
 
