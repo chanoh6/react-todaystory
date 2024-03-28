@@ -159,7 +159,7 @@ const Home = () => {
                   </section>
                 );
               })}
-              <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>
+              {hasMore && <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>}
             </>
           )}
         </Suspense>
