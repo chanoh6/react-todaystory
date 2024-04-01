@@ -6,9 +6,9 @@ import { decode } from 'html-entities';
 import { useAPI } from 'context/APIContext';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
+import { getInstagramCode } from 'utils/instagram';
 import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
-import { getInstagramCode } from 'utils/instagram';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 

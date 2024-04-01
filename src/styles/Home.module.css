@@ -80,3 +80,7 @@
 .content__wrap.top {
   padding: 28px 15px 36px 15px;
 }
+
+.content__wrap.editors {
+  padding: 0;
+}

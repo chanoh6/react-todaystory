@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
-import { CardListSkeleton, CategoryStories, Loading, MenuButton, NoStories, TypeC } from 'components';
+import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
 
@@ -100,14 +100,9 @@ const Category = () => {
               {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.stories`)} />
               ) : (
-                data.contents.map((content, i) => {
-                  if (data.contents.length !== 1 && data.contents.length === i + 1) {
-                    return <li key={i} ref={lastItemRef}></li>;
-                  } else {
-                    return <TypeC key={i} content={content} />;
-                  }
-                })
+                data.contents.map((content, i) => <TypeC key={i} content={content} />)
               )}
+              {hasMore && <li ref={lastItemRef}></li>}
             </ul>
           </section>
         )}

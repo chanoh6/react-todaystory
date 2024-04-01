@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
-const TopStories = () => {
+const TopStories = React.memo(() => {
   const { t } = useTranslation();
   const { api } = useAPI();
   const [loading, setLoading] = useState(true);
@@ -59,6 +59,6 @@ const TopStories = () => {
       </ul>
     </>
   );
-};
+});
 
 export default TopStories;

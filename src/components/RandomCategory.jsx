@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -6,7 +6,7 @@ import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
-const RandomCategory = (props) => {
+const RandomCategory = React.memo((props) => {
   const { idx, name } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -42,7 +42,8 @@ const RandomCategory = (props) => {
     });
   }, []);
 
-  if (loading || error || !data) return <StoriesSkeleton />;
+  // if (loading || error || !data) return <StoriesSkeleton />;
+  if (loading || error || !data) return null;
 
   return (
     <>
@@ -68,7 +69,7 @@ const RandomCategory = (props) => {
       <ul className={style.list}>{getRandomComponents(data.contents)}</ul>
     </>
   );
-};
+});
 
 // getRandomCount 함수: 3~5 사이의 랜덤한 숫자 반환
 const getRandomCount = () => Math.floor(Math.random() * (5 - 3 + 1)) + 3;

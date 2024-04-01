@@ -41,10 +41,10 @@
   border-radius: 100%;
   background-color: var(--color-light-gray);
   cursor: pointer;
-}
 
-.icon:active {
-  opacity: 0.5;
+  &:active {
+    opacity: 0.5;
+  }
 }
 
 .content__wrap {

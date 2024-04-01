@@ -5,14 +5,11 @@ import { useAPI } from 'context/APIContext';
 import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
 import style from 'styles/Home.module.css';
-import { init } from 'i18next';
-import { render } from '@testing-library/react';
 
 /**
  * @TODOS
- * 1. 홈 화면 무한 스크롤 구현
- * 2. footer 추가
- * 3. 아이콘 통합 정리
+ * 1. footer 추가
+ * 2. 아이콘 통합 정리
  */
 
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
@@ -35,13 +32,13 @@ const Home = () => {
   const [renderData, setRenderData] = useState(null); // 렌더링할 data
   const [index, setIndex] = useState(0); // 현재 data index
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
-  let bestStoriesCount = 0;
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
       val: { month: 'long', day: 'numeric' },
     },
   });
+  let bestStoriesCount = 0;
 
   // 로고 클릭시 홈으로 이동
   const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
@@ -69,14 +66,11 @@ const Home = () => {
       if (loading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && hasMore) {
-            setIndex((prev) => prev + 1);
-          }
-        },
-        { threshold: 0.5 },
-      );
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setIndex((prev) => prev + 1);
+        }
+      });
 
       if (node) observer.current.observe(node);
     },
@@ -137,33 +131,35 @@ const Home = () => {
         <Suspense fallback={<StoriesSkeleton />}>
           {renderData && (
             <>
-              {renderData.map((item, index) => {
-                // item.type이 1003일 경우 section 제외하고 EditorsPick 컴포넌트 렌더링
-                if (item.type === '1003') return <EditorsPick key={index} comment={item.data} />;
-
-                return (
-                  <section key={index} className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''}`}>
-                    {(() => {
-                      switch (item.type) {
-                        case '1001':
-                          return <TopStories />;
-                        case '1002':
-                          bestStoriesCount += 1;
-                          return <BestStories page={bestStoriesCount} />;
-                        case '1004':
-                          return <RandomCategory idx={item.data} name={item.name} />;
-                        default:
-                          return null;
-                      }
-                    })()}
-                  </section>
-                );
-              })}
+              {renderData.map((item, index) => (
+                <section
+                  key={index}
+                  className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''} ${
+                    item.type === '1003' ? style.editors : ''
+                  }
+                  `}
+                >
+                  {(() => {
+                    switch (item.type) {
+                      case '1001':
+                        return <TopStories />;
+                      case '1002':
+                        bestStoriesCount += 1;
+                        return <BestStories page={bestStoriesCount} />;
+                      case '1003':
+                        return <EditorsPick comment={item.data} />;
+                      case '1004':
+                        return <RandomCategory idx={item.data} name={item.name} />;
+                      default:
+                        return null;
+                    }
+                  })()}
+                </section>
+              ))}
               {hasMore && <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>}
             </>
           )}
         </Suspense>
-        {/* <Suspense fallback={<StoriesSkeleton />}>{data && <RenderContent renderData={data} />}</Suspense> */}
       </main>
 
       <footer></footer>

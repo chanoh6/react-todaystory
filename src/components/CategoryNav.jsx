@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -8,7 +8,7 @@ import 'swiper/css';
 import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
-const CategoryNav = () => {
+const CategoryNav = React.memo(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
@@ -89,6 +89,6 @@ const CategoryNav = () => {
       ))}
     </Swiper>
   );
-};
+});
 
 export default CategoryNav;

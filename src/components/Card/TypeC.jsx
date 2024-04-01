@@ -2,8 +2,9 @@ import { useCard } from 'hooks/useCard';
 import { LikeButton } from 'components';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
+import React from 'react';
 
-const TypeC = (props) => {
+const TypeC = React.memo((props) => {
   const { content } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
@@ -28,6 +29,6 @@ const TypeC = (props) => {
       </div>
     </li>
   );
-};
+});
 
 export default TypeC;

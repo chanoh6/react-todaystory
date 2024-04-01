@@ -1,10 +1,11 @@
+import React from 'react';
 import { useCard } from 'hooks/useCard';
 import { useFavorite } from 'hooks/useLocalStorage';
 import { LikeFilledIcon, LikeUnfilledIcon } from 'assets';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
 
-const TypeD = (props) => {
+const TypeD = React.memo((props) => {
   const { content, onClick } = props;
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
     useCard(content);
@@ -41,6 +42,6 @@ const TypeD = (props) => {
       </div>
     </li>
   );
-};
+});
 
 export default TypeD;

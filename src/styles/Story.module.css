@@ -33,11 +33,11 @@
   background-color: var(--color-light-gray);
   cursor: pointer;
   transition: opacity 0.2s ease-in-out;
-}
 
-.icon:active,
-.icon.active {
-  opacity: 0.5;
+  &:active,
+  &.active {
+    opacity: 0.5;
+  }
 }
 
 .content__wrap {
