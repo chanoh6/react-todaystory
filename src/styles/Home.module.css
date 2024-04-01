@@ -84,3 +84,7 @@
 .content__wrap.editors {
   padding: 0;
 }
+
+.footer {
+  background-color: var(--background-color);
+}

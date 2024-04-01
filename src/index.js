@@ -49,11 +49,11 @@ const router = createBrowserRouter([
 // Suspense: 로딩 중일 때 보여줄 컴포넌트
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <Suspense fallback={<Loading />}>
-        <RouterProvider router={router} />
-      </Suspense>
-    </HelmetProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <HelmetProvider>
+    <Suspense fallback={<Loading />}>
+      <RouterProvider router={router} />
+    </Suspense>
+  </HelmetProvider>,
+  // </React.StrictMode>,
 );

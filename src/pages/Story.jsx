@@ -2,8 +2,9 @@ import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { decode } from 'html-entities';
 import { useAPI } from 'context/APIContext';
+import { useAdContext } from 'context/AdContext';
+import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { useStory } from 'hooks/useStories';
 import { getInstagramCode } from 'utils/instagram';
@@ -55,7 +56,10 @@ const Story = () => {
   const _cp = decode(cp);
   const _category = decode(category);
 
-  const moreMenuRef = useRef();
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
+
+  const moreMenuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
 
@@ -68,6 +72,9 @@ const Story = () => {
       console.error(e);
     }
   };
+
+  const handleMoreMenu = () => setIsOpen(!isOpen);
+  const handleShareMenu = () => setShareOpen(!shareOpen);
 
   // useRef?
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
@@ -143,8 +150,11 @@ const Story = () => {
     };
   }, [isOpen]);
 
-  const handleMoreMenu = () => setIsOpen(!isOpen);
-  const handleShareMenu = () => setShareOpen(!shareOpen);
+  useEffect(() => {
+    if (footerRef.current) {
+      footerRef.current.style.paddingBottom = `${adHeight}px`;
+    }
+  }, [adHeight, footerRef.current]);
 
   if (loading || error) return <Loading />;
 
@@ -252,7 +262,7 @@ const Story = () => {
         </main>
       )}
 
-      <footer></footer>
+      <footer ref={footerRef}></footer>
     </>
   );
 };

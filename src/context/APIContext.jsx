@@ -9,12 +9,8 @@ const api = new APIService(client);
 
 export const APIContext = createContext();
 
-export function APIProvider({ children }) {
-  return <APIContext.Provider value={{ api }}>{children}</APIContext.Provider>;
-}
+export const useAPI = () => useContext(APIContext);
 
-export function useAPI() {
-  return useContext(APIContext);
-}
+export const APIProvider = ({ children }) => <APIContext.Provider value={{ api }}>{children}</APIContext.Provider>;
 
 export default APIProvider;

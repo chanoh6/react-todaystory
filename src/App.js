@@ -2,8 +2,10 @@ import { Outlet } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { APIProvider } from 'context/APIContext';
+import { AdProvider } from 'context/AdContext';
 import { styled } from 'styled-components';
 import { ScrollToTop } from 'components';
+import AnchorAd from 'components/Ad/AnchorAd';
 import 'styles/App.css';
 
 /**
@@ -47,10 +49,13 @@ function App() {
       </Helmet>
 
       <APIProvider>
-        <FontWrapper lang={lang}>
-          <ScrollToTop />
-          <Outlet />
-        </FontWrapper>
+        <AdProvider>
+          <FontWrapper lang={lang}>
+            <ScrollToTop />
+            <Outlet />
+            <AnchorAd />
+          </FontWrapper>
+        </AdProvider>
       </APIProvider>
     </>
   );

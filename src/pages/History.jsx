@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -6,6 +6,7 @@ import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/History.module.css';
+import { useAdContext } from 'context/AdContext';
 
 const History = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const History = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
 
   const handleClearClick = () => {
     clearHistory();
@@ -48,6 +51,12 @@ const History = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (footerRef.current) {
+      footerRef.current.style.paddingBottom = `${adHeight}px`;
+    }
+  }, [adHeight, footerRef.current]);
+
   if (loading || error) return <Loading />;
 
   return (
@@ -77,6 +86,8 @@ const History = () => {
           </section>
         )}
       </main>
+
+      <footer ref={footerRef}></footer>
     </>
   );
 };

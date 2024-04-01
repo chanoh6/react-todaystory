@@ -5,6 +5,7 @@ import { useAPI } from 'context/APIContext';
 import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
+import { useAdContext } from 'context/AdContext';
 
 const Category = () => {
   const { state, pathname } = useLocation();
@@ -17,6 +18,8 @@ const Category = () => {
   const [data, setData] = useState(null);
   const [page, setPage] = useState(1); // 현재 페이지
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
   const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
 
   const observer = useRef();
@@ -78,6 +81,12 @@ const Category = () => {
     });
   }, [page]);
 
+  useEffect(() => {
+    if (footerRef.current) {
+      footerRef.current.style.paddingBottom = `${adHeight}px`;
+    }
+  }, [adHeight, footerRef.current]);
+
   if (loading && page === 1) return <Loading />;
   if (error) return null;
 
@@ -107,6 +116,8 @@ const Category = () => {
           </section>
         )}
       </main>
+
+      <footer ref={footerRef}></footer>
     </>
   );
 };

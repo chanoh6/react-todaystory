@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
@@ -11,7 +11,6 @@ import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
 // styled-components: 컴포넌트 스타일링
-/*
 const ContentWrap = styled.div`
   background: ${(props) =>
     props.gradient
@@ -24,7 +23,6 @@ const ContentWrap = styled.div`
 const Background = styled.div`
   background-color: ${(props) => (props.gradient ? `rgba(${props.gradient[0].join(', ')}, 0.2)` : 'none')};
 `;
-*/
 
 const EditorsPick = React.memo(() => {
   const navigate = useNavigate();
@@ -35,8 +33,6 @@ const EditorsPick = React.memo(() => {
   const [data, setData] = useState(null);
   const [gradient, setGradient] = useState(null);
   const locale = process.env.REACT_APP_LOCALE;
-  const wrapRef = useRef(null);
-  const backgroundRef = useRef(null);
 
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
@@ -62,8 +58,8 @@ const EditorsPick = React.memo(() => {
     const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${url}`;
 
     try {
-      const response = await api.imageLoad(imageURL);
-      return response;
+      const res = await api.imageLoad(imageURL);
+      return res;
     } catch (e) {
       console.error(e);
     }
@@ -101,73 +97,61 @@ const EditorsPick = React.memo(() => {
     });
   }, [data]);
 
-  useEffect(() => {
-    if (!gradient) return;
-    backgroundRef.current.style.backgroundColor = `rgba(${gradient[0].join(', ')}, 0.2)`;
-    wrapRef.current.style.background = `linear-gradient(to bottom, rgba(${gradient[0].join(
-      ', ',
-    )}, 0.4) 0%, rgba(${gradient[1].join(', ')}, 0.8) 100%)`;
-  }, [gradient]);
-
   if (loading || error || !data) return null;
 
   return (
-    // <StyleSheetManager shouldForwardProp={(prop) => !['gradient'].includes(prop)}>
-    //   <ContentWrap className={style.content__wrap} gradient={gradient} ref={wrapRef}>
-    <div className={style.content__wrap} ref={wrapRef}>
-      <hgroup className={style.content__title}>
-        <h1>{t(`editor.title`)}</h1>
-        <h2>{data.subTopic}</h2>
-      </hgroup>
-      {data.contents.map((content, i) => (
-        <>
-          <article
-            key={i}
-            className={style.card}
-            onClick={() => navigate(`${process.env.REACT_APP_WEB_STORY_URL}${content.idx}`)}
-          >
-            <div className={style.card__img}>
-              <figure className={style.thumbnail}>
-                <img
-                  loading="lazy"
-                  src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${content.thumbnail}`}
-                  alt="thumbnail"
-                  onError={onErrorImg}
-                />
-              </figure>
-              <figure className={style.background}>
-                <img
-                  loading="lazy"
-                  src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${content.thumbnail}`}
-                  alt="background"
-                  onError={onErrorImg}
-                />
-              </figure>
-            </div>
-            <div className="card__title">
-              <div className="cp">
-                <img
-                  loading="lazy"
-                  src={`${process.env.REACT_APP_LOGO_IMG_URL}${content.logo}`}
-                  alt="cp logo"
-                  onError={onErrorLogo}
-                />
-                <p>{decode(content.cp)}</p>
+    <StyleSheetManager shouldForwardProp={(prop) => !['gradient'].includes(prop)}>
+      <ContentWrap className={style.content__wrap} gradient={gradient}>
+        <hgroup className={style.content__title}>
+          <h1>{t(`editor.title`)}</h1>
+          <h2>{data.subTopic}</h2>
+        </hgroup>
+        {data.contents.map((content, i) => (
+          <React.Fragment key={i}>
+            <article
+              className={style.card}
+              onClick={() => navigate(`${process.env.REACT_APP_WEB_STORY_URL}${content.idx}`)}
+            >
+              <div className={style.card__img}>
+                <figure className={style.thumbnail}>
+                  <img
+                    loading="lazy"
+                    src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${content.thumbnail}`}
+                    alt="thumbnail"
+                    onError={onErrorImg}
+                  />
+                </figure>
+                <figure className={style.background}>
+                  <img
+                    loading="lazy"
+                    src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${content.thumbnail}`}
+                    alt="background"
+                    onError={onErrorImg}
+                  />
+                </figure>
               </div>
-              <p className="title">{decode(content.title)}</p>
-            </div>
-            <div className="card__more">
-              <span id="publishedAt">{formatAgo(content.publishDate, locale)}</span>
-              <LikeButton idx={content.idx} />
-            </div>
-            <div className={style.card__background} ref={backgroundRef} />
-            {/* <Background className={style.card__background} gradient={gradient} ref={backgroundRef} /> */}
-          </article>
-        </>
-      ))}
-    </div>
-    //   </ContentWrap>
-    // </StyleSheetManager>
+              <div className="card__title">
+                <div className="cp">
+                  <img
+                    loading="lazy"
+                    src={`${process.env.REACT_APP_LOGO_IMG_URL}${content.logo}`}
+                    alt="cp logo"
+                    onError={onErrorLogo}
+                  />
+                  <p>{decode(content.cp)}</p>
+                </div>
+                <p className="title">{decode(content.title)}</p>
+              </div>
+              <div className="card__more">
+                <span id="publishedAt">{formatAgo(content.publishDate, locale)}</span>
+                <LikeButton idx={content.idx} />
+              </div>
+              <Background className={style.card__background} gradient={gradient} />
+            </article>
+          </React.Fragment>
+        ))}
+      </ContentWrap>
+    </StyleSheetManager>
   );
 });
 

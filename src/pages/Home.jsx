@@ -2,9 +2,12 @@ import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import { useAdContext } from 'context/AdContext';
+import AmazonAds from 'components/Ad/AmazonAds';
 import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
 import style from 'styles/Home.module.css';
+import GoogleAnalyticsTagManager from 'components/Ad/GoogleAnalyticsTagManager';
 
 /**
  * @TODOS
@@ -32,6 +35,8 @@ const Home = () => {
   const [renderData, setRenderData] = useState(null); // 렌더링할 data
   const [index, setIndex] = useState(0); // 현재 data index
   const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
@@ -103,8 +108,16 @@ const Home = () => {
     });
   }, [index]);
 
+  useEffect(() => {
+    if (footerRef.current) {
+      footerRef.current.style.paddingBottom = `${adHeight}px`;
+    }
+  }, [adHeight, footerRef.current]);
+
   return (
     <>
+      <GoogleAnalyticsTagManager />
+      <AmazonAds />
       <header className={style.header}>
         <hgroup className={style.logo}>
           <h1 onClick={handleClickLogo}>{t(`header.logo`)}</h1>
@@ -162,7 +175,7 @@ const Home = () => {
         </Suspense>
       </main>
 
-      <footer></footer>
+      <footer className={style.footer} ref={footerRef}></footer>
     </>
   );
 };

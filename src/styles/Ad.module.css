@@ -1,0 +1,20 @@
+.ad__anchor {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: transparent;
+  z-index: 100;
+
+  &.hide {
+    display: none;
+  }
+}
+
+.ad__anchor iframe {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

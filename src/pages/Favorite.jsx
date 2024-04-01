@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -6,6 +6,7 @@ import { useFavorite } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, NoStories, TypeD } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Favorite.module.css';
+import { useAdContext } from 'context/AdContext';
 
 const Favorite = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Favorite = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
 
   const handleCardClick = (idx) => {
     setData({ ...data, contents: data.contents.filter((content) => content.idx !== idx) });
@@ -47,6 +50,12 @@ const Favorite = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (footerRef.current) {
+      footerRef.current.style.paddingBottom = `${adHeight}px`;
+    }
+  }, [adHeight, footerRef.current]);
+
   if (loading || error) return <Loading />;
 
   return (
@@ -73,6 +82,8 @@ const Favorite = () => {
           </section>
         )}
       </main>
+
+      <footer ref={footerRef}></footer>
     </>
   );
 };
