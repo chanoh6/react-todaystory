@@ -5,6 +5,7 @@
   align-items: center;
   gap: 24px;
   padding: 36px 0;
+  background: linear-gradient(180deg, var(--color-white) 0%, var(--background-color) 100%);
   z-index: 1;
 }
 

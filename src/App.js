@@ -53,7 +53,7 @@ function App() {
           <FontWrapper lang={lang}>
             <ScrollToTop />
             <Outlet />
-            <AnchorAd />
+            {/* <AnchorAd /> */}
           </FontWrapper>
         </AdProvider>
       </APIProvider>

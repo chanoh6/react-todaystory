@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { useAdContext } from 'context/AdContext';
-import AmazonAds from 'components/Ad/AmazonAds';
 import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
 import style from 'styles/Home.module.css';
-import GoogleAnalyticsTagManager from 'components/Ad/GoogleAnalyticsTagManager';
+import AdScript from 'components/Ad/AdScript';
+import AnchorAd from 'components/Ad/AnchorAd';
 
 /**
  * @TODOS
@@ -116,8 +116,7 @@ const Home = () => {
 
   return (
     <>
-      <GoogleAnalyticsTagManager />
-      <AmazonAds />
+      <AdScript />
       <header className={style.header}>
         <hgroup className={style.logo}>
           <h1 onClick={handleClickLogo}>{t(`header.logo`)}</h1>

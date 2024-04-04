@@ -40,6 +40,20 @@ const AnchorAd = () => {
       window.googletag.display('div-gpt-ad-1573457886200-0');
     });
 
+    /*
+    window.browsitag.cmd.push(() => {
+      window.browsitag.display('div-gpt-ad-1573457886200-0', {
+        size: [
+          { w: 320, h: 50 },
+          { w: 320, h: 100 },
+        ],
+        adUnit: '/284705699/Samsung_life/Samsung_life_anchor',
+        disableViewabilityOptimization: false,
+        positionTag: 'adhesive',
+      });
+    });
+    */
+
     return () => {
       if (window.googletag && window.googletag.pubads()) {
         window.googletag.pubads().removeEventListener('slotRenderEnded', slotRenderEndedHandler);

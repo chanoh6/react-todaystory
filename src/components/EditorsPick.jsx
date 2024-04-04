@@ -13,15 +13,14 @@ import style from 'styles/EditorsPick.module.css';
 // styled-components: 컴포넌트 스타일링
 const ContentWrap = styled.div`
   background: ${(props) =>
-    props.gradient
-      ? `linear-gradient(to bottom, rgba(${props.gradient[0].join(', ')}, 0.4) 0%, rgba(${props.gradient[1].join(
-          ', ',
-        )}, 0.8) 100%)`
-      : 'none'};
+    props.gradient &&
+    `linear-gradient(to bottom, rgba(${props.gradient[0].join(', ')}, 0.4) 0%, rgba(${props.gradient[1].join(
+      ', ',
+    )}, 0.8) 100%)`};
 `;
 
 const Background = styled.div`
-  background-color: ${(props) => (props.gradient ? `rgba(${props.gradient[0].join(', ')}, 0.2)` : 'none')};
+  background-color: ${(props) => props.gradient && `rgba(${props.gradient[0].join(', ')}, 0.2)`};
 `;
 
 const EditorsPick = React.memo(() => {
@@ -78,6 +77,8 @@ const EditorsPick = React.memo(() => {
 
   useEffect(() => {
     if (!data) return;
+    // 개발 환경 적용
+    /*
     getGradient(data.contents[0].thumbnail).then((res) => {
       const base64Image = res;
       Vibrant.from(`data:image/jpeg;base64,${base64Image}`)
@@ -95,6 +96,24 @@ const EditorsPick = React.memo(() => {
           console.error('Failed to extract colors with Vibrant:', err);
         });
     });
+    */
+
+    // 도메인 변경시 적용
+    const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.contents[0].thumbnail}`;
+    Vibrant.from(imageURL)
+      .getPalette()
+      .then((palette) => {
+        let startColor = palette.LightMuted ? palette.LightMuted.getRgb() : palette.Vibrant.getRgb();
+        let endColor = palette.DarkMuted ? palette.DarkMuted.getRgb() : palette.Muted.getRgb();
+
+        startColor = startColor.map((color) => Math.round(color));
+        endColor = endColor.map((color) => Math.round(color));
+
+        setGradient([startColor, endColor]);
+      })
+      .catch((err) => {
+        console.error('Failed to extract colors with Vibrant:', err);
+      });
   }, [data]);
 
   if (loading || error || !data) return null;

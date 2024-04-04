@@ -30,6 +30,7 @@ const router = createBrowserRouter([
     path: process.env.PUBLIC_URL,
     children: [
       { index: true, element: <Home /> },
+      { path: 'index.html', element: <Home /> },
       { path: 'view/:contentId', element: <Story /> },
       { path: 'views/:contentId', element: <StoryTest /> },
       { path: 'category/:pageId', element: <Category /> },
