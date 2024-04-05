@@ -1,6 +1,7 @@
-import style from 'styles/PolicyPrivacy.module.css';
-import { CloseIcon } from 'assets';
 import { useNavigate } from 'react-router';
+import { CloseIcon } from 'assets';
+import style from 'styles/PolicyPrivacy.module.css';
+
 const ServiceEn = () => {
   const navigate = useNavigate();
   return (

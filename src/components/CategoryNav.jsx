@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -8,43 +9,34 @@ import 'swiper/css';
 import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
+const fetchCategory = async (api) => {
+  try {
+    const response = await api.category();
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const CategoryNav = React.memo(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
+
+  const { data, error, isLoading } = useQuery('category', () => fetchCategory(api), {
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
+    onError: (error) => console.error(error),
+  });
 
   const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_ICON);
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    setData(null);
-
-    try {
-      const res = await api.category();
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      } else {
-        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
-      }
-    });
-  }, []);
-
-  if (loading || error || !data) {
+  if (isLoading || error || !data) {
     return (
       <ul className={style.list__skeleton}>
         {new Array(10).fill(1).map((_, i) => (

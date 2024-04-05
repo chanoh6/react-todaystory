@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -6,44 +7,34 @@ import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
+const fetchRandomCategory = async (api, idx, page) => {
+  const size = getRandomCount();
+  try {
+    const response = await api.categoryStories(idx, page, size);
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const RandomCategory = React.memo((props) => {
   const { idx, name } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
 
-  // fetchData 함수: 랜덤 카테고리 스토리 데이터를 가져오는 함수
-  const fetchData = async () => {
-    const randomCount = getRandomCount();
-    setLoading(true);
-    setError(null);
-    setData(null);
-
-    try {
-      const res = await api.categoryStories(idx, 1, randomCount);
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      } else {
-        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
-      }
-    });
-  }, []);
+  const { data, error, isLoading } = useQuery(['randomCategoryStories', idx], () => fetchRandomCategory(api, idx, 1), {
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
+    onError: (error) => console.error(error),
+  });
 
   // if (loading || error || !data) return <StoriesSkeleton />;
-  if (loading || error || !data) return null;
+  if (isLoading || error || !data) return null;
 
   return (
     <>

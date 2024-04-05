@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import { useAdContext } from 'context/AdContext';
 import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/History.module.css';
-import { useAdContext } from 'context/AdContext';
 
 const History = () => {
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -6,42 +7,37 @@ import { NoStories, StoriesSkeleton, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
+const fetchCategoryStories = async (api, idx, page, size) => {
+  try {
+    const response = await api.categoryStories(idx, page, size);
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const CategoryStories = (props) => {
   const { idx, page } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
   const size = process.env.REACT_APP_CATEGORY_STORIES_SIZE;
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    setData(null);
+  const { data, error, isLoading } = useQuery(
+    ['categoryStories', idx],
+    () => fetchCategoryStories(api, idx, page, size),
+    {
+      keepPreviousData: true,
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 60 * 60 * 1000,
+      onError: (error) => console.error(error),
+    },
+  );
 
-    try {
-      const res = await api.categoryStories(idx, page, size);
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      } else {
-        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
-      }
-    });
-  }, []);
-
-  if (loading || error || !data) return <StoriesSkeleton />;
+  if (isLoading || error || !data) return <StoriesSkeleton />;
 
   return (
     <>

@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import { useAdContext } from 'context/AdContext';
 import { CardListSkeleton, Loading, MenuButton, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
-import { useAdContext } from 'context/AdContext';
 
 const Category = () => {
   const { state, pathname } = useLocation();

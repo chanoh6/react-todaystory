@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
@@ -23,34 +24,34 @@ const Background = styled.div`
   background-color: ${(props) => props.gradient && `rgba(${props.gradient[0].join(', ')}, 0.2)`};
 `;
 
+const fetchEditorsPick = async (api) => {
+  try {
+    const response = await api.editorsPick();
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const EditorsPick = React.memo(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
   const [gradient, setGradient] = useState(null);
   const locale = process.env.REACT_APP_LOCALE;
 
+  const { data, error, isLoading } = useQuery(['editorsPick'], () => fetchEditorsPick(api), {
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
+    onError: (error) => console.error(error),
+  });
+
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
-
-  // fetchData: API 호출
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    setData(null);
-
-    try {
-      const res = await api.editorsPick();
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Vibrant: 이미지 색상 추출
   const getGradient = async (url) => {
@@ -63,17 +64,6 @@ const EditorsPick = React.memo(() => {
       console.error(e);
     }
   };
-
-  // useEffect: 컴포넌트 렌더링 후 한 번만 실행
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      } else {
-        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
-      }
-    });
-  }, []);
 
   useEffect(() => {
     if (!data) return;
@@ -116,7 +106,7 @@ const EditorsPick = React.memo(() => {
       });
   }, [data]);
 
-  if (loading || error || !data) return null;
+  if (isLoading || error || !data) return null;
 
   return (
     <StyleSheetManager shouldForwardProp={(prop) => !['gradient'].includes(prop)}>

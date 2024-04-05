@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
+import { useQuery } from 'react-query';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +7,6 @@ import { useAPI } from 'context/APIContext';
 import { useAdContext } from 'context/AdContext';
 import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
-import { useStory } from 'hooks/useStories';
 import { getInstagramCode } from 'utils/instagram';
 import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
@@ -22,6 +22,18 @@ const CategoryStories = React.lazy(() => import('components/CategoryStories'));
  * 1. ? 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
  */
 
+const fetchStory = async (api, contentId) => {
+  try {
+    const response = await api.story(contentId);
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const Story = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,38 +42,21 @@ const Story = () => {
   const { contentId } = useParams();
   const { favorite, saveFavorite } = useFavorite(contentId);
   const { saveHistory } = useHistory();
-  const { loading, error, data } = useStory(contentId);
-  const {
-    categoryIdx,
-    category,
-    cpIdx,
-    cp,
-    logo,
-    thumbnail,
-    url,
-    title,
-    detail,
-    editor,
-    publishDate,
-    tag,
-    btnURL,
-    btnTitle,
-    noindex,
-    externalLink,
-  } = data;
-  const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${thumbnail}`;
-  const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL}${logo}`;
-  const keyword = tag && tag.split('#').filter(Boolean).join(', ');
-  const _title = decode(title);
-  const _cp = decode(cp);
-  const _category = decode(category);
-
-  const { adHeight } = useAdContext();
-  const footerRef = useRef(null);
+  let keyword;
 
   const moreMenuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+
+  const { adHeight } = useAdContext();
+  const footerRef = useRef(null);
+
+  const { data, error, isLoading } = useQuery(['story', contentId], () => fetchStory(api, contentId), {
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000, // 데이터가 5분 동안 새롭게 간주
+    cacheTime: 60 * 60 * 1000, // 데이터를 1시간 동안 캐시
+    onError: (error) => console.error(error),
+  });
 
   // 조회수 업데이트
   const updateViewCount = async (idx) => {
@@ -114,10 +109,15 @@ const Story = () => {
   };
 
   // contentId가 변경될 때마다 실행
-  useEffect(() => {
-    saveHistory(contentId);
-    updateViewCount(contentId);
-  }, [contentId]);
+  useEffect(
+    () => {
+      saveHistory(contentId);
+      updateViewCount(contentId);
+    },
+    [contentId],
+    saveHistory,
+    updateViewCount,
+  );
 
   // Instagram 임베드 스크립트 로드
   useEffect(() => {
@@ -150,25 +150,28 @@ const Story = () => {
     };
   }, [isOpen]);
 
+  // 광고 높이만큼 footer padding 설정
   useEffect(() => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
     }
   }, [adHeight, footerRef.current]);
 
-  if (loading || error) return <Loading />;
+  if (isLoading || error || !data) return <Loading />;
+
+  keyword = data.tag && data.tag.split('#').filter(Boolean).join(', ');
 
   return (
     <>
       <Helmet>
         <meta name="keywords" content={keyword} />
 
-        <meta property="og:title" content={`${t(`meta.title`)} - ${_title}`} />
-        <meta property="og:image" content={thumbnailURL} />
+        <meta property="og:title" content={`${t(`meta.title`)} - ${decode(data.title)}`} />
+        <meta property="og:image" content={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.thumbnail}`} />
         <meta property="og:url" content={`${process.env.REACT_APP_WEB_BASE_URL}${location.pathname}`} />
 
-        <meta name="twitter:title" content={`${t(`meta.title`)} - ${_title}`} />
-        <meta name="twitter:image" content={thumbnailURL} />
+        <meta name="twitter:title" content={`${t(`meta.title`)} - ${decode(data.title)}`} />
+        <meta name="twitter:image" content={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.thumbnail}`} />
 
         <script async src="https://www.instagram.com/embed.js" />
       </Helmet>
@@ -187,8 +190,12 @@ const Story = () => {
           </button>
         </nav>
 
-        <h1 onClick={() => navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } })}>
-          {_cp}
+        <h1
+          onClick={() =>
+            navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${data.cpIdx}`, { state: { title: data.cp } })
+          }
+        >
+          {decode(data.cp)}
         </h1>
 
         <nav className={style.header__btn}>
@@ -215,15 +222,15 @@ const Story = () => {
       ) : (
         <main>
           <section className={style.content__wrap}>
-            <h1 className={style.title}>{_title}</h1>
-            <p className={style.editor}>by {editor || cp}</p>
-            <p className={style.date}>{publishDate}</p>
+            <h1 className={style.title}>{decode(data.title)}</h1>
+            <p className={style.editor}>by {data.editor || data.cp}</p>
+            <p className={style.date}>{data.publishDate}</p>
 
             {/* <div className={style.content}>
-              <img src={thumbnailURL} alt="thumbnail" onError={onErrorImg} />
+              <img src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.thumbnail}`} alt="thumbnail" onError={onErrorImg} />
             </div> */}
 
-            {Object.keys(detail).map((key, index) => renderHtml(detail[key], index))}
+            {Object.keys(data.detail).map((key, index) => renderHtml(data.detail[key], index))}
 
             <div className={style.content__more}>
               <button
@@ -231,15 +238,20 @@ const Story = () => {
                 aria-label="more_button"
                 className={style.more}
                 onClick={() => {
-                  btnURL
-                    ? window.open(btnURL, '_blank')
-                    : navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${cpIdx}`, { state: { title: cp } });
+                  data.btnURL
+                    ? window.open(data.btnURL, '_blank')
+                    : navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${data.cpIdx}`, { state: { title: data.cp } });
                 }}
               >
                 <div className="cp">
-                  <img loading="lazy" src={logoURL} alt="cp logo" onError={onErrorLogo} />
+                  <img
+                    loading="lazy"
+                    src={`${process.env.REACT_APP_LOGO_IMG_URL}${data.logo}`}
+                    alt="cp logo"
+                    onError={onErrorLogo}
+                  />
                 </div>
-                <span>{btnTitle ? decode(btnTitle) : t(`detail.more-latest`, { channel: cp })}</span>
+                <span>{data.btnTitle ? decode(data.btnTitle) : t(`detail.more-latest`, { channel: data.cp })}</span>
                 <ArrowTopIcon style={{ rotate: '45deg' }} />
               </button>
             </div>
@@ -248,7 +260,7 @@ const Story = () => {
           <Suspense fallback={<StoriesSkeleton />}>
             <section className={style.category__wrap}>
               <p>{t(`detail.more-from`)}</p>
-              <ChannelStories idx={cpIdx} page={1} />
+              <ChannelStories idx={data.cpIdx} page={1} />
             </section>
 
             <section className={style.category__wrap}>
@@ -256,7 +268,7 @@ const Story = () => {
             </section>
 
             <section className={style.category__wrap}>
-              <CategoryStories idx={categoryIdx} page={1} />
+              <CategoryStories idx={data.categoryIdx} page={1} />
             </section>
           </Suspense>
         </main>

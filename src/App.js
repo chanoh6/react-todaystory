@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { APIProvider } from 'context/APIContext';
@@ -11,7 +12,10 @@ import 'styles/App.css';
 /**
  * @TODOS
  * 1. 전역 상태 관리 추가 (메뉴, 테마)
+ * 2. react-query 적용
  */
+
+const queryClient = new QueryClient();
 
 // FontWrapper: 언어별 폰트 설정
 const FontWrapper = styled.div`
@@ -29,34 +33,36 @@ function App() {
   // Outlet: 라우터 설정
   return (
     <>
-      <Helmet>
-        <noscript>{t(`meta.noscript`)}</noscript>
+      <QueryClientProvider client={queryClient}>
+        <Helmet>
+          <noscript>{t(`meta.noscript`)}</noscript>
 
-        <title>{t(`meta.title`)}</title>
-        <meta name="description" content={t(`meta.description`)} />
+          <title>{t(`meta.title`)}</title>
+          <meta name="description" content={t(`meta.description`)} />
 
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={t(`meta.title`)} />
-        <meta property="og:title" content={t(`meta.title`)} />
-        <meta property="og:description" content={t(`meta.description`)} />
-        <meta property="og:image" content="/assets/todaystory.png" />
-        <meta property="og:url" content={process.env.REACT_APP_WEB_BASE_URL} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={t(`meta.title`)} />
+          <meta property="og:title" content={t(`meta.title`)} />
+          <meta property="og:description" content={t(`meta.description`)} />
+          <meta property="og:image" content="/assets/todaystory.png" />
+          <meta property="og:url" content={process.env.REACT_APP_WEB_BASE_URL} />
 
-        <meta name="twitter:title" content={t(`meta.title`)} />
-        <meta name="twitter:description" content={t(`meta.description`)} />
-        <meta name="twitter:image" content="/assets/todaystory.png" />
-        <meta name="twitter:card" content={t(`meta.description`)} />
-      </Helmet>
+          <meta name="twitter:title" content={t(`meta.title`)} />
+          <meta name="twitter:description" content={t(`meta.description`)} />
+          <meta name="twitter:image" content="/assets/todaystory.png" />
+          <meta name="twitter:card" content={t(`meta.description`)} />
+        </Helmet>
 
-      <APIProvider>
-        <AdProvider>
-          <FontWrapper lang={lang}>
-            <ScrollToTop />
-            <Outlet />
-            {/* <AnchorAd /> */}
-          </FontWrapper>
-        </AdProvider>
-      </APIProvider>
+        <APIProvider>
+          <AdProvider>
+            <FontWrapper lang={lang}>
+              <ScrollToTop />
+              <Outlet />
+              {/* <AnchorAd /> */}
+            </FontWrapper>
+          </AdProvider>
+        </APIProvider>
+      </QueryClientProvider>
     </>
   );
 }

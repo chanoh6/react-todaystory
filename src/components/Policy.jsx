@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import style from 'styles/PolicyPrivacy.module.css';
-import { CloseIcon } from 'assets';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
+import { CloseIcon } from 'assets';
+import style from 'styles/PolicyPrivacy.module.css';
 
 const Policy = () => {
   const navigate = useNavigate();

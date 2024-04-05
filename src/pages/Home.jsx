@@ -16,13 +16,9 @@ import AnchorAd from 'components/Ad/AnchorAd';
  */
 
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
-// 상단 스토리
 const TopStories = React.lazy(() => import('components/TopStories'));
-// 베스트 스토리
 const BestStories = React.lazy(() => import('components/BestStories'));
-// 에디터 픽
 const EditorsPick = React.lazy(() => import('components/EditorsPick'));
-// 랜덤 카테고리
 const RandomCategory = React.lazy(() => import('components/RandomCategory'));
 
 const Home = () => {

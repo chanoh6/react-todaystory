@@ -1,43 +1,38 @@
+import React from 'react';
+import { useQuery } from 'react-query';
+import { useAPI } from 'context/APIContext';
 import { NoStories, StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
-import { useChannelStories } from 'hooks/useStories';
-import { useAPI } from 'context/APIContext';
-import { useEffect, useState } from 'react';
+
+const fetchChannelStories = async (api, idx, page, size) => {
+  try {
+    const response = await api.channelStories(idx, page, size);
+    if (response.code !== '0') {
+      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const ChannelStories = (props) => {
   const { idx, page } = props;
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
   const size = process.env.REACT_APP_CHANNEL_STORIES_SIZE;
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    setData(null);
+  const { data, error, isLoading } = useQuery(
+    ['channelStories', idx, page],
+    () => fetchChannelStories(api, idx, page, size),
+    {
+      keepPreviousData: true,
+      staleTime: 5 * 60 * 1000,
+      cacheTime: 60 * 60 * 1000,
+      onError: (error) => console.error(error),
+    },
+  );
 
-    try {
-      const res = await api.channelStories(idx, page, size);
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      } else {
-        console.log(`API error: ${res.msg[process.env.REACT_APP_LOCALE]}`);
-      }
-    });
-  }, []);
-
-  if (loading || error || !data) return <StoriesSkeleton />;
+  if (isLoading || error || !data) return <StoriesSkeleton />;
 
   return (
     <>
