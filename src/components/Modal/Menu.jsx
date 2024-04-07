@@ -9,24 +9,64 @@ import Modal from 'components/Modal/Modal';
 import style from 'styles/Menu.module.css';
 
 const fetchCategoryList = async (api) => {
+  const storageKey = `category`;
+  const storedData = localStorage.getItem(storageKey);
+  const now = new Date().getTime();
+
+  if (storedData) {
+    const { lastFetched, data } = JSON.parse(storedData);
+    const staleTime = 5 * 60 * 1000;
+
+    if (now - lastFetched < staleTime) {
+      return data;
+    }
+  }
+
   try {
     const response = await api.category();
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
-    return response.data;
+    const newData = response.data;
+    
+    localStorage.setItem(storageKey, JSON.stringify({
+      lastFetched: now,
+      data: newData
+    }));
+
+    return newData;
   } catch (error) {
     throw error;
   }
 };
 
 const fetchChannelList = async (api) => {
+  const storageKey = `channel`;
+  const storedData = localStorage.getItem(storageKey);
+  const now = new Date().getTime();
+
+  if (storedData) {
+    const { lastFetched, data } = JSON.parse(storedData);
+    const staleTime = 5 * 60 * 1000;
+
+    if (now - lastFetched < staleTime) {
+      return data;
+    }
+  }
+
   try {
     const response = await api.channel();
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
-    return response.data;
+    const newData = response.data;
+    
+    localStorage.setItem(storageKey, JSON.stringify({
+      lastFetched: now,
+      data: newData
+    }));
+
+    return newData;
   } catch (error) {
     throw error;
   }
@@ -42,17 +82,17 @@ const Menu = (props) => {
   const year = new Date().getFullYear();
   const menuRef = useRef();
 
-  const { data: categoryList } = useQuery(['categoryList'], () => fetchCategoryList(api), {
+  const { data: categoryList } = useQuery(['category'], () => fetchCategoryList(api), {
     keepPreviousData: true,
-    staleTime: 60 * 60 * 1000,
-    cacheTime: 24 * 60 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
     onError: (error) => console.error(error),
   });
 
-  const { data: channelList } = useQuery(['channelList'], () => fetchChannelList(api), {
+  const { data: channelList } = useQuery(['channel'], () => fetchChannelList(api), {
     keepPreviousData: true,
-    staleTime: 60 * 60 * 1000,
-    cacheTime: 24 * 60 * 60 * 1000,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 60 * 60 * 1000,
     onError: (error) => console.error(error),
   });
 

@@ -23,12 +23,32 @@ const CategoryStories = React.lazy(() => import('components/CategoryStories'));
  */
 
 const fetchStory = async (api, contentId) => {
+  const storageKey = `story-${contentId}`;
+  const storedData = localStorage.getItem(storageKey);
+  const now = new Date().getTime();
+
+  if (storedData) {
+    const { lastFetched, data } = JSON.parse(storedData);
+    const staleTime = 5 * 60 * 1000;
+
+    if (now - lastFetched < staleTime) {
+      return data;
+    }
+  }
+
   try {
     const response = await api.story(contentId);
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
-    return response.data;
+    const newData = response.data;
+    
+    localStorage.setItem(storageKey, JSON.stringify({
+      lastFetched: now,
+      data: newData
+    }));
+
+    return newData;
   } catch (error) {
     throw error;
   }
@@ -114,9 +134,7 @@ const Story = () => {
       saveHistory(contentId);
       updateViewCount(contentId);
     },
-    [contentId],
-    saveHistory,
-    updateViewCount,
+    [contentId]
   );
 
   // Instagram 임베드 스크립트 로드
@@ -155,7 +173,7 @@ const Story = () => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
     }
-  }, [adHeight, footerRef.current]);
+  }, [adHeight, footerRef]);
 
   if (isLoading || error || !data) return <Loading />;
 

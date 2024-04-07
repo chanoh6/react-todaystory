@@ -10,12 +10,32 @@ import style from 'styles/CategoryNav.module.css';
 import Skeleton from 'react-loading-skeleton';
 
 const fetchCategory = async (api) => {
+  const storageKey = `category`;
+  const storedData = localStorage.getItem(storageKey);
+  const now = new Date().getTime();
+
+  if (storedData) {
+    const { lastFetched, data } = JSON.parse(storedData);
+    const staleTime = 5 * 60 * 1000;
+
+    if (now - lastFetched < staleTime) {
+      return data;
+    }
+  }
+
   try {
     const response = await api.category();
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
-    return response.data;
+    const newData = response.data;
+    
+    localStorage.setItem(storageKey, JSON.stringify({
+      lastFetched: now,
+      data: newData
+    }));
+
+    return newData;
   } catch (error) {
     throw error;
   }
