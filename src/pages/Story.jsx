@@ -17,11 +17,6 @@ const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
 const CategoryStories = React.lazy(() => import('components/CategoryStories'));
 
-/**
- * @TODOS
- * 1. ? 스크롤 아래로 향하면 헤더 숨김, 스크롤 위로 향하면 헤더 표시
- */
-
 const fetchStory = async (api, contentId) => {
   const storageKey = `story-${contentId}`;
   const storedData = localStorage.getItem(storageKey);
@@ -42,11 +37,14 @@ const fetchStory = async (api, contentId) => {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
     const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        lastFetched: now,
+        data: newData,
+      }),
+    );
 
     return newData;
   } catch (error) {
@@ -55,21 +53,19 @@ const fetchStory = async (api, contentId) => {
 };
 
 const Story = () => {
+  const { contentId } = useParams();
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const { api } = useAPI();
-  const { t } = useTranslation();
-  const { contentId } = useParams();
-  const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory();
-  let keyword;
-
-  const moreMenuRef = useRef(null);
+  const { adHeight } = useAdContext();
   const [isOpen, setIsOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
-
-  const { adHeight } = useAdContext();
+  const { favorite, saveFavorite } = useFavorite(contentId);
+  const { saveHistory } = useHistory();
+  const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
+  let keyword;
 
   const { data, error, isLoading } = useQuery(['story', contentId], () => fetchStory(api, contentId), {
     keepPreviousData: true,
@@ -77,6 +73,9 @@ const Story = () => {
     cacheTime: 60 * 60 * 1000, // 데이터를 1시간 동안 캐시
     onError: (error) => console.error(error),
   });
+
+  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   // 조회수 업데이트
   const updateViewCount = async (idx) => {
@@ -88,12 +87,40 @@ const Story = () => {
     }
   };
 
-  const handleMoreMenu = () => setIsOpen(!isOpen);
-  const handleShareMenu = () => setShareOpen(!shareOpen);
+  // 더보기수 업데이트
+  const updateMoreCount = async (idx) => {
+    try {
+      const res = await api.updateMoreCount(idx);
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
-  // useRef?
-  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+  // 뒤로가기 버튼 클릭
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  // 더보기 메뉴 클릭
+  const handleMoreMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // 공유 버튼 클릭
+  const handleShareMenu = () => {
+    setShareOpen(!shareOpen);
+  };
+
+  // 더보기 버튼 클릭
+  const handleMoreButton = () => {
+    updateMoreCount(contentId);
+    if (data.btnURL) {
+      window.open(data.btnURL, '_blank');
+    } else {
+      navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${data.cpIdx}`, { state: { title: data.cp } });
+    }
+  };
 
   // 본문 내용 렌더링
   const renderHtml = (html, index) => {
@@ -129,13 +156,10 @@ const Story = () => {
   };
 
   // contentId가 변경될 때마다 실행
-  useEffect(
-    () => {
-      saveHistory(contentId);
-      updateViewCount(contentId);
-    },
-    [contentId]
-  );
+  useEffect(() => {
+    saveHistory(contentId);
+    updateViewCount(contentId);
+  }, [contentId]);
 
   // Instagram 임베드 스크립트 로드
   useEffect(() => {
@@ -196,7 +220,7 @@ const Story = () => {
 
       <header className={style.header}>
         <nav className={style.header__btn}>
-          <button type="button" aria-label="back_button" className={style.icon} onClick={() => navigate(-1)}>
+          <button type="button" aria-label="back_button" className={style.icon} onClick={handleBack}>
             <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
           </button>
           <button type="button" aria-label="like_button" className={style.icon} onClick={saveFavorite}>
@@ -244,23 +268,10 @@ const Story = () => {
             <p className={style.editor}>by {data.editor || data.cp}</p>
             <p className={style.date}>{data.publishDate}</p>
 
-            {/* <div className={style.content}>
-              <img src={`${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.thumbnail}`} alt="thumbnail" onError={onErrorImg} />
-            </div> */}
-
             {Object.keys(data.detail).map((key, index) => renderHtml(data.detail[key], index))}
 
             <div className={style.content__more}>
-              <button
-                type="button"
-                aria-label="more_button"
-                className={style.more}
-                onClick={() => {
-                  data.btnURL
-                    ? window.open(data.btnURL, '_blank')
-                    : navigate(`${process.env.REACT_APP_WEB_CHANNEL_URL}${data.cpIdx}`, { state: { title: data.cp } });
-                }}
-              >
+              <button type="button" aria-label="more_button" className={style.more} onClick={handleMoreButton}>
                 <div className="cp">
                   <img
                     loading="lazy"

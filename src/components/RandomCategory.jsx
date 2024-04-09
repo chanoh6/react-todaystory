@@ -8,7 +8,7 @@ import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
 const fetchRandomCategory = async (api, idx, page) => {
-  const storageKey = `randomCategoryStories-${idx}`;
+  const storageKey = `categoryStories-${idx}-${page}`;
   const storedData = localStorage.getItem(storageKey);
   const now = new Date().getTime();
 
@@ -21,18 +21,20 @@ const fetchRandomCategory = async (api, idx, page) => {
     }
   }
 
-  const size = getRandomCount();
   try {
-    const response = await api.categoryStories(idx, page, size);
+    const response = await api.categoryStories(idx, page, 10);
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
     const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        lastFetched: now,
+        data: newData,
+      }),
+    );
 
     return newData;
   } catch (error) {
@@ -87,16 +89,19 @@ const getRandomCount = () => Math.floor(Math.random() * (5 - 3 + 1)) + 3;
 
 // getRandomComponents 함수: contents 배열을 받아서 랜덤한 컴포넌트 배열을 반환
 const getRandomComponents = (contents) => {
+  if (contents.length === 0) return null;
+
+  const size = getRandomCount();
   const components = [];
   let typeCStarted = false;
 
-  for (let i = 0; i < contents.length; i++) {
+  for (let i = 0; i < size; i++) {
     const content = contents[i];
 
     // if (i === 0 && Math.random() < 0.5 && !typeCStarted) {
     if (i === 0 && !typeCStarted) {
       components.push(<TypeA key={i} content={content} />);
-    } else if (i < contents.length - 1 && Math.random() < 0.5 && !typeCStarted) {
+    } else if (i < size - 1 && Math.random() < 0.5 && !typeCStarted) {
       components.push(<TypeB key={i} content={content} />);
       components.push(<TypeB key={i + 1} content={contents[i + 1]} />);
       i += 1;

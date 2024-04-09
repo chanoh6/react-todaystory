@@ -69,6 +69,16 @@ class APIService2 {
     // data: idx
     return this.fetchData(process.env.REACT_APP_API_VIEW_COUNT_URL, 'post', {}, data);
   }
+
+  async updateLikeCount(data) {
+    // data: idx
+    return this.fetchData(process.env.REACT_APP_API_LIKE_COUNT_URL, 'post', {}, data);
+  }
+
+  async updateMoreCount(data) {
+    // data: idx
+    return this.fetchData(process.env.REACT_APP_API_MORE_COUNT_URL, 'post', {}, data);
+  }
 }
 
 export default APIService2;

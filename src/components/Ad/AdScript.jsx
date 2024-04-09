@@ -20,6 +20,7 @@ function AdScript() {
     document.head.appendChild(pubmaticScript);
 
     // Browsi 스크립트 추가
+    /*
     const browsiScript = document.createElement('script');
     browsiScript.src = 'https://cdn.browsiprod.com/bootstrap/bootstrap.js';
     browsiScript.async = true;
@@ -35,6 +36,7 @@ function AdScript() {
       window.browsitag.cmd = window.browsitag.cmd || [];
     `;
     document.body.appendChild(browsiInitScript);
+    */
 
     // Amazon Ads 스크립트 추가
     const amazonScript = document.createElement('script');
@@ -66,7 +68,7 @@ function AdScript() {
 
     return () => {
       document.head.removeChild(pubmaticScript);
-      document.body.removeChild(browsiScript);
+      // document.body.removeChild(browsiScript);
       document.head.removeChild(amazonScript);
       // Google Tag Manager or Analytics 스크립트를 제거하는 명확한 방법이 없기 때문에, 이 부분은 생략합니다.
       // 해당 스크립트들은 페이지 네비게이션이 일어날 때 자동으로 새 페이지 컨텍스트에 맞게 재로딩 됩니다.

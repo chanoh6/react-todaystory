@@ -8,7 +8,7 @@ import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 
 const fetchCategoryStories = async (api, idx, page, size) => {
-  const storageKey = `categoryStories-${idx}`;
+  const storageKey = `categoryStories-${idx}-${page}`;
   const storedData = localStorage.getItem(storageKey);
   const now = new Date().getTime();
 
@@ -22,16 +22,19 @@ const fetchCategoryStories = async (api, idx, page, size) => {
   }
 
   try {
-    const response = await api.categoryStories(idx, page, size);
+    const response = await api.categoryStories(idx, page, 10);
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
     const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        lastFetched: now,
+        data: newData,
+      }),
+    );
 
     return newData;
   } catch (error) {
@@ -78,7 +81,7 @@ const CategoryStories = (props) => {
         </button>
       </div>
       <ul className={style.list}>
-        {data.contents.map((content, i) => (
+        {data.contents.slice(0, size).map((content, i) => (
           <TypeC key={i} content={content} />
         ))}
       </ul>

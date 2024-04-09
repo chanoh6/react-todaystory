@@ -51,6 +51,14 @@ class API {
     return this.apiClient.updateViewCount(idx).then((res) => res.data);
   }
 
+  async updateLikeCount(idx) {
+    return this.apiClient.updateLikeCount(idx).then((res) => res.data);
+  }
+
+  async updateMoreCount(idx) {
+    return this.apiClient.updateMoreCount(idx).then((res) => res.data);
+  }
+
   async imageLoad(url) {
     return this.apiClient.imageLoad(url).then((res) => res.data);
   }

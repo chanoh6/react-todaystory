@@ -63,6 +63,14 @@ class APIClient {
     return this.httpClient.post(process.env.REACT_APP_API_VIEW_COUNT_URL, { idx });
   }
 
+  async updateLikeCount(idx) {
+    return this.httpClient.post(process.env.REACT_APP_API_LIKE_COUNT_URL, { idx });
+  }
+
+  async updateMoreCount(idx) {
+    return this.httpClient.post(process.env.REACT_APP_API_MORE_COUNT_URL, { idx });
+  }
+
   async imageLoad(url) {
     return this.httpClient.post(process.env.REACT_APP_API_IMAGE_URL, { url });
   }
