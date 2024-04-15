@@ -3,17 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { useAdContext } from 'context/AdContext';
+import useFetchData from 'hooks/useFetchData';
 import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
-import style from 'styles/Home.module.css';
 import AdScript from 'components/Ad/AdScript';
 import AnchorAd from 'components/Ad/AnchorAd';
-
-/**
- * @TODOS
- * 1. footer 추가
- * 2. 아이콘 통합 정리
- */
+import style from 'styles/Home.module.css';
 
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
 const TopStories = React.lazy(() => import('components/TopStories'));
@@ -25,12 +20,15 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-  const [renderData, setRenderData] = useState(null); // 렌더링할 data
-  const [index, setIndex] = useState(0); // 현재 data index
-  const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  // 홈 데이터
+  const { data, error, isLoading } = useFetchData(() => api.home(), 'home');
+  // 렌더링할 데이터
+  const [renderData, setRenderData] = useState(null);
+  // 현재 데이터 인덱스
+  const [index, setIndex] = useState(0);
+  // 더 불러올 데이터가 있는지 여부
+  const [hasMore, setHasMore] = useState(true);
+  // 광고 높이
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
   const date = t(`header.date`, {
@@ -44,27 +42,31 @@ const Home = () => {
   // 로고 클릭시 홈으로 이동
   const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
 
-  // 운세 클릭시 새창으로 이동
+  // 운세 클릭시 새 창으로 이동
   const handleClickFortune = () => window.open('http://s.sazoo.com/fortune/tarot.html');
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const res = await api.home();
-      return res;
-    } catch (e) {
-      setError(e);
-    } finally {
-      setLoading(false);
+  // 콘텐츠 타입에 따라 렌더링할 컴포넌트 반환
+  const getContent = (item) => {
+    switch (item.type) {
+      case '1001':
+        return <TopStories />;
+      case '1002':
+        bestStoriesCount += 1;
+        return <BestStories page={bestStoriesCount} />;
+      case '1003':
+        return <EditorsPick comment={item.data} />;
+      case '1004':
+        return <RandomCategory idx={item.data} name={item.name} />;
+      default:
+        return null;
     }
   };
 
+  // 무한 스크롤 기능
   const observer = useRef();
   const lastItemRef = useCallback(
     (node) => {
-      if (loading || !hasMore) return;
+      if (isLoading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
@@ -75,35 +77,28 @@ const Home = () => {
 
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore],
+    [isLoading, hasMore],
   );
 
-  // API 호출 및 초기 data 세팅
-  useEffect(() => {
-    fetchData().then((res) => {
-      if (res.code === '0') {
-        setData(res.data);
-      }
-    });
-  }, []);
-
+  // 데이터 변경 시 렌더링 데이터 업데이트
   useEffect(() => {
     if (!data) return;
-    setIndex(0);
     setRenderData([data[0]]);
   }, [data]);
 
+  // 인덱스 변경 시 렌더링 데이터 업데이트
   useEffect(() => {
     if (!data) return;
 
     index >= data.length ? setHasMore(false) : setHasMore(true);
 
     setRenderData((prev) => {
-      if (!prev) return [data.slice(0, index)];
+      if (!prev || index === 0) return [data[0]];
       return [...prev, ...data.slice(index, index + 1)];
     });
   }, [index]);
 
+  // 광고 높이만큼 footer padding 추가
   useEffect(() => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
@@ -147,21 +142,7 @@ const Home = () => {
                   }
                   `}
                 >
-                  {(() => {
-                    switch (item.type) {
-                      case '1001':
-                        return <TopStories />;
-                      case '1002':
-                        bestStoriesCount += 1;
-                        return <BestStories page={bestStoriesCount} />;
-                      case '1003':
-                        return <EditorsPick comment={item.data} />;
-                      case '1004':
-                        return <RandomCategory idx={item.data} name={item.name} />;
-                      default:
-                        return null;
-                    }
-                  })()}
+                  {getContent(item)}
                 </section>
               ))}
               {hasMore && <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>}
@@ -170,7 +151,9 @@ const Home = () => {
         </Suspense>
       </main>
 
-      <footer className={style.footer} ref={footerRef}></footer>
+      <footer className={style.footer} ref={footerRef}>
+        {/* <AnchorAd /> */}
+      </footer>
     </>
   );
 };

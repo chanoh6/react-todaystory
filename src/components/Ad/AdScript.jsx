@@ -5,7 +5,7 @@ function AdScript() {
     // Pubmatic 스크립트 추가
     const pubmaticScript = document.createElement('script');
     const purl = window.location.href;
-    let url = '//ads.pubmatic.com/AdServer/js/pwt/159369/2340';
+    let url = '//ads.pubmatic.com/AdServer/js/pwt/159369/2845';
     let profileVersionId = '';
     if (purl.indexOf('pwtv=') > 0) {
       const regexp = /pwtv=(.*?)(\&|$)/g;

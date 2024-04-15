@@ -8,6 +8,7 @@ import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Category.module.css';
 
 const Channel = () => {
+  const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
   const { state, pathname } = useLocation();
   const { pageId } = useParams();
   const navigate = useNavigate();
@@ -16,12 +17,17 @@ const Channel = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [page, setPage] = useState(1); // 현재 페이지
-  const [hasMore, setHasMore] = useState(true); // 더 불러올 데이터가 있는지 여부
+  // 현재 페이지
+  const [page, setPage] = useState(1);
+  // 더 불러올 데이터가 있는지 여부
+  const [hasMore, setHasMore] = useState(true);
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
-  const size = process.env.REACT_APP_INFINITY_SCROLL_SIZE;
 
+  // 뒤로가기 버튼 클릭
+  const handleBack = () => navigate(-1);
+
+  // 무한 스크롤 기능
   const observer = useRef();
   const lastItemRef = useCallback(
     (node) => {
@@ -39,6 +45,7 @@ const Channel = () => {
     [loading, hasMore],
   );
 
+  // API 호출 함수
   const fetchData = async (idx, page, size) => {
     setLoading(true);
     setError(null);
@@ -53,6 +60,7 @@ const Channel = () => {
     }
   };
 
+  // 페이지 이동 시 데이터 초기화
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -62,11 +70,13 @@ const Channel = () => {
     fetchData(pageId, 1, size).then((res) => {
       if (res.code === '0') {
         setData(res.data);
-        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+        // 받아올 데이터가 더 있는지 확인
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false);
       }
     });
   }, [pageId, pathname]);
 
+  // 무한 스크롤 시 데이터 추가 호출
   useEffect(() => {
     if (page === 1) return;
     fetchData(pageId, page, size).then((res) => {
@@ -75,12 +85,13 @@ const Channel = () => {
           if (!prev) return res.data;
           return { ...prev, contents: [...prev.contents, ...res.data.contents] };
         });
-
-        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false); // 받아온 데이터가 더 있는지 확인
+        // 받아올 데이터가 더 있는지 확인
+        res.data.contents.length >= size ? setHasMore(true) : setHasMore(false);
       }
     });
   }, [page]);
 
+  // 광고 높이만큼 footer padding 추가
   useEffect(() => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
@@ -93,7 +104,7 @@ const Channel = () => {
   return (
     <>
       <header className={style.header}>
-        <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
+        <button type="button" aria-label="back_button" onClick={handleBack}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{state?.title ?? data.cp ?? ''}</h1>

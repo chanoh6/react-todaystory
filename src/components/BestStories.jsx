@@ -1,57 +1,17 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import useFetchData from 'hooks/useFetchData';
 import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
-const fetchBestStories = async (api, page, size) => {
-  const storageKey = `bestStories-${page}`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.bestStories(page, size);
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-    const newData = response.data;
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        lastFetched: now,
-        data: newData,
-      }),
-    );
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const BestStories = React.memo((props) => {
+  const size = process.env.REACT_APP_BEST_STORIES_SIZE;
   const { page } = props;
   const { t } = useTranslation();
   const { api } = useAPI();
-  const size = process.env.REACT_APP_BEST_STORIES_SIZE;
-
-  const { data, error, isLoading } = useQuery(['bestStories', page], () => fetchBestStories(api, page, size), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 60 * 60 * 1000,
-    onError: (error) => console.error(error),
-  });
+  // 베스트스토리 데이터
+  const { data, error, isLoading } = useFetchData(() => api.bestStories(page, size), `bestStories-${page}`);
 
   if (isLoading || error || !data) return <StoriesSkeleton />;
 

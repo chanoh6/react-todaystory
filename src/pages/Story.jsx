@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { useAdContext } from 'context/AdContext';
+import useFetchData from 'hooks/useFetchData';
 import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { getInstagramCode } from 'utils/instagram';
@@ -12,45 +13,12 @@ import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'c
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
+import AdScript from 'components/Ad/AdScript';
+import AnchorAd from 'components/Ad/AnchorAd';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
 const CategoryStories = React.lazy(() => import('components/CategoryStories'));
-
-const fetchStory = async (api, contentId) => {
-  const storageKey = `story-${contentId}`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.story(contentId);
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-    const newData = response.data;
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        lastFetched: now,
-        data: newData,
-      }),
-    );
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
 
 const Story = () => {
   const { contentId } = useParams();
@@ -58,22 +26,18 @@ const Story = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { api } = useAPI();
+  // 상세 스토리 데이터
+  const { data, error, isLoading } = useFetchData(() => api.story(contentId), `story-${contentId}`);
+  const [keyword, setKeyword] = useState('');
   const { adHeight } = useAdContext();
-  const [isOpen, setIsOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const { favorite, saveFavorite } = useFavorite(contentId);
   const { saveHistory } = useHistory();
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
-  let keyword;
 
-  const { data, error, isLoading } = useQuery(['story', contentId], () => fetchStory(api, contentId), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000, // 데이터가 5분 동안 새롭게 간주
-    cacheTime: 60 * 60 * 1000, // 데이터를 1시간 동안 캐시
-    onError: (error) => console.error(error),
-  });
-
+  // 이미지 로딩 실패 시 대체 이미지로 교체
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
@@ -98,19 +62,13 @@ const Story = () => {
   };
 
   // 뒤로가기 버튼 클릭
-  const handleBack = () => {
-    navigate(-1);
-  };
+  const handleBack = () => navigate(-1);
 
   // 더보기 메뉴 클릭
-  const handleMoreMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleMoreMenu = () => setMoreOpen(!moreOpen);
 
   // 공유 버튼 클릭
-  const handleShareMenu = () => {
-    setShareOpen(!shareOpen);
-  };
+  const handleShareMenu = () => setShareOpen(!shareOpen);
 
   // 더보기 버튼 클릭
   const handleMoreButton = () => {
@@ -161,10 +119,15 @@ const Story = () => {
     updateViewCount(contentId);
   }, [contentId]);
 
-  // Instagram 임베드 스크립트 로드
+  // keyword 설정 및 Instagram 임베드 스크립트 로드
   useEffect(() => {
-    if (data && window.instgrm) {
-      // instrgrm이 정의되어 있으면 Instagram 임베드 스크립트 실행
+    if (!data) return;
+
+    // 태그가 있으면 '#'을 제거하고 콤마로 구분하여 키워드에 저장
+    setKeyword(data.tag && data.tag.split('#').filter(Boolean).join(', '));
+
+    // instrgrm이 정의되어 있으면 Instagram 임베드 스크립트 실행
+    if (window.instgrm) {
       window.instgrm?.Embeds?.process();
     }
   }, [data]);
@@ -172,14 +135,14 @@ const Story = () => {
   //모달창 바깥 영역 클릭시 닫힘
   useEffect(() => {
     const handleClick = (e) => {
-      if (isOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
-        setIsOpen(false);
+      if (moreOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
+        setMoreOpen(false);
       }
     };
 
     const handleTouchMove = (e) => {
-      if (isOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
-        setIsOpen(false);
+      if (moreOpen && moreMenuRef.current && !moreMenuRef.current.contains(e.target)) {
+        setMoreOpen(false);
       }
     };
 
@@ -190,7 +153,7 @@ const Story = () => {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('touchmove', handleTouchMove);
     };
-  }, [isOpen]);
+  }, [moreOpen]);
 
   // 광고 높이만큼 footer padding 설정
   useEffect(() => {
@@ -200,8 +163,6 @@ const Story = () => {
   }, [adHeight, footerRef]);
 
   if (isLoading || error || !data) return <Loading />;
-
-  keyword = data.tag && data.tag.split('#').filter(Boolean).join(', ');
 
   return (
     <>
@@ -218,6 +179,7 @@ const Story = () => {
         <script async src="https://www.instagram.com/embed.js" />
       </Helmet>
 
+      <AdScript />
       <header className={style.header}>
         <nav className={style.header__btn}>
           <button type="button" aria-label="back_button" className={style.icon} onClick={handleBack}>
@@ -247,7 +209,7 @@ const Story = () => {
           <button
             type="button"
             aria-label="more_button"
-            className={`${style.icon} ${isOpen ? style.active : ''}`}
+            className={`${style.icon} ${moreOpen ? style.active : ''}`}
             ref={moreMenuRef}
             onClick={handleMoreMenu}
           >
@@ -255,9 +217,6 @@ const Story = () => {
           </button>
         </nav>
       </header>
-
-      {isOpen && <MoreMenu contents={data} />}
-      {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
 
       {!data ? (
         <StorySkeleton />
@@ -303,7 +262,10 @@ const Story = () => {
         </main>
       )}
 
-      <footer ref={footerRef}></footer>
+      <footer ref={footerRef}>{/* <AnchorAd /> */}</footer>
+
+      {moreOpen && <MoreMenu contents={data} />}
+      {shareOpen && <ShareModal contents={data} onClose={handleShareMenu} />}
     </>
   );
 };

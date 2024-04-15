@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAPI } from 'context/APIContext';
+import useFetchData from 'hooks/useFetchData';
 import { decode } from 'html-entities';
 import { formatAgo } from 'utils/date';
 import Vibrant from 'node-vibrant';
@@ -24,55 +24,22 @@ const Background = styled.div`
   background-color: ${(props) => props.gradient && `rgba(${props.gradient[0].join(', ')}, 0.2)`};
 `;
 
-const fetchEditorsPick = async (api) => {
-  const storageKey = `editorsPick`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.editorsPick();
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-    const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const EditorsPick = React.memo(() => {
+  const locale = process.env.REACT_APP_LOCALE;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
+  // 배경 그라데이션 데이터
   const [gradient, setGradient] = useState(null);
-  const locale = process.env.REACT_APP_LOCALE;
+  // 에디터픽 데이터
+  const { data, error, isLoading } = useFetchData(() => api.editorsPick(), 'editorsPick');
 
-  const { data, error, isLoading } = useQuery(['editorsPick'], () => fetchEditorsPick(api), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 60 * 60 * 1000,
-    onError: (error) => console.error(error),
-  });
-
+  // 이미지 로딩 실패시 대체 이미지 적용
   const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
+  // 개발 환경 적용
+  /*
   // Vibrant: 이미지 색상 추출
   const getGradient = async (url) => {
     const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${url}`;
@@ -87,8 +54,6 @@ const EditorsPick = React.memo(() => {
 
   useEffect(() => {
     if (!data) return;
-    // 개발 환경 적용
-    /*
     getGradient(data.contents[0].thumbnail).then((res) => {
       const base64Image = res;
       Vibrant.from(`data:image/jpeg;base64,${base64Image}`)
@@ -106,10 +71,15 @@ const EditorsPick = React.memo(() => {
           console.error('Failed to extract colors with Vibrant:', err);
         });
     });
-    */
+  }, [data]);
+  */
 
-    // 도메인 변경시 적용
+  // 도메인 변경시 적용
+  useEffect(() => {
+    if (!data) return;
+
     const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.contents[0].thumbnail}`;
+
     Vibrant.from(imageURL)
       .getPalette()
       .then((palette) => {

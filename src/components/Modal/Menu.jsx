@@ -1,105 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
-import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
+import useFetchData from 'hooks/useFetchData';
 import { decode } from 'html-entities';
 import Modal from 'components/Modal/Modal';
+import { CloseIcon, LikeFilledIcon, ArrowRightIcon, HistoryIcon } from 'assets';
 import style from 'styles/Menu.module.css';
 
-const fetchCategoryList = async (api) => {
-  const storageKey = `category`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.category();
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-    const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
-
-const fetchChannelList = async (api) => {
-  const storageKey = `channel`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.channel();
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-    const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
-
 const Menu = (props) => {
+  const year = new Date().getFullYear();
   const { onClose } = props;
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
   const [showCategory, setShowCategory] = useState(false);
   const [showChannel, setShowChannel] = useState(false);
-  const year = new Date().getFullYear();
   const menuRef = useRef();
+  // 카테고리 데이터
+  const { data: categoryList } = useFetchData(() => api.category(), 'category');
+  // 채널 데이터
+  const { data: channelList } = useFetchData(() => api.channel(), 'channel');
 
-  const { data: categoryList } = useQuery(['category'], () => fetchCategoryList(api), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 60 * 60 * 1000,
-    onError: (error) => console.error(error),
-  });
+  // 이미지 로딩 실패시 대체 이미지 적용
+  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
-  const { data: channelList } = useQuery(['channel'], () => fetchChannelList(api), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 60 * 60 * 1000,
-    onError: (error) => console.error(error),
-  });
-
+  // 메뉴 닫기
   const handleClose = () => {
     onClose?.();
   };
 
+  // 페이지 이동 시 메뉴 닫기
   const handleNavigate = (url, title = '') => {
     navigate(url, {
       state: { title },
@@ -109,12 +41,14 @@ const Menu = (props) => {
     }, 100);
   };
 
+  // vh 단위 계산
   const setScreenSize = () => {
     let vh = 0;
     vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   };
 
+  // 화면 크기 변경 시 vh 단위 계산
   useEffect(() => {
     setScreenSize();
 
@@ -124,6 +58,7 @@ const Menu = (props) => {
     };
   }, []);
 
+  // 메뉴 높이 계산
   useEffect(() => {
     const menuHeight = menuRef.current.offsetHeight;
     menuRef.current.style.setProperty('height', `${menuHeight}px`);
@@ -135,9 +70,6 @@ const Menu = (props) => {
     // 다닫히는 액션
   }, [isMenuOpen]); 
   */
-
-  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   return (
     <Modal>

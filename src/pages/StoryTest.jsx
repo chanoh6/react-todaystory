@@ -14,6 +14,7 @@ const StoryTest = () => {
       setData(res);
       setLoading(false);
     });
+
     // const fetchData = async () => {
     //   try {
     //     const res = await apiService.topStories({ size: 6 });

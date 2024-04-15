@@ -6,7 +6,6 @@ import { APIProvider } from 'context/APIContext';
 import { AdProvider } from 'context/AdContext';
 import { styled } from 'styled-components';
 import { ScrollToTop } from 'components';
-import AnchorAd from 'components/Ad/AnchorAd';
 import 'styles/App.css';
 
 /**
@@ -58,7 +57,6 @@ function App() {
             <FontWrapper lang={lang}>
               <ScrollToTop />
               <Outlet />
-              {/* <AnchorAd /> */}
             </FontWrapper>
           </AdProvider>
         </APIProvider>

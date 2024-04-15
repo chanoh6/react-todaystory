@@ -21,15 +21,20 @@ const fetchTopStories = async (api, size) => {
 
   try {
     const response = await api.topStories(size);
+
     if (response.code !== '0') {
       throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
     }
+
     const newData = response.data;
-    
-    localStorage.setItem(storageKey, JSON.stringify({
-      lastFetched: now,
-      data: newData
-    }));
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        lastFetched: now,
+        data: newData,
+      }),
+    );
 
     return newData;
   } catch (error) {
