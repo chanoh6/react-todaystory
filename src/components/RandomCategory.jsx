@@ -22,7 +22,7 @@ const RandomCategory = React.memo((props) => {
     <>
       <div className={style.content__title}>
         <h1 className={style.title} style={{ color: data.color }}>
-          {name ?? data.category}
+          {name || data.category}
         </h1>
         <button
           type="button"

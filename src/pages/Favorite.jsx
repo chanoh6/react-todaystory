@@ -19,9 +19,12 @@ const Favorite = () => {
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
 
-  const handleCardClick = (idx) => {
+  // 뒤로가기 버튼 클릭
+  const handleBack = () => navigate(-1);
+
+  // 카드 클릭시 즐겨찾기 해제
+  const handleCardClick = (idx) =>
     setData({ ...data, contents: data.contents.filter((content) => content.idx !== idx) });
-  };
 
   const fetchData = async (idxList) => {
     setLoading(true);
@@ -61,7 +64,7 @@ const Favorite = () => {
   return (
     <>
       <header className={style.header}>
-        <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
+        <button type="button" aria-label="back_button" onClick={handleBack}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{t(`menu.favorites`)}</h1>

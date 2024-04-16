@@ -19,6 +19,10 @@ const History = () => {
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
 
+  // 뒤로가기 버튼 클릭
+  const handleBack = () => navigate(-1);
+
+  // 클리어 버튼 클릭
   const handleClearClick = () => {
     clearHistory();
     setData({ ...data, contents: [] });
@@ -62,7 +66,7 @@ const History = () => {
   return (
     <>
       <header className={style.header}>
-        <button type="button" aria-label="back_button" onClick={() => navigate(-1)}>
+        <button type="button" aria-label="back_button" onClick={handleBack}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
         <h1>{t(`menu.history`)}</h1>

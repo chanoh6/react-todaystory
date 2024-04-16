@@ -38,7 +38,22 @@ const Story = () => {
   const footerRef = useRef(null);
 
   // 이미지 로딩 실패 시 대체 이미지로 교체
-  const onErrorImg = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
+  const onErrorImg = (e) => {
+    const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL2}${data.thumbnail}`;
+    const errorURL = process.env.REACT_APP_ERROR_IMG;
+
+    if (e.target.src !== thumbnailURL) {
+      e.target.src = thumbnailURL;
+      e.target.onerror = (errorEvent) => {
+        if (errorEvent.target.src !== errorURL) {
+          errorEvent.target.src = errorURL;
+          // 더 이상의 onerror 처리가 없도록 설정
+          errorEvent.target.onerror = null;
+        }
+      };
+    }
+  };
+
   const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
 
   // 조회수 업데이트

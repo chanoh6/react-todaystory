@@ -66,12 +66,11 @@ function AdScript() {
     gtag('js', new Date());
     gtag('config', 'GA_MEASUREMENT_ID');
 
+    // 페이지 로드 시 광고 요청
     return () => {
       document.head.removeChild(pubmaticScript);
       // document.body.removeChild(browsiScript);
       document.head.removeChild(amazonScript);
-      // Google Tag Manager or Analytics 스크립트를 제거하는 명확한 방법이 없기 때문에, 이 부분은 생략합니다.
-      // 해당 스크립트들은 페이지 네비게이션이 일어날 때 자동으로 새 페이지 컨텍스트에 맞게 재로딩 됩니다.
     };
   }, []);
 

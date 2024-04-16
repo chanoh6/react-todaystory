@@ -107,7 +107,7 @@ const Category = () => {
         <button type="button" aria-label="back_button" onClick={handleBack}>
           <ArrowLeftIcon width={10} height={18} />
         </button>
-        <h1>{state?.title ?? data.category ?? ''}</h1>
+        <h1>{state?.title || data.category || ''}</h1>
         <MenuButton />
       </header>
 
