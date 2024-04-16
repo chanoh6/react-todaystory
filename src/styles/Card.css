@@ -43,8 +43,8 @@
   width: 16px;
   height: 16px;
   object-fit: contain;
-  border-radius: 100%;
-  background-color: var(--color-light-gray);
+  border-radius: 4px;
+  background-color: transparent;
 }
 
 .cp p {

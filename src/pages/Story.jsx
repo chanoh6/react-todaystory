@@ -54,7 +54,21 @@ const Story = () => {
     }
   };
 
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+  const onErrorLogo = (e) => {
+    const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL2}${data.logo}`;
+    const errorURL = process.env.REACT_APP_ERROR_LOGO;
+
+    if (e.target.src !== logoURL) {
+      e.target.src = logoURL;
+      e.target.onerror = (errorEvent) => {
+        if (errorEvent.target.src !== errorURL) {
+          errorEvent.target.src = errorURL;
+          // 더 이상의 onerror 처리가 없도록 설정
+          errorEvent.target.onerror = null;
+        }
+      };
+    }
+  };
 
   // 조회수 업데이트
   const updateViewCount = async (idx) => {
