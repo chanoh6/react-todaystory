@@ -13,9 +13,6 @@ import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, Lik
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import adStyle from 'styles/Ad.module.css';
-import GenericAd from 'components/Ad/GenericAd';
-import AnchorAd from 'components/Ad/AnchorAd';
-import BelowImageAd from 'components/Ad/BelowImageAd';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -27,6 +24,7 @@ const Story = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { api } = useAPI2();
+  const { isGPTLoaded, isPWTLoaded } = useAdContext();
   // 상세 스토리 데이터
   const { data, error, isLoading } = useFetchData(() => api.story({ idx: contentId }), `story-${contentId}`);
   const [main, setMain] = useState(null);
@@ -144,6 +142,23 @@ const Story = () => {
     );
   };
 
+  // 광고 로드
+  const loadAd = (adUnitPath, adSizes, adSlotId) => {
+    if (window.googletag && document.getElementById(adSlotId)) {
+      window.googletag.cmd.push(function() {
+        const existingSlot = window.googletag
+        .pubads()
+        .getSlots()
+        .find((slot) => slot.getSlotElementId() === adSlotId);
+        if (existingSlot) return;
+        
+        window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
+        window.googletag.display(adSlotId);
+        // window.googletag.pubads().refresh();
+      });
+    }
+  };
+
   // Instagram 임베드 스크립트 로드
   useEffect(() => {
     const script = document.createElement('script');
@@ -156,6 +171,26 @@ const Story = () => {
       document.body.removeChild(script);
     };
   }, []);
+
+  useEffect(() => {
+    if (!isPWTLoaded) return;
+    loadAd(
+      '/284705699/Samsung_life/Samsung_life_anchor', 
+      [
+        [320, 50],
+        [320, 100],
+      ], 
+      'div-gpt-ad-1573457886200-0'
+    );
+    loadAd(
+      '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image', 
+      [
+        [320, 100],
+        [320, 50],
+      ], 
+      'div-gpt-ad-1613117154866-0'
+    );
+  }, [isPWTLoaded]);
 
   // contentId가 변경될 때마다 실행
   useEffect(() => {
@@ -204,12 +239,6 @@ const Story = () => {
       document.removeEventListener('touchmove', handleTouchMove);
     };
   }, [moreOpen]);
-
-  // 광고 높이만큼 footer padding 설정
-  useEffect(() => {
-    if (!adHeight || !footerRef.current) return;
-    footerRef.current.style.paddingBottom = `${adHeight}px`;
-  }, [adHeight, setAdHeight, footerRef.current]);
 
   if (isLoading) return <Loading />;
   if (error) return null;
@@ -275,16 +304,10 @@ const Story = () => {
             <p className={style.editor}>by {data.editor || data.cp}</p>
             <p className={style.date}>{data.publishDate}</p>
 
-            {/* <BelowImageAd /> */}
-            <GenericAd
-              adSlotId="div-gpt-ad-1613117154866-0"
-              adSizes={[
-                [320, 100],
-                [320, 50],
-              ]}
-              adUnitPath="/284705699/Samsung_life/Samsung_KR_life_viewer_below_image"
-              adStyle={adStyle.ad__below}
-            />
+            {/* /284705699/Samsung_life/Samsung_KR_life_viewer_below_image */}
+            <div className={adStyle.ad__below}>
+              <div id="div-gpt-ad-1613117154866-0"></div>
+            </div>
 
             {/* {Object.keys(data.detail).map((key, index) => renderHtml(data.detail[key], index))} */}
             {main}
@@ -323,16 +346,10 @@ const Story = () => {
       )}
 
       <footer ref={footerRef}>
-        <AnchorAd />
-        {/* <GenericAd
-          adSlotId="div-gpt-ad-1573457886200-0"
-          adSizes={[
-            [320, 50],
-            [320, 100],
-          ]}
-          adUnitPath="/284705699/Samsung_life/Samsung_life_anchor"
-          adStyle={adStyle.ad__anchor}
-        /> */}
+        {/* /284705699/Samsung_life/Samsung_life_anchor */}
+        <div className={adStyle.ad__anchor}>
+          <div id="div-gpt-ad-1573457886200-0"></div>
+        </div>
       </footer>
 
       {moreOpen && <MoreMenu contents={data} />}

@@ -8,6 +8,7 @@ import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
 import style from 'styles/Home.module.css';
 import adStyle from 'styles/Ad.module.css';
+import AdInfeed from 'components/Ad/AdInfeed';
 
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
 const TopStories = React.lazy(() => import('components/TopStories'));
@@ -19,6 +20,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
+  const { isPWTLoaded } = useAdContext();
   // 홈 데이터
   const { data, error, isLoading } = useFetchData(() => api.home(), 'home');
   // 렌더링할 데이터
@@ -30,6 +32,7 @@ const Home = () => {
   // 광고 높이
   const { adHeight, setAdHeight } = useAdContext();
   const footerRef = useRef(null);
+  const adAnchorRef = useRef(null);
   const date = t(`header.date`, {
     val: new Date(),
     formatParams: {
@@ -37,7 +40,6 @@ const Home = () => {
     },
   });
   let bestStoriesCount = 0;
-  let adCount = 0;
 
   // 로고 클릭시 홈으로 이동
   const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
@@ -47,25 +49,12 @@ const Home = () => {
 
   // 콘텐츠 타입에 따라 렌더링할 컴포넌트 반환
   const getContent = (item) => {
-    adCount += 1;
-    const adInfeed1 = `div-gpt-ad-1623978560284-${adCount}`;
-    const adInfeed2 = `div-gpt-ad-1623978689578-${adCount}`;
-    const adInfeed3 = `div-gpt-ad-1623978827138-${adCount}`;
-
     switch (item.type) {
       case '1001':
         return <TopStories />;
       case '1002':
         bestStoriesCount += 1;
-        return (
-          <>
-            {/* 284705699 > Samsung_life > Samsung_KR_life_categorylist_infeed */}
-            {/* <li key={'ad-' + i} className={adStyle.ad__below}>
-              <div id={adInfeed1}></div>
-            </li> */}
-            <BestStories page={bestStoriesCount} />
-          </>
-        );
+        return <BestStories page={bestStoriesCount} />;
       case '1003':
         return <EditorsPick comment={item.data} />;
       case '1004':
@@ -93,6 +82,43 @@ const Home = () => {
     [isLoading, hasMore],
   );
 
+  // 광고 로드
+  const loadAd = (adUnitPath, adSizes, adSlotId) => {
+    if (window.googletag && document.getElementById(adSlotId)) {
+      window.googletag.cmd.push(function() {
+        const existingSlot = window.googletag
+        .pubads()
+        .getSlots()
+        .find((slot) => slot.getSlotElementId() === adSlotId);
+        if (existingSlot) return;
+
+        window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
+        window.googletag.display(adSlotId);
+        // window.googletag.pubads().refresh();
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!isPWTLoaded) return;
+    loadAd(
+      '/284705699/Samsung_life/Samsung_life_anchor', 
+      [
+        [320, 50],
+        [320, 100],
+      ], 
+      'div-gpt-ad-1573457886200-0'
+    );
+    loadAd(
+      '/284705699/Samsung_life/Samsung_KR_life_list_atf', 
+      [
+        [320, 100],
+        [320, 50],
+      ], 
+      'div-gpt-ad-1613117118357-0'
+    );
+  }, [isPWTLoaded]);
+
   // 데이터 변경 시 렌더링 데이터 업데이트
   useEffect(() => {
     if (!data) return;
@@ -115,7 +141,7 @@ const Home = () => {
   useEffect(() => {
     if (!adHeight || !footerRef.current) return;
     footerRef.current.style.paddingBottom = `${adHeight}px`;
-  }, [adHeight, setAdHeight, footerRef.current]);
+  }, [adHeight, setAdHeight]);
 
   return (
     <>
@@ -142,7 +168,7 @@ const Home = () => {
       </nav>
 
       {/* /284705699/Samsung_life/Samsung_KR_life_list_atf */}
-      <div className={adStyle.ad__below}>
+      <div className={adStyle.ad__home}>
         <div id="div-gpt-ad-1613117118357-0"></div>
       </div>
 
@@ -151,15 +177,18 @@ const Home = () => {
           {renderData && (
             <>
               {renderData.map((item, index) => (
-                <section
-                  key={index}
-                  className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''} ${
-                    item.type === '1003' ? style.editors : ''
-                  }
-                  `}
-                >
-                  {getContent(item)}
-                </section>
+                <React.Fragment key={index}>
+                  {index !== 0 && <AdInfeed index={index} />}
+                  <section
+                    key={index}
+                    className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''} ${
+                      item.type === '1003' ? style.editors : ''
+                    }
+                    `}
+                  >
+                    {getContent(item)}
+                  </section>
+                </React.Fragment>
               ))}
               {hasMore && <section style={{ paddingTop: '30px' }} ref={lastItemRef}></section>}
             </>
@@ -169,7 +198,7 @@ const Home = () => {
 
       <footer className={style.footer} ref={footerRef}>
         {/* /284705699/Samsung_life/Samsung_life_anchor */}
-        <div className={adStyle.ad__anchor}>
+        <div className={adStyle.ad__anchor} ref={adAnchorRef}>
           <div id="div-gpt-ad-1573457886200-0"></div>
         </div>
       </footer>

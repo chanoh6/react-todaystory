@@ -28,6 +28,7 @@ const removeScript = (id) => {
 export const AdProvider = ({ children }) => {
   const location = useLocation();
   const [isGPTLoaded, setIsGPTLoaded] = useState(false);
+  const [isPWTLoaded, setIsPWTLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false); // 페이지 변경 감지
   const [adHeight, setAdHeight] = useState(0);
 
@@ -103,36 +104,6 @@ export const AdProvider = ({ children }) => {
           () => {
             window.googletag = window.googletag || { cmd: [] };
             window.googletag.cmd.push(() => {
-              window.googletag
-                .defineSlot(
-                  '/284705699/Samsung_life/Samsung_life_anchor',
-                  [
-                    [320, 50],
-                    [320, 100],
-                  ],
-                  'div-gpt-ad-1573457886200-0',
-                )
-                .addService(window.googletag.pubads());
-
-              window.googletag
-                .defineSlot(
-                  '/284705699/Samsung_life/Samsung_KR_life_list_atf',
-                  [
-                    [320, 100],
-                    [320, 50],
-                  ],
-                  'div-gpt-ad-1613117118357-0',
-                )
-                .addService(window.googletag.pubads());
-
-              window.googletag
-                .defineSlot(
-                  '/284705699/Samsung_life/Samsung_KR_life_list_between_top_list',
-                  [[200, 200], [320, 100], [320, 180], [320, 50], [336, 280], [300, 250], 'fluid'],
-                  'div-gpt-ad-1628051169428-0',
-                )
-                .addService(window.googletag.pubads());
-
               if (!window.googletag.pubads().getTargetingKeys().includes('singleRequest')) {
                 window.googletag.pubads().enableSingleRequest();
               }
@@ -165,6 +136,7 @@ export const AdProvider = ({ children }) => {
           if (window.googletag.pubadsReady) {
             window.googletag.pubads().refresh();
           }
+          setIsPWTLoaded(true);
         });
         clearInterval(checkPWTAndGPT);
       }
@@ -172,12 +144,13 @@ export const AdProvider = ({ children }) => {
 
     return () => {
       setIsVisible(false);
+      setIsPWTLoaded(false);
       removeScript('gpt-script');
     };
   }, [location]);
 
   return (
-    <AdContext.Provider value={{ isGPTLoaded, isVisible, setIsVisible, adHeight, setAdHeight }}>
+    <AdContext.Provider value={{ isGPTLoaded, isPWTLoaded, isVisible, setIsVisible, adHeight, setAdHeight }}>
       {children}
     </AdContext.Provider>
   );

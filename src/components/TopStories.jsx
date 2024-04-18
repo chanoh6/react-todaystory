@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 import adStyle from 'styles/Ad.module.css';
+import { useAdContext } from 'context/AdContext';
 
 const fetchTopStories = async (api, size) => {
   const storageKey = `topStories`;
@@ -46,14 +47,36 @@ const fetchTopStories = async (api, size) => {
 const TopStories = React.memo(() => {
   const { t } = useTranslation();
   const { api } = useAPI();
+  const { isGPTLoaded } = useAdContext();
   const size = process.env.REACT_APP_TOP_STORIES_SIZE;
-
   const { data, error, isLoading } = useQuery('topStories', () => fetchTopStories(api, size), {
     keepPreviousData: true,
     staleTime: 5 * 60 * 1000,
     cacheTime: 60 * 60 * 1000,
     onError: (error) => console.error(error),
   });
+
+  // 광고 로드
+  const loadAd = (adUnitPath, adSizes, adSlotId) => {
+    if (window.googletag && document.getElementById(adSlotId)) {
+      window.googletag.cmd.push(function() {
+        const existingSlot = window.googletag
+        .pubads()
+        .getSlots()
+        .find((slot) => slot.getSlotElementId() === adSlotId);
+        if (existingSlot) return;
+        
+        window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
+        window.googletag.display(adSlotId);
+      });
+    }
+  };
+
+  useEffect(() => {
+    loadAd('/284705699/Samsung_life/Samsung_KR_life_list_between_top_list',
+    [[200, 200], [320, 100], [320, 180], [320, 50], [336, 280], [300, 250], 'fluid'],
+    'div-gpt-ad-1628051169428-0');
+  }, [isGPTLoaded]);
 
   if (isLoading || error || !data) return <StoriesSkeleton />;
 
@@ -76,7 +99,7 @@ const TopStories = React.memo(() => {
             return (
               <React.Fragment key={'fragment-' + i}>
                 {/* /284705699/Samsung_life/Samsung_KR_life_list_between_top_list */}
-                <li key={'ad-' + i} className={adStyle.ad__below}>
+                <li key={'ad-' + i} className={adStyle.ad__home}>
                   <div id="div-gpt-ad-1628051169428-0"></div>
                 </li>
                 <TypeC key={i} content={content} />

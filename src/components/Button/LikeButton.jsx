@@ -1,42 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useAPI } from 'context/APIContext';
-import { checkLocalStorage, deleteLocalStorage, saveLocalStorage } from 'utils/localStorage';
+import React from 'react';
 import { LikeFilledIcon, LikeUnfilledIcon } from 'assets';
+import { useFavorite } from 'hooks/useLocalStorage';
 
 const LikeButton = (props) => {
-  const { idx } = props;
-  const { api } = useAPI();
-  const [favorite, setFavorite] = useState(false);
+  const { idx, onClick } = props;
+  const { favorite, saveFavorite } = useFavorite(idx);
 
-  const updateLikeCount = async (idx) => {
-    try {
-      const res = await api.updateLikeCount(idx);
-      return res;
-    } catch (e) {
-      console.error(e);
-    }
+  const handleButtonClick = (e) => {
+    saveFavorite(e);
+    onClick?.(idx);
   };
-
-  const saveFavorite = (e) => {
-    e.stopPropagation();
-
-    if (favorite) {
-      deleteLocalStorage('favorites', idx);
-    } else {
-      saveLocalStorage('favorites', idx);
-      updateLikeCount(idx);
-    }
-
-    setFavorite((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const isFavorite = checkLocalStorage('favorites', idx);
-    setFavorite(isFavorite);
-  }, [idx]);
 
   return (
-    <button type="button" aria-label="like_button" onClick={saveFavorite}>
+    <button type="button" aria-label="like_button" onClick={handleButtonClick}>
       {favorite ? (
         <LikeFilledIcon width={18} height={16} fill={'var(--color-blue)'} />
       ) : (

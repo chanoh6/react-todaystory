@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { useAdContext } from 'context/AdContext';
 import { useFavorite } from 'hooks/useLocalStorage';
-import { CardListSkeleton, Loading, NoStories, TypeD } from 'components';
+import { CardListSkeleton, Loading, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Favorite.module.css';
 
@@ -79,7 +79,7 @@ const Favorite = () => {
               {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.favorite`)} />
               ) : (
-                data.contents.map((content, i) => <TypeD key={i} content={content} onClick={handleCardClick} />)
+                data.contents.map((content, i) => <TypeC key={i} content={content} onClick={handleCardClick} />)
               )}
             </ul>
           </section>
