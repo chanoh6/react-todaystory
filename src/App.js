@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { APIProvider } from 'context/APIContext';
+import { APIProvider2 } from 'context/APIContextTest';
 import { AdProvider } from 'context/AdContext';
 import { styled } from 'styled-components';
 import { ScrollToTop } from 'components';
@@ -10,8 +11,7 @@ import 'styles/App.css';
 
 /**
  * @TODOS
- * 1. 전역 상태 관리 추가 (메뉴, 테마)
- * 2. react-query 적용
+ * - 전역 상태 관리 추가 (메뉴, 테마)
  */
 
 const queryClient = new QueryClient();
@@ -53,12 +53,14 @@ function App() {
         </Helmet>
 
         <APIProvider>
-          <AdProvider>
-            <FontWrapper lang={lang}>
-              <ScrollToTop />
-              <Outlet />
-            </FontWrapper>
-          </AdProvider>
+          <APIProvider2>
+            <AdProvider>
+              <FontWrapper lang={lang}>
+                <ScrollToTop />
+                <Outlet />
+              </FontWrapper>
+            </AdProvider>
+          </APIProvider2>
         </APIProvider>
       </QueryClientProvider>
     </>

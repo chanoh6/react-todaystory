@@ -10,7 +10,6 @@ import 'locales/i18n';
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
 const Home = React.lazy(() => import('pages/Home'));
 const Story = React.lazy(() => import('pages/Story'));
-const StoryTest = React.lazy(() => import('pages/StoryTest'));
 const Category = React.lazy(() => import('pages/Category'));
 const Channel = React.lazy(() => import('pages/Channel'));
 const Favorite = React.lazy(() => import('pages/Favorite'));
@@ -24,7 +23,6 @@ const NotFound = React.lazy(() => import('pages/NotFound'));
 // createBrowserRouter: 라우터 생성
 const router = createBrowserRouter([
   {
-    // basename: process.env.PUBLIC_URL,
     element: <App />,
     errorElement: <NotFound />,
     path: process.env.PUBLIC_URL,
@@ -32,7 +30,6 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'index.html', element: <Home /> },
       { path: 'view/:contentId', element: <Story /> },
-      { path: 'views/:contentId', element: <StoryTest /> },
       { path: 'category/:pageId', element: <Category /> },
       { path: 'channel/:pageId', element: <Channel /> },
       { path: 'favorite', element: <Favorite /> },

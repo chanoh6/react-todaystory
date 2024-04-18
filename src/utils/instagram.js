@@ -1,3 +1,4 @@
+// 인스타그램 URL을 입력받아 해당 포스트를 불러오는 코드 반환
 export const getInstagramCode = (url) => {
   const code = `
     <blockquote

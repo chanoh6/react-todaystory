@@ -1,46 +1,6 @@
 import axios from 'axios';
 
-/*
-constructor(data) {
-  this = ax
-  this.setBody
-  ....
-  ...
-  ...
-  ...
-
-}
-.setHeader(....)
-.setBody(.....)
-.setXXXXX....
-.call(
-  try {
-      const aaa = axions.get()
-  return aaaa
-  } catch (e) {
-    e.//////
-  }
-)
-
-
-apiclient = new APIClient("post", "", "body");
-apiClient.setHeader("Content-Type", "application/json");
-apiClient.setB
-....
-....
-....
-apiclient.call();
----------------------------------
-const param = {
-  url : "http://localhost:8080",
-  method : "post",
-
-}
-const apiClient = new APIClient(param);
-apiClient.call();
-*/
-
-class AxiosWrapper {
+class APIClient2 {
   constructor(options = {}) {
     const { baseURL, url, method = 'get', headers = {}, params = {}, data = null } = options;
     this.baseURL = baseURL;
@@ -50,7 +10,7 @@ class AxiosWrapper {
     this.params = params;
     this.data = data;
   }
-  
+
   setHeaders(headers) {
     // 헤더를 설정합니다.
     this.headers = headers;
@@ -94,4 +54,4 @@ class AxiosWrapper {
   }
 }
 
-export default AxiosWrapper;
+export default APIClient2;

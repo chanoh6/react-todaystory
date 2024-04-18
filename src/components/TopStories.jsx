@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
+import adStyle from 'styles/Ad.module.css';
 
 const fetchTopStories = async (api, size) => {
   const storageKey = `topStories`;
@@ -56,6 +57,8 @@ const TopStories = React.memo(() => {
 
   if (isLoading || error || !data) return <StoriesSkeleton />;
 
+  const middleIndex = Math.ceil(data.contents.length / 2);
+
   return (
     <>
       <div className={style.content__title}>
@@ -69,6 +72,16 @@ const TopStories = React.memo(() => {
             return <TypeA key={i} content={content} />;
           } else if (i === 1 || i === 2) {
             return <TypeB key={i} content={content} />;
+          } else if (i === middleIndex) {
+            return (
+              <React.Fragment key={'fragment-' + i}>
+                {/* /284705699/Samsung_life/Samsung_KR_life_list_between_top_list */}
+                <li key={'ad-' + i} className={adStyle.ad__below}>
+                  <div id="div-gpt-ad-1628051169428-0"></div>
+                </li>
+                <TypeC key={i} content={content} />
+              </React.Fragment>
+            );
           } else {
             return <TypeC key={i} content={content} />;
           }

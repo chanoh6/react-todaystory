@@ -2,9 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useAdContext } from 'context/AdContext';
 import style from 'styles/Ad.module.css';
 
-const AnchorAd = () => {
-  const { isGPTLoaded, isVisible, setIsVisible, setAdHeight } = useAdContext();
-  const adRef = useRef(null);
+const BelowImageAd = () => {
+  const { isGPTLoaded, isVisible, setIsVisible } = useAdContext();
 
   useEffect(() => {
     if (!isGPTLoaded) return;
@@ -17,21 +16,16 @@ const AnchorAd = () => {
     };
 
     window.googletag.cmd.push(() => {
-      const existingSlot = window.googletag
-        .pubads()
-        .getSlots()
-        .find((slot) => slot.getSlotElementId() === 'div-gpt-ad-1573457886200-0');
-
-      if (!existingSlot) {
+      if (!window.googletag.slot) {
         // 광고 슬롯이 정의되지 않았을 경우에만 정의
         window.googletag.slot = window.googletag
           .defineSlot(
-            '/284705699/Samsung_life/Samsung_life_anchor',
+            '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image',
             [
-              [320, 50],
               [320, 100],
+              [320, 50],
             ],
-            'div-gpt-ad-1573457886200-0',
+            'div-gpt-ad-1613117154866-0',
           )
           .addService(window.googletag.pubads());
         window.googletag.pubads().enableSingleRequest();
@@ -42,7 +36,7 @@ const AnchorAd = () => {
       window.googletag.pubads().addEventListener('slotRenderEnded', slotRenderEndedHandler);
 
       // 정의된 광고 슬롯에 대해 광고 요청
-      window.googletag.display('div-gpt-ad-1573457886200-0');
+      window.googletag.display('div-gpt-ad-1613117154866-0');
     });
 
     return () => {
@@ -52,17 +46,11 @@ const AnchorAd = () => {
     };
   }, [isGPTLoaded, isVisible, setIsVisible]);
 
-  useEffect(() => {
-    if (!isVisible || adRef.current?.className.includes(style.hide)) return;
-    const height = adRef.current?.offsetHeight;
-    setAdHeight(height);
-  }, [isVisible, setAdHeight]);
-
   return (
-    <div className={`${style.ad__anchor} ${isVisible ? '' : style.hide}`} ref={adRef}>
-      <div id="div-gpt-ad-1573457886200-0"></div>
+    <div className={`${style.ad__anchor} ${isVisible ? '' : style.hide}`}>
+      <div id="div-gpt-ad-1613117154866-0"></div>
     </div>
   );
 };
 
-export default AnchorAd;
+export default BelowImageAd;

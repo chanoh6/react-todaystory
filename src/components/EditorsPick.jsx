@@ -105,7 +105,7 @@ const EditorsPick = React.memo(() => {
 
   // 도메인 변경시 적용
   useEffect(() => {
-    if (!data) return;
+    if (!data || data.contents.length === 0) return;
 
     const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${data.contents[0].thumbnail}`;
 
@@ -132,7 +132,7 @@ const EditorsPick = React.memo(() => {
       <ContentWrap className={style.content__wrap} gradient={gradient}>
         <hgroup className={style.content__title}>
           <h1>{t(`editor.title`)}</h1>
-          <h2>{data.subTopic}</h2>
+          <h2>{data.subTopic || ''}</h2>
         </hgroup>
         {data.contents.map((content, i) => (
           <React.Fragment key={i}>

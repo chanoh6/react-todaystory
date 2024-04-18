@@ -6,9 +6,8 @@ import { useAdContext } from 'context/AdContext';
 import useFetchData from 'hooks/useFetchData';
 import { CategoryNav, MenuButton, StoriesSkeleton } from 'components';
 import { LuckIcon } from 'assets';
-import AdScript from 'components/Ad/AdScript';
-import AnchorAd from 'components/Ad/AnchorAd';
 import style from 'styles/Home.module.css';
+import adStyle from 'styles/Ad.module.css';
 
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
 const TopStories = React.lazy(() => import('components/TopStories'));
@@ -29,7 +28,7 @@ const Home = () => {
   // 더 불러올 데이터가 있는지 여부
   const [hasMore, setHasMore] = useState(true);
   // 광고 높이
-  const { adHeight } = useAdContext();
+  const { adHeight, setAdHeight } = useAdContext();
   const footerRef = useRef(null);
   const date = t(`header.date`, {
     val: new Date(),
@@ -38,6 +37,7 @@ const Home = () => {
     },
   });
   let bestStoriesCount = 0;
+  let adCount = 0;
 
   // 로고 클릭시 홈으로 이동
   const handleClickLogo = () => navigate(process.env.REACT_APP_WEB_HOME_URL);
@@ -47,12 +47,25 @@ const Home = () => {
 
   // 콘텐츠 타입에 따라 렌더링할 컴포넌트 반환
   const getContent = (item) => {
+    adCount += 1;
+    const adInfeed1 = `div-gpt-ad-1623978560284-${adCount}`;
+    const adInfeed2 = `div-gpt-ad-1623978689578-${adCount}`;
+    const adInfeed3 = `div-gpt-ad-1623978827138-${adCount}`;
+
     switch (item.type) {
       case '1001':
         return <TopStories />;
       case '1002':
         bestStoriesCount += 1;
-        return <BestStories page={bestStoriesCount} />;
+        return (
+          <>
+            {/* 284705699 > Samsung_life > Samsung_KR_life_categorylist_infeed */}
+            {/* <li key={'ad-' + i} className={adStyle.ad__below}>
+              <div id={adInfeed1}></div>
+            </li> */}
+            <BestStories page={bestStoriesCount} />
+          </>
+        );
       case '1003':
         return <EditorsPick comment={item.data} />;
       case '1004':
@@ -100,14 +113,12 @@ const Home = () => {
 
   // 광고 높이만큼 footer padding 추가
   useEffect(() => {
-    if (footerRef.current) {
-      footerRef.current.style.paddingBottom = `${adHeight}px`;
-    }
-  }, [adHeight, footerRef.current]);
+    if (!adHeight || !footerRef.current) return;
+    footerRef.current.style.paddingBottom = `${adHeight}px`;
+  }, [adHeight, setAdHeight, footerRef.current]);
 
   return (
     <>
-      <AdScript />
       <header className={style.header}>
         <hgroup className={style.logo}>
           <h1 onClick={handleClickLogo}>{t(`header.logo`)}</h1>
@@ -129,6 +140,11 @@ const Home = () => {
           </button>
         </div>
       </nav>
+
+      {/* /284705699/Samsung_life/Samsung_KR_life_list_atf */}
+      <div className={adStyle.ad__below}>
+        <div id="div-gpt-ad-1613117118357-0"></div>
+      </div>
 
       <main>
         <Suspense fallback={<StoriesSkeleton />}>
@@ -152,7 +168,10 @@ const Home = () => {
       </main>
 
       <footer className={style.footer} ref={footerRef}>
-        {/* <AnchorAd /> */}
+        {/* /284705699/Samsung_life/Samsung_life_anchor */}
+        <div className={adStyle.ad__anchor}>
+          <div id="div-gpt-ad-1573457886200-0"></div>
+        </div>
       </footer>
     </>
   );

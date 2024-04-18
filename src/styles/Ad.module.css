@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  text-align: center;
   background-color: transparent;
   z-index: 9;
 
@@ -17,4 +18,17 @@
   position: relative;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.ad__below {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+  margin-bottom: 20px;
+
+  &.hide {
+    display: none;
+  }
 }
