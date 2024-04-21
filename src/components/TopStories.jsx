@@ -59,13 +59,13 @@ const TopStories = React.memo(() => {
   // 광고 로드
   const loadAd = (adUnitPath, adSizes, adSlotId) => {
     if (window.googletag && document.getElementById(adSlotId)) {
-      window.googletag.cmd.push(function() {
+      window.googletag.cmd.push(function () {
         const existingSlot = window.googletag
-        .pubads()
-        .getSlots()
-        .find((slot) => slot.getSlotElementId() === adSlotId);
+          .pubads()
+          .getSlots()
+          .find((slot) => slot.getSlotElementId() === adSlotId);
         if (existingSlot) return;
-        
+
         window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
         window.googletag.display(adSlotId);
       });
@@ -73,9 +73,11 @@ const TopStories = React.memo(() => {
   };
 
   useEffect(() => {
-    loadAd('/284705699/Samsung_life/Samsung_KR_life_list_between_top_list',
-    [[200, 200], [320, 100], [320, 180], [320, 50], [336, 280], [300, 250], 'fluid'],
-    'div-gpt-ad-1628051169428-0');
+    loadAd(
+      '/284705699/Samsung_life/Samsung_KR_life_list_between_top_list',
+      [[200, 200], [320, 100], [320, 180], [320, 50], [336, 280], [300, 250], 'fluid'],
+      'div-gpt-ad-1628051169428-0',
+    );
   }, [isGPTLoaded]);
 
   if (isLoading || error || !data) return <StoriesSkeleton />;

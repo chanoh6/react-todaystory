@@ -7,6 +7,7 @@ import { useFavorite } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/Favorite.module.css';
+import AdInfeed from 'components/Ad/AdInfeed';
 
 const Favorite = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Favorite = () => {
   const [data, setData] = useState(null);
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
+  let adNum = 3;
 
   // 뒤로가기 버튼 클릭
   const handleBack = () => navigate(-1);
@@ -26,6 +28,7 @@ const Favorite = () => {
   const handleCardClick = (idx) =>
     setData({ ...data, contents: data.contents.filter((content) => content.idx !== idx) });
 
+  // API 호출
   const fetchData = async (idxList) => {
     setLoading(true);
     setError(null);
@@ -41,6 +44,15 @@ const Favorite = () => {
     }
   };
 
+  // 광고 추가
+  const getAd = (index) => {
+    // 0, 1, 2 반환
+    const requsetAdNum = ((adNum - 3) / 4) % 3;
+    adNum += 4;
+    return <AdInfeed index={index} adNum={requsetAdNum} />;
+  };
+
+  // 즐겨찾기 목록 불러오기
   useEffect(() => {
     const idxList = getFavorite();
 
@@ -53,6 +65,7 @@ const Favorite = () => {
     });
   }, []);
 
+  // 광고 높이만큼 footer padding 추가
   useEffect(() => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
@@ -79,7 +92,12 @@ const Favorite = () => {
               {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.favorite`)} />
               ) : (
-                data.contents.map((content, i) => <TypeC key={i} content={content} onClick={handleCardClick} />)
+                data.contents.map((content, index) => (
+                  <React.Fragment key={index}>
+                    {index === adNum && getAd(index)}
+                    <TypeC key={index} content={content} onClick={handleCardClick} />
+                  </React.Fragment>
+                ))
               )}
             </ul>
           </section>

@@ -24,7 +24,7 @@ const Story = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { api } = useAPI2();
-  const { isGPTLoaded, isPWTLoaded } = useAdContext();
+  const { isPWTLoaded } = useAdContext();
   // 상세 스토리 데이터
   const { data, error, isLoading } = useFetchData(() => api.story({ idx: contentId }), `story-${contentId}`);
   const [main, setMain] = useState(null);
@@ -33,7 +33,7 @@ const Story = () => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory();
+  const { saveHistory } = useHistory(contentId);
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
 
@@ -91,7 +91,23 @@ const Story = () => {
   };
 
   // 뒤로가기 버튼 클릭
-  const handleBack = () => navigate(-1);
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate(process.env.REACT_APP_WEB_HOME_URL);
+    }
+  };
+
+  // 게시물 없을 시 뒤로가기
+  const handleNoContent = () => {
+    alert('게시글이 존재하지 않습니다.');
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate(process.env.REACT_APP_WEB_HOME_URL);
+    }
+  };
 
   // 더보기 메뉴 클릭
   const handleMoreMenu = () => setMoreOpen(!moreOpen);
@@ -145,16 +161,14 @@ const Story = () => {
   // 광고 로드
   const loadAd = (adUnitPath, adSizes, adSlotId) => {
     if (window.googletag && document.getElementById(adSlotId)) {
-      window.googletag.cmd.push(function() {
+      window.googletag.cmd.push(function () {
         const existingSlot = window.googletag
-        .pubads()
-        .getSlots()
-        .find((slot) => slot.getSlotElementId() === adSlotId);
+          .pubads()
+          .getSlots()
+          .find((slot) => slot.getSlotElementId() === adSlotId);
         if (existingSlot) return;
-        
         window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
         window.googletag.display(adSlotId);
-        // window.googletag.pubads().refresh();
       });
     }
   };
@@ -175,26 +189,26 @@ const Story = () => {
   useEffect(() => {
     if (!isPWTLoaded) return;
     loadAd(
-      '/284705699/Samsung_life/Samsung_life_anchor', 
+      '/284705699/Samsung_life/Samsung_life_anchor',
       [
         [320, 50],
         [320, 100],
-      ], 
-      'div-gpt-ad-1573457886200-0'
+      ],
+      'div-gpt-ad-1573457886200-0',
     );
     loadAd(
-      '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image', 
+      '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image',
       [
         [320, 100],
         [320, 50],
-      ], 
-      'div-gpt-ad-1613117154866-0'
+      ],
+      'div-gpt-ad-1613117154866-0',
     );
-  }, [isPWTLoaded]);
+  }, [isPWTLoaded, location]);
 
   // contentId가 변경될 때마다 실행
   useEffect(() => {
-    saveHistory(contentId);
+    saveHistory();
     updateViewCount(contentId);
   }, [contentId]);
 
@@ -242,6 +256,7 @@ const Story = () => {
 
   if (isLoading) return <Loading />;
   if (error) return null;
+  if (data === '-6') return handleNoContent();
   if (!data) return <StorySkeleton />;
 
   return (

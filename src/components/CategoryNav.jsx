@@ -35,11 +35,12 @@ const CategoryNav = React.memo(() => {
       modules={[FreeMode]}
       spaceBetween={8}
       slidesPerView={'auto'}
-      freeMode={true}
+      freeMode={false}
       preventClicks={true}
       preventClicksPropagation={true}
       grabCursor={true}
       roundLengths={true}
+      speed={500}
     >
       <SwiperSlide
         className={`${style.item} ${style.active}`}

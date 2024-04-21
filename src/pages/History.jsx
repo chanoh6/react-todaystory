@@ -7,6 +7,7 @@ import { useHistory } from 'hooks/useLocalStorage';
 import { CardListSkeleton, Loading, NoStories, TypeC } from 'components';
 import { ArrowLeftIcon } from 'assets';
 import style from 'styles/History.module.css';
+import AdInfeed from 'components/Ad/AdInfeed';
 
 const History = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const History = () => {
   const [data, setData] = useState(null);
   const { adHeight } = useAdContext();
   const footerRef = useRef(null);
+  let adNum = 3;
 
   // 뒤로가기 버튼 클릭
   const handleBack = () => navigate(-1);
@@ -28,6 +30,7 @@ const History = () => {
     setData({ ...data, contents: [] });
   };
 
+  // API 호출
   const fetchData = async (idxList) => {
     setLoading(true);
     setError(null);
@@ -43,6 +46,15 @@ const History = () => {
     }
   };
 
+  // 광고 추가
+  const getAd = (index) => {
+    // 0, 1, 2 반환
+    const requsetAdNum = ((adNum - 3) / 4) % 3;
+    adNum += 4;
+    return <AdInfeed index={index} adNum={requsetAdNum} />;
+  };
+
+  // 최근 본 목록 불러오기
   useEffect(() => {
     const idxList = getHistory();
 
@@ -55,6 +67,7 @@ const History = () => {
     });
   }, []);
 
+  // 광고 높이만큼 footer padding 추가
   useEffect(() => {
     if (footerRef.current) {
       footerRef.current.style.paddingBottom = `${adHeight}px`;
@@ -77,14 +90,24 @@ const History = () => {
 
       <main>
         {!data ? (
-          <CardListSkeleton />
+          // <CardListSkeleton />
+          <section className={style.content__wrap}>
+            <ul className={style.list}>
+              <NoStories text={t(`noStories.history`)} />
+            </ul>
+          </section>
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>
               {data.contents.length === 0 ? (
                 <NoStories text={t(`noStories.history`)} />
               ) : (
-                data.contents.map((content, i) => <TypeC key={i} content={content} />)
+                data.contents.map((content, index) => (
+                  <React.Fragment key={index}>
+                    {index === adNum && getAd(index)}
+                    <TypeC key={index} content={content} />
+                  </React.Fragment>
+                ))
               )}
             </ul>
           </section>

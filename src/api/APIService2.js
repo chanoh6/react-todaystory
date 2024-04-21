@@ -15,6 +15,8 @@ class APIService2 {
       const response = await apiClient.call();
       if (response.code === '0') {
         return response.data;
+      } else if (response.code === '-6') {
+        return response.code;
       } else {
         console.error(response.msg);
         throw new Error(response.msg);

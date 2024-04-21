@@ -45,8 +45,10 @@ export const useFavorite = (idx) => {
 };
 
 export const useHistory = (idx = null) => {
-  const saveHistory = (idx) => {
-    resaveLoaclStorage('history', idx);
+  const [contentId, setContentId] = useState(idx);
+
+  const saveHistory = () => {
+    resaveLoaclStorage('history', contentId);
   };
 
   const clearHistory = () => {

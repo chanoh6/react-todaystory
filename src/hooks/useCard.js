@@ -17,13 +17,13 @@ export const useCard = (content) => {
 
     if (e.target.src !== thumbnailURL) {
       e.target.src = thumbnailURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
+      // e.target.onerror = (errorEvent) => {
+      //   if (errorEvent.target.src !== errorURL) {
+      //     errorEvent.target.src = errorURL;
+      //     // 더 이상의 onerror 처리가 없도록 설정
+      //     errorEvent.target.onerror = null;
+      //   }
+      // };
     }
   };
 

@@ -85,37 +85,41 @@ const Home = () => {
   // 광고 로드
   const loadAd = (adUnitPath, adSizes, adSlotId) => {
     if (window.googletag && document.getElementById(adSlotId)) {
-      window.googletag.cmd.push(function() {
+      window.googletag.cmd.push(function () {
         const existingSlot = window.googletag
-        .pubads()
-        .getSlots()
-        .find((slot) => slot.getSlotElementId() === adSlotId);
+          .pubads()
+          .getSlots()
+          .find((slot) => slot.getSlotElementId() === adSlotId);
         if (existingSlot) return;
-
         window.googletag.defineSlot(adUnitPath, adSizes, adSlotId).addService(window.googletag.pubads());
         window.googletag.display(adSlotId);
-        // window.googletag.pubads().refresh();
       });
     }
+  };
+
+  // 광고 추가
+  const getAd = (index) => {
+    const adNum = (index - 1) % 3;
+    return <AdInfeed index={index} adNum={adNum} />;
   };
 
   useEffect(() => {
     if (!isPWTLoaded) return;
     loadAd(
-      '/284705699/Samsung_life/Samsung_life_anchor', 
+      '/284705699/Samsung_life/Samsung_life_anchor',
       [
         [320, 50],
         [320, 100],
-      ], 
-      'div-gpt-ad-1573457886200-0'
+      ],
+      'div-gpt-ad-1573457886200-0',
     );
     loadAd(
-      '/284705699/Samsung_life/Samsung_KR_life_list_atf', 
+      '/284705699/Samsung_life/Samsung_KR_life_list_atf',
       [
         [320, 100],
         [320, 50],
-      ], 
-      'div-gpt-ad-1613117118357-0'
+      ],
+      'div-gpt-ad-1613117118357-0',
     );
   }, [isPWTLoaded]);
 
@@ -178,7 +182,7 @@ const Home = () => {
             <>
               {renderData.map((item, index) => (
                 <React.Fragment key={index}>
-                  {index !== 0 && <AdInfeed index={index} />}
+                  {index !== 0 && getAd(index)}
                   <section
                     key={index}
                     className={`${style.content__wrap} ${item.type === '1001' ? style.top : ''} ${
