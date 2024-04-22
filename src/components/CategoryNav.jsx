@@ -5,9 +5,10 @@ import { useAPI } from 'context/APIContext';
 import useFetchData from 'hooks/useFetchData';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import 'swiper/css';
 import style from 'styles/CategoryNav.module.css';
-import Skeleton from 'react-loading-skeleton';
 
 const CategoryNav = React.memo(() => {
   const baseImgURL = process.env.REACT_APP_CATEGORY_ICON;
@@ -17,7 +18,11 @@ const CategoryNav = React.memo(() => {
   // 카테고리 데이터
   const { data, error, isLoading } = useFetchData(() => api.category(), 'category');
 
-  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_ICON);
+  // 아이콘 로딩 실패 시 대체 이미지로 교체
+  const onErrorIcon = (e) => {
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_ICON;
+  };
 
   if (isLoading || error || !data) {
     return (

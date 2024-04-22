@@ -11,7 +11,7 @@ import { LikeButton } from 'components';
 import 'styles/Card.css';
 import style from 'styles/EditorsPick.module.css';
 
-// styled-components: 컴포넌트 스타일링
+// styled-components: 그라데이션 색상을 적용하기 위한 컴포넌트
 const ContentWrap = styled.div`
   background: ${(props) =>
     props.gradient &&
@@ -29,81 +29,29 @@ const EditorsPick = React.memo(() => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { api } = useAPI();
-  // 배경 그라데이션 데이터
   const [gradient, setGradient] = useState(null);
   // 에디터픽 데이터
   const { data, error, isLoading } = useFetchData(() => api.editorsPick(), 'editorsPick');
 
   // 이미지 로딩 실패시 대체 이미지 적용
   const onErrorImg = (e) => {
-    const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL2}${data.contents[0].thumbnail}`;
-    const errorURL = process.env.REACT_APP_ERROR_IMG;
-
-    if (e.target.src !== thumbnailURL) {
-      e.target.src = thumbnailURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
-    }
+    // 더 이상의 onerror 이벤트 처리를 하지 않도록 설정
+    e.target.onerror = null;
+    // 대체 이미지로 변경
+    e.target.src = process.env.REACT_APP_ERROR_IMG;
   };
 
+  // 로고 로딩 실패시 대체 이미지 적용
   const onErrorLogo = (e) => {
-    const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL2}${data.contents[0].logo}`;
-    const errorURL = process.env.REACT_APP_ERROR_LOGO;
-
-    if (e.target.src !== logoURL) {
-      e.target.src = logoURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
-    }
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_LOGO;
   };
 
-  // 개발 환경 적용
-  /*
-  // Vibrant: 이미지 색상 추출
-  const getGradient = async (url) => {
-    const imageURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${url}`;
+  // 카드 클릭 시 해당 상세 스토리로 이동
+  const handleClick = (idx) => navigate(`${process.env.REACT_APP_WEB_STORY_URL}${idx}`);
 
-    try {
-      const res = await api.imageLoad(imageURL);
-      return res;
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    if (!data) return;
-    getGradient(data.contents[0].thumbnail).then((res) => {
-      const base64Image = res;
-      Vibrant.from(`data:image/jpeg;base64,${base64Image}`)
-        .getPalette()
-        .then((palette) => {
-          let startColor = palette.LightMuted ? palette.LightMuted.getRgb() : palette.Vibrant.getRgb();
-          let endColor = palette.DarkMuted ? palette.DarkMuted.getRgb() : palette.Muted.getRgb();
-
-          startColor = startColor.map((color) => Math.round(color));
-          endColor = endColor.map((color) => Math.round(color));
-
-          setGradient([startColor, endColor]);
-        })
-        .catch((err) => {
-          console.error('Failed to extract colors with Vibrant:', err);
-        });
-    });
-  }, [data]);
-  */
-
-  // 도메인 변경시 적용
+  // 에디터픽 데이터가 로드되면 배경 그라데이션 색상 추출
+  // issue: 이미지 파일 형식이 webp로 변경되고 나서 vibrant에서 지원하지 않는 형식이라 추출이 안될 수 있음, 다른 라이브러리 사용 필요
   useEffect(() => {
     if (!data || data.contents.length === 0) return;
 
@@ -131,15 +79,12 @@ const EditorsPick = React.memo(() => {
     <StyleSheetManager shouldForwardProp={(prop) => !['gradient'].includes(prop)}>
       <ContentWrap className={style.content__wrap} gradient={gradient}>
         <hgroup className={style.content__title}>
-          <h1>{t(`editor.title`)}</h1>
+          <h1>{t(`main.editor`)}</h1>
           <h2>{data.subTopic || ''}</h2>
         </hgroup>
         {data.contents.map((content, i) => (
           <React.Fragment key={i}>
-            <article
-              className={style.card}
-              onClick={() => navigate(`${process.env.REACT_APP_WEB_STORY_URL}${content.idx}`)}
-            >
+            <article className={style.card} onClick={() => handleClick(content.idx)}>
               <div className={style.card__img}>
                 <figure className={style.thumbnail}>
                   <img

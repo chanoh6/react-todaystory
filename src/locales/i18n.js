@@ -4,6 +4,7 @@ import en from 'locales/en-US/translation.json';
 import ko from 'locales/ko-KR/translation.json';
 import ja from 'locales/ja-JP/translation.json';
 
+// 번역 파일을 불러와서 i18n 초기화
 const resources = {
   en: {
     translation: en,
@@ -16,6 +17,7 @@ const resources = {
   },
 };
 
+// i18n 초기화
 i18n.use(initReactI18next).init({
   resources,
   lng: process.env.REACT_APP_LOCALE, // 기본 설정 언어, 'cimode'로 설정할 경우 키 값으로 출력된다.

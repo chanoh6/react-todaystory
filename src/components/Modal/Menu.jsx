@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
@@ -22,9 +22,17 @@ const Menu = (props) => {
   // 채널 데이터
   const { data: channelList } = useFetchData(() => api.channel(), 'channel');
 
-  // 이미지 로딩 실패시 대체 이미지 적용
-  const onErrorIcon = (e) => (e.target.src = process.env.REACT_APP_ERROR_IMG);
-  const onErrorLogo = (e) => (e.target.src = process.env.REACT_APP_ERROR_LOGO);
+  // 아이콘 로딩 실패 시 대체 이미지로 교체
+  const onErrorIcon = (e) => {
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_ICON;
+  };
+
+  // 로고 로딩 실패 시 대체 이미지로 교체
+  const onErrorLogo = (e) => {
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_LOGO;
+  };
 
   // 메뉴 닫기
   const handleClose = () => {
@@ -32,6 +40,7 @@ const Menu = (props) => {
   };
 
   // 페이지 이동 시 메뉴 닫기
+  // issue: setTimeout은 좋지 않음. menu 상태를 전역으로 관리하기
   const handleNavigate = (url, title = '') => {
     navigate(url, {
       state: { title },
@@ -40,6 +49,13 @@ const Menu = (props) => {
       handleClose();
     }, 100);
   };
+
+  /*
+  const { isMenuOpen } = props;
+  useEffect(() => {
+    // 다닫히는 액션
+  }, [isMenuOpen]); 
+  */
 
   // vh 단위 계산
   const setScreenSize = () => {
@@ -63,13 +79,6 @@ const Menu = (props) => {
     const menuHeight = menuRef.current.offsetHeight;
     menuRef.current.style.setProperty('height', `${menuHeight}px`);
   }, [showCategory, showChannel]);
-
-  /*
-  const { isMenuOpen } = props;
-  useEffect(() => {
-    // 다닫히는 액션
-  }, [isMenuOpen]); 
-  */
 
   return (
     <Modal>

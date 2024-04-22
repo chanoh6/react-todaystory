@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
 import useFetchData from 'hooks/useFetchData';
-import { NoStories, StoriesSkeleton, TypeC } from 'components';
+import { StoriesSkeleton, TypeC } from 'components';
 import { ArrowRightIcon } from 'assets';
 import style from 'styles/Stories.module.css';
 

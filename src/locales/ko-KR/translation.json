@@ -25,14 +25,13 @@
   "main": {
     "top": "top stories",
     "best": "best stories",
+    "editor": "editors' pick",
     "more": "더보기"
   },
   "detail": {
+    "share": "TodayStory의 콘텐츠를 SNS에 공유해보세요.",
     "more-latest": "<{{channel}}> 최신 기사 읽기",
     "more-from": "더 알아보기"
-  },
-  "editor": {
-    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
@@ -119,5 +118,10 @@
     "title7": "분쟁 해결",
     "contents7": " 본 콘텐츠 이용과 관련하여 당사와 이용자 간에 발생하는 일체의 분쟁은, 한국법에 준거하여 서울중앙지방법원을 전속적 관할재판소로 하는 소송으로 해결합니다",
     "contents7-1": " 당사는 위 내용을 정정하는 경우가 있습니다. 그러한 경우, 모든 정보는 이 페이지를 통해 알려드립니다."
+  },
+  "error": {
+    "code": "{{code}}",
+    "title": "페이지를 찾을 수 없습니다.",
+    "desc": "죄송합니다. 요청하신 페이지를 찾을 수 없습니다."
   }
 }

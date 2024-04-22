@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Menu } from 'components';
 import { MenuIcon } from 'assets';
 import style from 'styles/Home.module.css';
@@ -6,10 +6,12 @@ import style from 'styles/Home.module.css';
 const MenuButton = () => {
   const [showMenu, setShowMenu] = useState(false);
 
+  // 메뉴 버튼 클릭
   const handleClickMenu = () => {
     setShowMenu((prev) => !prev);
   };
 
+  // 메뉴 닫기
   const handleCloseMenu = () => {
     setShowMenu(false);
   };

@@ -5,14 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { useAPI2 } from 'context/APIContextTest';
 import { useAdContext } from 'context/AdContext';
 import useFetchData from 'hooks/useFetchDataTest';
-import { decode } from 'html-entities';
 import { useFavorite, useHistory } from 'hooks/useLocalStorage';
+import { decode } from 'html-entities';
 import { getInstagramCode } from 'utils/instagram';
 import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
 import { ArrowLeftIcon, LikeUnfilledIcon, ShareIcon, MoreIcon, ArrowTopIcon, LikeFilledIcon } from 'assets';
 import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import adStyle from 'styles/Ad.module.css';
+import NotFound from './NotFound';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -29,45 +30,27 @@ const Story = () => {
   const { data, error, isLoading } = useFetchData(() => api.story({ idx: contentId }), `story-${contentId}`);
   const [main, setMain] = useState(null);
   const [keyword, setKeyword] = useState('');
-  const { adHeight, setAdHeight } = useAdContext();
+  const [isWidget, setIsWidget] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const { favorite, saveFavorite } = useFavorite(contentId);
   const { saveHistory } = useHistory(contentId);
+  const { adHeight, setAdHeight } = useAdContext();
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
 
   // 이미지 로딩 실패 시 대체 이미지로 교체
   const onErrorImg = (e) => {
-    const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL2}${data.thumbnail}`;
-    const errorURL = process.env.REACT_APP_ERROR_IMG;
-
-    if (e.target.src !== thumbnailURL) {
-      e.target.src = thumbnailURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
-    }
+    // 더 이상의 onerror 이벤트 처리를 하지 않도록 설정
+    e.target.onerror = null;
+    // 대체 이미지로 변경
+    e.target.src = process.env.REACT_APP_ERROR_IMG;
   };
 
+  // 로고 로딩 실패 시 대체 이미지로 교체
   const onErrorLogo = (e) => {
-    const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL2}${data.logo}`;
-    const errorURL = process.env.REACT_APP_ERROR_LOGO;
-
-    if (e.target.src !== logoURL) {
-      e.target.src = logoURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
-    }
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_LOGO;
   };
 
   // 조회수 업데이트
@@ -173,8 +156,13 @@ const Story = () => {
     }
   };
 
-  // Instagram 임베드 스크립트 로드
+  // URL 쿼리 파라미터 확인, Instagram 임베드 스크립트 로드
   useEffect(() => {
+    // URL 쿼리 파라미터에서 f 값이 widget이면 isWidget을 true로 설정
+    const params = new URLSearchParams(location.search);
+    const f = params.get('f');
+    if (f === 'widget') setIsWidget(true);
+
     const script = document.createElement('script');
     script.src = 'https://www.instagram.com/embed.js';
     script.async = true;
@@ -186,6 +174,7 @@ const Story = () => {
     };
   }, []);
 
+  // PWT 로드 후 광고 로드
   useEffect(() => {
     if (!isPWTLoaded) return;
     loadAd(
@@ -255,7 +244,7 @@ const Story = () => {
   }, [moreOpen]);
 
   if (isLoading) return <Loading />;
-  if (error) return null;
+  if (error) return <NotFound />;
   if (data === '-6') return handleNoContent();
   if (!data) return <StorySkeleton />;
 
@@ -274,9 +263,11 @@ const Story = () => {
 
       <header className={style.header}>
         <nav className={style.header__btn}>
-          <button type="button" aria-label="back_button" className={style.icon} onClick={handleBack}>
-            <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
-          </button>
+          {!isWidget && (
+            <button type="button" aria-label="back_button" className={style.icon} onClick={handleBack}>
+              <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
+            </button>
+          )}
           <button type="button" aria-label="like_button" className={style.icon} onClick={saveFavorite}>
             {favorite ? (
               <LikeFilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
@@ -324,7 +315,6 @@ const Story = () => {
               <div id="div-gpt-ad-1613117154866-0"></div>
             </div>
 
-            {/* {Object.keys(data.detail).map((key, index) => renderHtml(data.detail[key], index))} */}
             {main}
 
             <div className={style.content__more}>

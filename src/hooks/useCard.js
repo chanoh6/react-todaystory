@@ -1,46 +1,29 @@
 import { useNavigate } from 'react-router-dom';
-import { formatAgo } from 'utils/date';
 import { decode } from 'html-entities';
+import { formatAgo } from 'utils/date';
 
 export const useCard = (content) => {
   const navigate = useNavigate();
   const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount } = content;
   const locale = process.env.REACT_APP_LOCALE;
 
+  // 카드 클릭시 해당 상세 스토리로 이동
   const handleClick = () => {
     navigate(`${process.env.REACT_APP_WEB_STORY_URL}${idx}`);
   };
 
+  // 이미지 로딩 실패시 대체 이미지로 변경
   const onErrorImg = (e) => {
-    const thumbnailURL = `${process.env.REACT_APP_THUMBNAIL_IMG_URL2}${thumbnail}`;
-    const errorURL = process.env.REACT_APP_ERROR_IMG;
-
-    if (e.target.src !== thumbnailURL) {
-      e.target.src = thumbnailURL;
-      // e.target.onerror = (errorEvent) => {
-      //   if (errorEvent.target.src !== errorURL) {
-      //     errorEvent.target.src = errorURL;
-      //     // 더 이상의 onerror 처리가 없도록 설정
-      //     errorEvent.target.onerror = null;
-      //   }
-      // };
-    }
+    // 더 이상의 onerror 이벤트 처리를 하지 않도록 설정
+    e.target.onerror = null;
+    // 대체 이미지로 변경
+    e.target.src = process.env.REACT_APP_ERROR_IMG;
   };
 
+  // 로고 로딩 실패시 대체 이미지로 변경
   const onErrorLogo = (e) => {
-    const logoURL = `${process.env.REACT_APP_LOGO_IMG_URL2}${logo}`;
-    const errorURL = process.env.REACT_APP_ERROR_LOGO;
-
-    if (e.target.src !== logoURL) {
-      e.target.src = logoURL;
-      e.target.onerror = (errorEvent) => {
-        if (errorEvent.target.src !== errorURL) {
-          errorEvent.target.src = errorURL;
-          // 더 이상의 onerror 처리가 없도록 설정
-          errorEvent.target.onerror = null;
-        }
-      };
-    }
+    e.target.onerror = null;
+    e.target.src = process.env.REACT_APP_ERROR_LOGO;
   };
 
   return {

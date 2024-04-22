@@ -3,10 +3,6 @@ class API {
     this.apiClient = apiClient;
   }
 
-  /**
-   * @TODOS : 정리 필요
-   */
-
   async home() {
     return this.apiClient.home().then((res) => res.data);
   }
