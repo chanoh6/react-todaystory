@@ -76,6 +76,7 @@ const History = () => {
 
   if (loading || error) return <Loading />;
 
+  // issue: 로컬스토리지에 값이 저장되지 않음. 로컬스토리지 수락 여부 확인 필요
   return (
     <>
       <header className={style.header}>
@@ -90,12 +91,7 @@ const History = () => {
 
       <main>
         {!data ? (
-          // <CardListSkeleton />
-          <section className={style.content__wrap}>
-            <ul className={style.list}>
-              <NoStories text={t(`noStories.history`)} />
-            </ul>
-          </section>
+          <CardListSkeleton />
         ) : (
           <section className={style.content__wrap}>
             <ul className={style.list}>

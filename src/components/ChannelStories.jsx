@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAPI } from 'context/APIContext';
 import useFetchData from 'hooks/useFetchData';
-import { NoStories, StoriesSkeleton, TypeC } from 'components';
+import { StoriesSkeleton, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 
 const ChannelStories = (props) => {

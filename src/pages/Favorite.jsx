@@ -24,7 +24,7 @@ const Favorite = () => {
   // 뒤로가기 버튼 클릭
   const handleBack = () => navigate(-1);
 
-  // 카드 클릭시 즐겨찾기 해제
+  // 카드 클릭시 좋아요 취소
   const handleCardClick = (idx) =>
     setData({ ...data, contents: data.contents.filter((content) => content.idx !== idx) });
 
@@ -52,7 +52,7 @@ const Favorite = () => {
     return <AdInfeed index={index} adNum={requsetAdNum} />;
   };
 
-  // 즐겨찾기 목록 불러오기
+  // 좋아요한 콘텐츠 목록 불러오기
   useEffect(() => {
     const idxList = getFavorite();
 
@@ -74,6 +74,7 @@ const Favorite = () => {
 
   if (loading || error) return <Loading />;
 
+  // issue: 로컬스토리지에 값이 저장되지 않음. 로컬스토리지 수락 여부 확인 필요
   return (
     <>
       <header className={style.header}>

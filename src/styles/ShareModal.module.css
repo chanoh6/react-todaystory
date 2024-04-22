@@ -22,7 +22,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  color: #fff;
+  max-width: 200px;
+  color: var(--color-white);
   transform: translate(-50%, -50%);
 }
 

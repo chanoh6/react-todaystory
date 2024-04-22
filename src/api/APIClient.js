@@ -2,10 +2,7 @@ import axios from 'axios';
 
 /**
  * @TODOS
- * 1. .env 파일 활용하여 param 설정
- * 2. api url 변경
- * 3. 예외 처리
- * 4. http client header
+ * 1. APIService2, APIClient2로 변경
  * */
 
 class APIClient {

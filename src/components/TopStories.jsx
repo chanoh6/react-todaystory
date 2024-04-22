@@ -2,59 +2,19 @@ import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useTranslation } from 'react-i18next';
 import { useAPI } from 'context/APIContext';
+import { useAdContext } from 'context/AdContext';
+import useFetchData from 'hooks/useFetchData';
 import { StoriesSkeleton, TypeA, TypeB, TypeC } from 'components';
 import style from 'styles/Stories.module.css';
 import adStyle from 'styles/Ad.module.css';
-import { useAdContext } from 'context/AdContext';
-
-const fetchTopStories = async (api, size) => {
-  const storageKey = `topStories`;
-  const storedData = localStorage.getItem(storageKey);
-  const now = new Date().getTime();
-
-  if (storedData) {
-    const { lastFetched, data } = JSON.parse(storedData);
-    const staleTime = 5 * 60 * 1000;
-
-    if (now - lastFetched < staleTime) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await api.topStories(size);
-
-    if (response.code !== '0') {
-      throw new Error(`API error: ${response.msg[process.env.REACT_APP_LOCALE]}`);
-    }
-
-    const newData = response.data;
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        lastFetched: now,
-        data: newData,
-      }),
-    );
-
-    return newData;
-  } catch (error) {
-    throw error;
-  }
-};
 
 const TopStories = React.memo(() => {
   const { t } = useTranslation();
   const { api } = useAPI();
   const { isGPTLoaded } = useAdContext();
   const size = process.env.REACT_APP_TOP_STORIES_SIZE;
-  const { data, error, isLoading } = useQuery('topStories', () => fetchTopStories(api, size), {
-    keepPreviousData: true,
-    staleTime: 5 * 60 * 1000,
-    cacheTime: 60 * 60 * 1000,
-    onError: (error) => console.error(error),
-  });
+  // 탑 스토리 데이터
+  const { data, error, isLoading } = useFetchData(() => api.topStories(size), `topStories`);
 
   // 광고 로드
   const loadAd = (adUnitPath, adSizes, adSlotId) => {
@@ -99,9 +59,9 @@ const TopStories = React.memo(() => {
             return <TypeB key={i} content={content} />;
           } else if (i === middleIndex) {
             return (
-              <React.Fragment key={'fragment-' + i}>
+              <React.Fragment key={i}>
                 {/* /284705699/Samsung_life/Samsung_KR_life_list_between_top_list */}
-                <li key={'ad-' + i} className={adStyle.ad__home}>
+                <li className={adStyle.ad__home}>
                   <div id="div-gpt-ad-1628051169428-0"></div>
                 </li>
                 <TypeC key={i} content={content} />

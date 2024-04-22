@@ -1,13 +1,12 @@
 import React from 'react';
 import { useCard } from 'hooks/useCard';
+import { LikeButton } from 'components';
 import 'styles/Card.css';
 import style from 'styles/TypeC.module.css';
-import { LikeButton } from 'components';
 
 const TypeC = React.memo((props) => {
   const { content, onClick } = props;
-  const { idx, category, cp, title, thumbnail, logo, publishDate, viewCount, handleClick, onErrorImg, onErrorLogo } =
-    useCard(content);
+  const { idx, cp, title, thumbnail, logo, publishDate, handleClick, onErrorImg, onErrorLogo } = useCard(content);
 
   return (
     <li className="card" onClick={handleClick}>

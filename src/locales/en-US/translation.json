@@ -25,14 +25,13 @@
   "main": {
     "top": "top stories",
     "best": "best stories",
+    "editor": "editors' pick",
     "more": "more"
   },
   "detail": {
+    "share": "Share TodayStory content on social media.",
     "more-latest": "<{{channel}}> read more latest",
     "more-from": "more from"
-  },
-  "editor": {
-    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
@@ -44,5 +43,10 @@
     "stories": "No Stories",
     "favorite": "No Favorites",
     "history": "No History"
+  },
+  "error": {
+    "code": "{{code}}",
+    "title": "Page not found.",
+    "desc": "Sorry, the page you requested could not be found."
   }
 }

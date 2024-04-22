@@ -1,9 +1,11 @@
+import React from 'react';
 import { useNavigate } from 'react-router';
 import { CloseIcon } from 'assets';
 import style from 'styles/PolicyPrivacy.module.css';
 
 const ServiceEn = () => {
   const navigate = useNavigate();
+
   return (
     <div className={style.contents__wrap}>
       <button type="button" aria-label="close_button" className={style.icon} onClick={() => navigate(-1)}>

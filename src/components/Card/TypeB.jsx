@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCard } from 'hooks/useCard';
 import { LikeButton } from 'components';
 import 'styles/Card.css';

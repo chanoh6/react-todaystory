@@ -25,14 +25,13 @@
   "main": {
     "top": "top stories",
     "best": "best stories",
+    "editor": "editors' pick",
     "more": "もっと見る"
   },
   "detail": {
+    "share": "コンテンツを共有",
     "more-latest": "<{{channel}}> 最新の記事を読むこと",
     "more-from": "もっと調べよう"
-  },
-  "editor": {
-    "title": "editors' pick"
   },
   "card": {
     "date": "{{val, relativetime}}"
@@ -119,5 +118,10 @@
     "title7": "紛争解決",
     "contents7": "本コンテンツ利用に関して当社と利用者との間で発生する一切の紛争は、韓国法に準拠し、ソウル中央地裁を専属的管轄裁判所とする訴訟で解決します。",
     "contents7-1": "当社は上記の内容を訂正する場合があります。 そのような場合、すべての情報はこのページからお知らせします。"
+  },
+  "error": {
+    "code": "{{code}}",
+    "title": "ページが見つかりません。",
+    "desc": "申し訳ございません。ご希望のページが見つかりません。"
   }
 }

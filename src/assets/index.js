@@ -11,3 +11,8 @@ export { ReactComponent as MoreIcon } from 'assets/icon/More.svg';
 export { ReactComponent as SearchIcon } from 'assets/icon/Search.svg';
 export { ReactComponent as ShareIcon } from 'assets/icon/Share.svg';
 export { ReactComponent as ViewIcon } from 'assets/icon/View.svg';
+
+export { default as KakaoIcon } from 'assets/icon/Kakao.png';
+export { default as FacebookIcon } from 'assets/icon/Facebook.png';
+export { default as TwitterIcon } from 'assets/icon/Twitter.png';
+export { default as LinkIcon } from 'assets/icon/Link.png';

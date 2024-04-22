@@ -1,11 +1,14 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const NotFound = () => {
+  const { t } = useTranslation();
+
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>404</h1>
-      <p style={styles.text}>페이지를 찾을 수 없습니다.</p>
-      <p style={styles.text}>죄송합니다. 요청하신 페이지를 찾을 수 없습니다.</p>
+      <h1 style={styles.heading}>{t(`error.code`, { code: '404' })}</h1>
+      <p style={styles.text}>{t(`error.title`)}</p>
+      <p style={styles.text}>{t(`error.desc`)}</p>
     </div>
   );
 };

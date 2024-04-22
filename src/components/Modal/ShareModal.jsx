@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Modal from './Modal';
 import { decode } from 'html-entities';
-import { CloseIcon } from 'assets';
+import { KakaoIcon, FacebookIcon, TwitterIcon, LinkIcon, CloseIcon } from 'assets';
 import style from 'styles/ShareModal.module.css';
-import kakao from '../../assets/icon/Kakao.png';
-import Facebook from '../../assets/icon/Facebook.png';
-import Twitter from '../../assets/icon/Twitter.png';
-import Link from '../../assets/icon/Link.png';
 
 const ShareModal = (props) => {
   const { contents, onClose } = props;
-  const url = window.location.href;
+  const { t } = useTranslation();
+  const URL = window.location.href;
   const shareRef = useRef();
 
   // 모달 닫기
@@ -22,17 +20,36 @@ const ShareModal = (props) => {
 
   // twitter 공유
   const shareToTwitter = () => {
-    const sharedLink = 'text=' + encodeURIComponent(decode(contents.title) + ' \n ') + encodeURIComponent(url);
+    const sharedLink = 'text=' + encodeURIComponent(decode(contents.title) + ' \n ') + encodeURIComponent(URL);
     window.open(`https://twitter.com/intent/tweet?${sharedLink}`);
   };
 
   // facebook 공유
   const shareToFacebook = () => {
-    const sharedLink = encodeURIComponent(url);
+    const sharedLink = encodeURIComponent(URL);
     window.open(`http://www.facebook.com/sharer/sharer.php?u=${sharedLink}`);
   };
 
   // 카카오톡 공유
+  // issue: 카카오톡 미설치 시 앱스토어로 이동하는 기능 추가 필요
+  const shareToKakao = () => {
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `${contents.title}`,
+        imageUrl: `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${contents.thumbnail}`, // 공유할 이미지 URL
+        link: {
+          mobileWebUrl: window.location.href, // 모바일 웹 URL
+          webUrl: window.location.href, // PC 웹 URL
+        },
+      },
+    });
+
+    const isKakaoAppInstalled = () => {
+      return /KAKAOTALK/i.test(navigator.userAgent);
+    };
+  };
+
   /*
   const shareToKakao = () => {
     const isKakaoAppInstalled = () => {
@@ -66,25 +83,22 @@ const ShareModal = (props) => {
   };
   */
 
-  const shareToKakao = () => {
-    window.Kakao.Link.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: `${contents.title}`,
-        imageUrl: `${process.env.REACT_APP_THUMBNAIL_IMG_URL}${contents.thumbnail}`, // 공유할 이미지 URL
-        link: {
-          mobileWebUrl: window.location.href, // 모바일 웹 URL
-          webUrl: window.location.href, // PC 웹 URL
-        },
-      },
-    });
-
-    const isKakaoAppInstalled = () => {
-      return /KAKAOTALK/i.test(navigator.userAgent);
-    };
+  // 링크 복사
+  // issue: 링크 복사 검증 필요
+  const shareToURL = async () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(URL);
+        alert('링크가 복사되었습니다.');
+      } catch (err) {
+        shareToURLFallback(URL);
+      }
+    } else {
+      shareToURLFallback(URL);
+    }
   };
 
-  // 링크 복사
+  // 링크 복사 fallback
   const shareToURLFallback = (text) => {
     let textArea = document.createElement('textarea');
     textArea.value = text;
@@ -98,20 +112,6 @@ const ShareModal = (props) => {
       alert('링크 복사에 실패했습니다.');
     }
     document.body.removeChild(textArea);
-  };
-
-  const shareToURL = async () => {
-    if (navigator.clipboard && window.isSecureContext) {
-      try {
-        await navigator.clipboard.writeText(url);
-        alert('링크가 복사되었습니다.');
-      } catch (err) {
-        // alert('링크 복사에 실패했습니다. 대체 방법을 시도합니다.');
-        shareToURLFallback(url);
-      }
-    } else {
-      shareToURLFallback(url);
-    }
   };
 
   // 카카오톡 SDK 초기화
@@ -135,22 +135,19 @@ const ShareModal = (props) => {
           <CloseIcon width={16} height={16} fill={'var(--color-white)'} />
         </button>
         <div className={style.sns__wrap}>
-          <p className={style.title}>
-            TodayStory의 콘텐츠를
-            <br /> SNS에 공유해보세요.
-          </p>
+          <p className={style.title}>{t(`detail.share`)}</p>
           <ul>
             <li onClick={shareToKakao}>
-              <img loading="lazy" src={kakao} alt="카카오" />
+              <img loading="lazy" src={KakaoIcon} alt="카카오" />
             </li>
             <li onClick={shareToFacebook}>
-              <img loading="lazy" src={Facebook} alt="페이스북" />
+              <img loading="lazy" src={FacebookIcon} alt="페이스북" />
             </li>
             <li onClick={shareToTwitter}>
-              <img loading="lazy" src={Twitter} alt="트위터" />
+              <img loading="lazy" src={TwitterIcon} alt="트위터" />
             </li>
             <li onClick={shareToURL}>
-              <img loading="lazy" src={Link} alt="URL" />
+              <img loading="lazy" src={LinkIcon} alt="URL" />
             </li>
           </ul>
         </div>

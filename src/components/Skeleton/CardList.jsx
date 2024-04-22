@@ -1,4 +1,6 @@
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import style from 'styles/Favorite.module.css';
 import card from 'styles/TypeC.module.css';
 
