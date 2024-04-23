@@ -48,12 +48,10 @@ export const useFavorite = (idx) => {
   return { favorite, saveFavorite, getFavorite };
 };
 
-export const useHistory = (idx = null) => {
-  const [contentId, setContentId] = useState(idx);
-
+export const useHistory = () => {
   // 최근 본 콘텐츠 저장
-  const saveHistory = () => {
-    resaveLoaclStorage('history', contentId);
+  const saveHistory = (idx) => {
+    resaveLoaclStorage('history', idx);
   };
 
   // 최근 본 콘텐츠 초기화
