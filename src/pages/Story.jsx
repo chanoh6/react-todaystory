@@ -34,7 +34,7 @@ const Story = () => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory(contentId);
+  const { saveHistory } = useHistory();
   const { adHeight, setAdHeight } = useAdContext();
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
@@ -197,7 +197,7 @@ const Story = () => {
 
   // contentId가 변경될 때마다 실행
   useEffect(() => {
-    saveHistory();
+    saveHistory(contentId);
     updateViewCount(contentId);
   }, [contentId]);
 
