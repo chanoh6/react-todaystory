@@ -85,12 +85,16 @@ export const AdProvider = ({ children }) => {
       'ua-script',
     );
 
+    // Geo Edge 태그
+    addScript('//rumcdn.geoedge.be/275f7111-2d04-458d-b278-d92922841cd7/grumi-ip.js', true, null, 'geoedge-script');
+
     // 페이지 언마운트 시 스크립트 제거
     return () => {
       removeScript('pubmatic-script');
       removeScript('amazon-script');
       removeScript('ga4-script');
       removeScript('ua-script');
+      removeScript('geoedge-script');
     };
   }, []);
 
