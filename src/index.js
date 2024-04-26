@@ -10,6 +10,7 @@ import 'locales/i18n';
 // React.lazy: 코드 스플리팅을 위한 함수 (Suspense와 함께 사용)
 const Home = React.lazy(() => import('pages/Home'));
 const Story = React.lazy(() => import('pages/Story'));
+const Preview = React.lazy(() => import('pages/Preview'));
 const Category = React.lazy(() => import('pages/Category'));
 const Channel = React.lazy(() => import('pages/Channel'));
 const Favorite = React.lazy(() => import('pages/Favorite'));
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'index.html', element: <Home /> },
       { path: 'view/:contentId', element: <Story /> },
+      { path: 'admin/:contentId', element: <Preview /> },
       { path: 'category/:pageId', element: <Category /> },
       { path: 'channel/:pageId', element: <Channel /> },
       { path: 'favorite', element: <Favorite /> },
