@@ -142,10 +142,34 @@ const Home = () => {
   }, [index]);
 
   // 광고 높이만큼 footer padding 추가
+  // useEffect(() => {
+  //   if (!adHeight || !footerRef.current) return;
+  //   footerRef.current.style.paddingBottom = `${adHeight}px`;
+  // }, [adHeight, setAdHeight]);
+
   useEffect(() => {
-    if (!adHeight || !footerRef.current) return;
-    footerRef.current.style.paddingBottom = `${adHeight}px`;
-  }, [adHeight, setAdHeight]);
+    const adElement = document.getElementById('div-gpt-ad-1573457886200-0');
+    if (!adElement) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (!entries || entries.length === 0) return;
+      const height = entries[0].contentRect.height;
+      setAdHeight(height);
+      // console.log('광고 높이:', height);
+
+      if (height !== 0) {
+        const footerElement = footerRef.current;
+        if (!footerElement) return;
+        footerElement.style.paddingBottom = `${height}px`;
+      }
+    });
+
+    resizeObserver.observe(adElement);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isPWTLoaded]);
 
   return (
     <>

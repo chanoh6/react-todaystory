@@ -62,6 +62,7 @@ export const AdProvider = ({ children }) => {
         }
         gtag('js', new Date());
         gtag('config', 'G-3GEGY1QV1W');
+        gtag('send', 'pageview');
         // gtag('event', 'page_view');
       },
       'ga4-script',
