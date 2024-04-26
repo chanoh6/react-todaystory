@@ -197,13 +197,28 @@ const Story = () => {
 
   //광고 높이만큼 footer padding bottom 추가
   useEffect(() => {
-    const footerElement = footerRef.current;
     const adElement = document.getElementById('div-gpt-ad-1573457886200-0');
-    if (!footerElement || !adElement) return;
+    if (!adElement) return;
 
-    const adHeight = adElement.offsetHeight;
-    footerElement.style.paddingBottom = `${adHeight}px`;
-  }, [isPWTLoaded]); // isPWTLoaded가 변경될 때마다 실행
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (!entries || entries.length === 0) return;
+      const height = entries[0].contentRect.height;
+      setAdHeight(height);
+      // console.log('광고 높이:', height);
+
+      if (height !== 0) {
+        const footerElement = footerRef.current;
+        if (!footerElement) return;
+        footerElement.style.paddingBottom = `${height}px`;
+      }
+    });
+
+    resizeObserver.observe(adElement);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [isPWTLoaded]);
 
   // contentId가 변경될 때마다 실행
   useEffect(() => {
