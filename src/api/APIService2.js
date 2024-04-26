@@ -81,6 +81,12 @@ class APIService2 {
     return this.fetchData(process.env.REACT_APP_API_STORY_URL, 'get', params);
   }
 
+  // 미리보기
+  async adminStory(params) {
+    // params: idx
+    return this.fetchData(process.env.REACT_APP_API_ADMIN_STORY_URL, 'get', params);
+  }
+
   // 인덱스별 스토리 (공감, 최근 본 스토리)
   async storiesByIndex(data) {
     // data: idxList

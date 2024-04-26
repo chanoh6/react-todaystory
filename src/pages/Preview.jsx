@@ -27,14 +27,14 @@ const Story = () => {
   const { api } = useAPI2();
   const { isPWTLoaded } = useAdContext();
   // 상세 스토리 데이터
-  const { data, error, isLoading } = useFetchData(() => api.story({ idx: contentId }), `story-${contentId}`);
+  const { data, error, isLoading } = useFetchData(() => api.adminStory({ idx: contentId }), `admin-${contentId}`);
   const [main, setMain] = useState(null);
   const [keyword, setKeyword] = useState('');
   const [isWidget, setIsWidget] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory();
+  const { saveHistory } = useHistory(contentId);
   const { adHeight, setAdHeight } = useAdContext();
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
@@ -213,7 +213,7 @@ const Story = () => {
 
   // contentId가 변경될 때마다 실행
   useEffect(() => {
-    saveHistory(contentId);
+    saveHistory();
     updateViewCount(contentId);
   }, [contentId]);
 
