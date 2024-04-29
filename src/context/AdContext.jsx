@@ -62,7 +62,9 @@ export const AdProvider = ({ children }) => {
         }
         gtag('js', new Date());
         gtag('config', 'G-3GEGY1QV1W');
-        gtag('send', 'pageview');
+        // gtag send는 지원하지 않는 형식으로 삭제
+        // gtag('send', 'pageview');
+        // event 호출시 카운트 중복 발생하여 삭제
         // gtag('event', 'page_view');
       },
       'ga4-script',
