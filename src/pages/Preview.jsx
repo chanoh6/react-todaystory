@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAPI2 } from 'context/APIContextTest';
 import { useAdContext } from 'context/AdContext';
 import useFetchData from 'hooks/useFetchDataTest';
-import { useFavorite, useHistory } from 'hooks/useLocalStorage';
+// import { useFavorite, useHistory } from 'hooks/useLocalStorage';
 import { decode } from 'html-entities';
 import { getInstagramCode } from 'utils/instagram';
 import { StorySkeleton, MoreMenu, ShareModal, Loading, StoriesSkeleton } from 'components';
@@ -33,8 +33,8 @@ const Story = () => {
   const [isWidget, setIsWidget] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
-  const { favorite, saveFavorite } = useFavorite(contentId);
-  const { saveHistory } = useHistory(contentId);
+  // const { favorite, saveFavorite } = useFavorite(contentId);
+  // const { saveHistory } = useHistory(contentId);
   const { adHeight, setAdHeight } = useAdContext();
   const moreMenuRef = useRef(null);
   const footerRef = useRef(null);
@@ -206,16 +206,16 @@ const Story = () => {
   }, [isPWTLoaded]); // isPWTLoaded가 변경될 때마다 실행
 
   // contentId가 변경될 때마다 실행
-  useEffect(() => {
-    saveHistory(contentId);
-    updateViewCount(contentId);
-  }, [contentId]);
+  // useEffect(() => {
+  //   saveHistory(contentId);
+  //   updateViewCount(contentId);
+  // }, [contentId]);
 
   // contentId가 변경될 때마다 실행
-  useEffect(() => {
-    saveHistory();
-    updateViewCount(contentId);
-  }, [contentId]);
+  // useEffect(() => {
+  //   saveHistory();
+  //   updateViewCount(contentId);
+  // }, [contentId]);
 
   // keyword 설정 및 Instagram 임베드 스크립트 로드
   useEffect(() => {
@@ -284,12 +284,8 @@ const Story = () => {
               <ArrowLeftIcon width={8} height={14} style={{ marginRight: '2px' }} />
             </button>
           )}
-          <button type="button" aria-label="like_button" className={style.icon} onClick={saveFavorite}>
-            {favorite ? (
-              <LikeFilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
-            ) : (
-              <LikeUnfilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
-            )}
+          <button type="button" aria-label="like_button" className={style.icon}>
+            <LikeUnfilledIcon width={16} height={14} fill="var(--color-black)" style={{ marginBottom: '2px' }} />
           </button>
         </nav>
 
