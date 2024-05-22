@@ -84,12 +84,13 @@ const Story = () => {
 
   // 게시물 없을 시 뒤로가기
   const handleNoContent = () => {
-    alert('게시글이 존재하지 않습니다.');
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate(process.env.REACT_APP_WEB_HOME_URL);
-    }
+    navigate(process.env.REACT_APP_WEB_HOME_URL);
+    // alert('게시글이 존재하지 않습니다.');
+    // if (window.history.length > 1) {
+    //   navigate(-1);
+    // } else {
+    //   navigate(process.env.REACT_APP_WEB_HOME_URL);
+    // }
   };
 
   // 더보기 메뉴 클릭
