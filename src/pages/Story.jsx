@@ -227,12 +227,6 @@ const Story = () => {
     updateViewCount(contentId);
   }, [contentId]);
 
-  // contentId가 변경될 때마다 실행
-  useEffect(() => {
-    saveHistory(contentId);
-    updateViewCount(contentId);
-  }, [contentId]);
-
   // keyword 설정 및 Instagram 임베드 스크립트 로드
   useEffect(() => {
     if (!data) return;
