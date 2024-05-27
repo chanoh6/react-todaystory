@@ -29,6 +29,8 @@ const Home = () => {
   const [index, setIndex] = useState(0);
   // 더 불러올 데이터가 있는지 여부
   const [hasMore, setHasMore] = useState(true);
+  // 현재 카테고리 인덱스
+  const [curCategoryIdx, setCurCategoryIdx] = useState('');
   // 광고 높이
   const { adHeight, setAdHeight } = useAdContext();
   const footerRef = useRef(null);
@@ -171,6 +173,43 @@ const Home = () => {
     };
   }, [isPWTLoaded]);
 
+  useEffect(() => {
+    const sections = document.querySelectorAll(`.${style.content__wrap}`);
+    const visibleCategories = new Set();
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target.dataset.type === '1004') {
+          if (entry.isIntersecting) {
+            visibleCategories.add(entry.target.dataset.categoryidx);
+          } else {
+            visibleCategories.delete(entry.target.dataset.categoryidx);
+          }
+        }
+      });
+
+      // 화면에 보이는 1004 타입 요소가 있을 때 첫 번째 요소를 사용
+      if (visibleCategories.size > 0) {
+        setCurCategoryIdx(Array.from(visibleCategories)[0]);
+      } else {
+        setCurCategoryIdx('');
+      }
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.25,
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, [renderData]);
+
   return (
     <>
       <header className={style.header}>
@@ -186,7 +225,7 @@ const Home = () => {
       </header>
 
       <nav className={style.nav}>
-        <CategoryNav />
+        <CategoryNav curCategoryIdx={curCategoryIdx} />
         <div className={style.nav__ad}>
           <button type="button" aria-label="ad_button" className={style.ad__item} onClick={handleClickFortune}>
             <LuckIcon width={18} height={20} fill="var(--color-black)" />
@@ -213,6 +252,8 @@ const Home = () => {
                       item.type === '1003' ? style.editors : ''
                     }
                     `}
+                    data-type={item.type}
+                    data-categoryidx={item.data}
                   >
                     {getContent(item)}
                   </section>
