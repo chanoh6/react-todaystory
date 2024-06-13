@@ -10,8 +10,12 @@ const MoreMenu = ({ contents }) => {
     { title: '채널 보러가기', url: `${process.env.REACT_APP_WEB_CHANNEL_URL}${contents.cpIdx}` },
   ];
 
+  // const origin = window.location.origin;
   // 클릭 시 해당 페이지로 이동
-  const handleClick = (url) => navigate(url);
+  const handleClick = (url) => {
+    // navigate(url);
+    window.location.href = `${origin}/ko_v2/index.html`;
+  };
 
   return (
     <div className={style.modal__wrap}>
