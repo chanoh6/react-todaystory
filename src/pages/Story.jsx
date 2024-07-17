@@ -14,6 +14,8 @@ import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import adStyle from 'styles/Ad.module.css';
 import NotFound from './NotFound';
+import AdViewerCp from 'components/Ad/AdViewerCp';
+import AdViewerbtf2 from 'components/Ad/AdViewerbtf2';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -109,6 +111,16 @@ const Story = () => {
     }
   };
 
+  // viewer cp 광고 추가 (20240717)
+  const getViewerCpAd = (index) => {
+    return <AdViewerCp index={index} />;
+  };
+
+  // viewer cp 광고 추가 (20240717)
+  const getViewerbtf2Ad = (index) => {
+    return <AdViewerbtf2 index={index} />;
+  };
+
   // 본문 내용 렌더링
   const renderHtml = (html, index) => {
     // HTML 엔티티 디코딩
@@ -120,6 +132,12 @@ const Story = () => {
 
     // 'fr-embedly' 클래스를 포함하는 모든 요소 찾기
     const embedlyElements = tempElement.querySelectorAll('.fr-embedly');
+
+    // if (index % 2 !== 0) {
+    //   console.log(getViewerCpAd(index));
+    // } else {
+    //   console.log(getViewerbtf2Ad(index));
+    // }
 
     // 각 embedly 요소를 반복
     embedlyElements.forEach((embedlyElement) => {
@@ -138,7 +156,10 @@ const Story = () => {
 
     // 업데이트된 HTML 문자열 반환
     return (
-      <article className={style.content} key={index + 1} dangerouslySetInnerHTML={{ __html: tempElement.innerHTML }} />
+      <React.Fragment key={index + 1}>
+        <article className={style.content} dangerouslySetInnerHTML={{ __html: tempElement.innerHTML }} />
+        {index % 2 !== 0 ? getViewerCpAd(index) : getViewerbtf2Ad(index)}
+      </React.Fragment>
     );
   };
 
