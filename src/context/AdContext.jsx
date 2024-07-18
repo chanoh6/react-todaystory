@@ -47,9 +47,9 @@ export const AdProvider = ({ children }) => {
     }
 
     // 페이지 URL에서 view가 포함이 안되어 있는 경우에만 pubmatic 스크립트 추가 (browsi 광고 설정 스크립트)
-    if (purl.indexOf('view') < 0) {
-      addScript(url + profileVersionId + '/pwt.js', true, null, 'pubmatic-script');
-    }
+    // if (purl.indexOf('view') < 0) {
+    addScript(url + profileVersionId + '/pwt.js', true, null, 'pubmatic-script');
+    // }
 
     // Amazon Ads 스크립트 추가
     addScript('//c.amazon-adsystem.com/aax2/apstag.js', true, null, 'amazon-script');
