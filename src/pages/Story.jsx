@@ -14,8 +14,10 @@ import 'styles/Story.css';
 import style from 'styles/Story.module.css';
 import adStyle from 'styles/Ad.module.css';
 import NotFound from './NotFound';
-import AdViewerCp from 'components/Ad/AdViewerCp';
-import AdViewerbtf2 from 'components/Ad/AdViewerbtf2';
+import AdBelow from 'components/Ad/AdBelow';
+import AdAnchor from 'components/Ad/AdAnchor';
+// import AdViewerCp from 'components/Ad/AdViewerCp';
+// import AdViewerbtf2 from 'components/Ad/AdViewerbtf2';
 
 const ChannelStories = React.lazy(() => import('components/ChannelStories'));
 const BestStories = React.lazy(() => import('components/BestStories'));
@@ -112,13 +114,21 @@ const Story = () => {
   };
 
   // viewer cp 광고 추가 (20240717)
-  const getViewerCpAd = (index) => {
-    return <AdViewerCp index={index} />;
-  };
+  // const getViewerCpAd = (index) => {
+  //   return <AdViewerCp index={index} />;
+  // };
 
   // viewer cp 광고 추가 (20240717)
-  const getViewerbtf2Ad = (index) => {
-    return <AdViewerbtf2 index={index} />;
+  // const getViewerbtf2Ad = (index) => {
+  //   return <AdViewerbtf2 index={index} />;
+  // };
+
+  const getBelowAd = () => {
+    return <AdBelow />;
+  };
+
+  const getAnchorAd = () => {
+    return <AdAnchor />;
   };
 
   // 본문 내용 렌더링
@@ -132,12 +142,6 @@ const Story = () => {
 
     // 'fr-embedly' 클래스를 포함하는 모든 요소 찾기
     const embedlyElements = tempElement.querySelectorAll('.fr-embedly');
-
-    // if (index % 2 !== 0) {
-    //   console.log(getViewerCpAd(index));
-    // } else {
-    //   console.log(getViewerbtf2Ad(index));
-    // }
 
     // 각 embedly 요소를 반복
     embedlyElements.forEach((embedlyElement) => {
@@ -156,10 +160,8 @@ const Story = () => {
 
     // 업데이트된 HTML 문자열 반환
     return (
-      <React.Fragment key={index + 1}>
-        <article className={style.content} dangerouslySetInnerHTML={{ __html: tempElement.innerHTML }} />
-        {index % 2 !== 0 ? getViewerCpAd(index) : getViewerbtf2Ad(index)}
-      </React.Fragment>
+      <article key={index + 1} className={style.content} dangerouslySetInnerHTML={{ __html: tempElement.innerHTML }} />
+      // {index % 2 !== 0 ? getViewerCpAd(index) : getViewerbtf2Ad(index)}
     );
   };
 
@@ -197,25 +199,25 @@ const Story = () => {
   }, []);
 
   // PWT 로드 후 광고 로드
-  useEffect(() => {
-    if (!isPWTLoaded) return;
-    loadAd(
-      '/284705699/Samsung_life/Samsung_life_anchor',
-      [
-        [320, 50],
-        [320, 100],
-      ],
-      'div-gpt-ad-1573457886200-0',
-    );
-    loadAd(
-      '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image',
-      [
-        [320, 100],
-        [320, 50],
-      ],
-      'div-gpt-ad-1613117154866-0',
-    );
-  }, [isPWTLoaded, location]);
+  // useEffect(() => {
+  //   if (!isPWTLoaded) return;
+  //   loadAd(
+  //     '/284705699/Samsung_life/Samsung_life_anchor',
+  //     [
+  //       [320, 50],
+  //       [320, 100],
+  //     ],
+  //     'div-gpt-ad-1573457886200-0',
+  //   );
+  //   loadAd(
+  //     '/284705699/Samsung_life/Samsung_KR_life_viewer_below_image',
+  //     [
+  //       [320, 100],
+  //       [320, 50],
+  //     ],
+  //     'div-gpt-ad-1613117154866-0',
+  //   );
+  // }, [isPWTLoaded, location]);
 
   //광고 높이만큼 footer padding bottom 추가
   useEffect(() => {
@@ -359,7 +361,8 @@ const Story = () => {
 
             {/* /284705699/Samsung_life/Samsung_KR_life_viewer_below_image */}
             <div className={adStyle.ad__below}>
-              <div id="div-gpt-ad-1613117154866-0"></div>
+              {/* <div id="div-gpt-ad-1613117154866-0"></div> */}
+              {getBelowAd()}
             </div>
 
             {main}
@@ -400,7 +403,8 @@ const Story = () => {
       <footer ref={footerRef}>
         {/* /284705699/Samsung_life/Samsung_life_anchor */}
         <div className={adStyle.ad__anchor}>
-          <div id="div-gpt-ad-1573457886200-0"></div>
+          {/* <div id="div-gpt-ad-1573457886200-0"></div> */}
+          {getAnchorAd()}
         </div>
       </footer>
 
