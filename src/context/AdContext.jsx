@@ -35,20 +35,20 @@ export const AdProvider = ({ children }) => {
   useEffect(() => {
     // Pubmatic 스크립트 추가
     const purl = window.location.href;
-    let url = '//ads.pubmatic.com/AdServer/js/pwt/159369/2845';
-    let profileVersionId = '';
+    // let url = '//ads.pubmatic.com/AdServer/js/pwt/159369/2845';
+    // let profileVersionId = '';
 
-    if (purl.indexOf('pwtv=') > 0) {
-      const regexp = /pwtv=(.*?)(\&|$)/g;
-      const matches = regexp.exec(purl);
-      if (matches && matches.length >= 2 && matches[1].length > 0) {
-        profileVersionId = '/' + matches[1];
-      }
-    }
+    // if (purl.indexOf('pwtv=') > 0) {
+    //   const regexp = /pwtv=(.*?)(\&|$)/g;
+    //   const matches = regexp.exec(purl);
+    //   if (matches && matches.length >= 2 && matches[1].length > 0) {
+    //     profileVersionId = '/' + matches[1];
+    //   }
+    // }
 
     // 페이지 URL에서 view가 포함이 안되어 있는 경우에만 pubmatic 스크립트 추가 (browsi 광고 설정 스크립트)
     // if (purl.indexOf('view') < 0) {
-    addScript(url + profileVersionId + '/pwt.js', true, null, 'pubmatic-script');
+    // addScript(url + profileVersionId + '/pwt.js', true, null, 'pubmatic-script');
     // }
 
     // Amazon Ads 스크립트 추가
@@ -96,7 +96,6 @@ export const AdProvider = ({ children }) => {
 
     // 페이지 언마운트 시 스크립트 제거
     return () => {
-      removeScript('pubmatic-script');
       removeScript('amazon-script');
       removeScript('ga4-script');
       removeScript('ua-script');
@@ -162,7 +161,6 @@ export const AdProvider = ({ children }) => {
     return () => {
       setIsVisible(false);
       setIsGPTLoaded(false);
-      setIsPWTLoaded(false);
       removeScript('gpt-script');
     };
   }, [location]);
